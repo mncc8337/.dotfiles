@@ -1,7 +1,6 @@
 
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
-local rnotification = require("ruled.notification")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
@@ -48,6 +47,8 @@ theme.taglist_font        = theme.font_type.mono .. " 8"
 -- notification_[bg|fg]
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
+theme.notification_font = theme.font_type.normal .. '  10'
+theme.notification_margin = 5
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
@@ -112,14 +113,6 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = "Papirus"
-
--- Set different colors for urgent notifications.
-rnotification.connect_signal('request::rules', function()
-    rnotification.append_rule {
-        rule       = { urgency = 'critical' },
-        properties = { bg = '#ff0000', fg = '#ffffff' }
-    }
-end)
 
 return theme
 
