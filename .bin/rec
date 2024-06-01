@@ -70,12 +70,12 @@ ffmpeg \
     "$output"
 
 printf "\n"
-printf "recording complete with the following settings:\n"
+printf "recording ended with the following settings:\n"
 printf "    framerate: $framerate\n"
 printf "    geometry:  $w,$h,$x,$y\n"
 printf "    crf:       $crf\n"
 if [ "$audio_param" != "" ]; then
-printf "    audio:     yes\n"
+    printf "    audio:     yes\n"
 else
-printf "    audio:     no\n"
+    printf "    audio:     no\n"
 fi
