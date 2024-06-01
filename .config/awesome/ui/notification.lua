@@ -10,7 +10,7 @@ ruled.notification.connect_signal('request::rules', function()
         rule       = { },
         properties = {
             screen           = awful.screen.preferred,
-            implicit_timeout = 3,
+            implicit_timeout = 5,
         }
     }
 
@@ -19,7 +19,7 @@ ruled.notification.connect_signal('request::rules', function()
         rule       = { urgency = 'critical' },
         properties = { bg = '#ff0000', fg = '#ffffff' }
     }
-end)
+end) 
 
 naughty.connect_signal("request::display", function(n)
     local notif = naughty.layout.box {
@@ -77,5 +77,18 @@ naughty.connect_signal("request::display", function(n)
                 }
             }
         }
+    }
+
+    -- why replace the built-in events?
+    -- awful.title buttons will function if they detect mouse release event on them
+    -- notifications are closed when receive mouse press event on them
+    -- if you press mouse on a notification which is on top of those buttons
+    -- you will unintentionally release mouse on top of the buttons, then the buttons will function,
+    -- causing bugs like client close after click of notification, etc...
+    -- by destroying notification AFTER releasing mouse, titlebar buttons will not receive the mouse release event,
+    -- so they will not work unintentionally
+    notif.buttons = {
+        awful.button({}, "1", nil, function() n:destroy() end),
+        awful.button({}, "3", nil, function() n:destroy() end)
     }
 end)
