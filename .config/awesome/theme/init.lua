@@ -55,6 +55,7 @@ theme.notification_margin = theme.common_margin
 theme.notification_width = 500
 theme.notification_height = 80
 theme.notification_icon_size = theme.notification_height - theme.notification_margin * 2
+theme.notification_border_width = 100
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
