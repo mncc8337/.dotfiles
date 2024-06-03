@@ -35,7 +35,7 @@ modkey = "Mod4"
 -- use pulseaudio to exceed the 100% limit
 -- you can use either pulseaudio or alsa though
 -- but dont use both of them at the same time
-require("signals.pulseaudio"):start()
+require("signal.pulseaudio"):start()
 
 require("config")
 require("ui")

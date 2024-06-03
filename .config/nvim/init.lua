@@ -14,10 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy = require("lazy")
 lazy.setup {
-    -- {
-    --     "nvim-treesitter/nvim-treesitter",
-    --     build = ":TSUpdate",
-    -- },
     { 'echasnovski/mini.nvim', version = false },
     {
         "nvim-tree/nvim-tree.lua",
@@ -76,16 +72,6 @@ require("mini.surround").setup {
     respect_selection_type = false,
     search_method = 'cover',
 }
-
--- require("nvim-treesitter.configs").setup {
---     ensure_installed = { "c", "lua", "cpp", "python" },
---     sync_install = false,
---     auto_install = false,
---     highlight = {
---         enable = true,
---         disable = {},
---     }
--- }
 
 --[[ keymapping ]]--
 require("mappings")

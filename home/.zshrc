@@ -34,6 +34,9 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# fix zsh-syntax-highlighter black out comments and variable calling `$var`
+ZSH_HIGHLIGHT_STYLES[comment]='fg=cyan,bold'
+
 eval $(thefuck --alias)
 
 alias py="python3"
@@ -51,12 +54,6 @@ function gogh() {
     bash -c "$(curl -sLo- https://git.io/vQgMr)"
     deactivate
 }
-
-# for some reason in my box XDG base directory env vars are not set
-export XDG_CONFIG_HOME="$HOME/.config"
-#export XDG_CACHE_HOME="$HOME/.cache"
-#export XDG_DATA_HOME="$HOME/.local/share"
-#export XDG_STATE_HOME="$HOME/.local/state"
 
 # proxy stuff
 # stolen from https://wiki.archlinux.org/title/Proxy_server
@@ -105,4 +102,7 @@ function proxy-off(){
     echo -e "Proxy environment variable removed."
 }
 
-crunchbang-mini
+# only print this if is in a terminal emulator
+if [ -z "$(tty | grep tty)" ]; then
+    crunchbang-mini
+fi

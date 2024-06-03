@@ -45,10 +45,10 @@ end)
 
 return {
     widget = wibox.container.margin,
-    margins = 3,
+    margins = beautiful.common_padding,
     {
         layout = wibox.layout.fixed.horizontal,
-        spacing = 3,
+        spacing = beautiful.common_padding,
         volume_icon, volume_widget
     }
 }

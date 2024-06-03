@@ -1,20 +1,11 @@
-## Configuration file for CAVA.
-# Remove the ; to change parameters.
-
 
 [general]
-
-# Smoothing mode. Can be 'normal', 'scientific' or 'waves'. DEPRECATED as of 0.6.0
-; mode = normal
-
 # Accepts only non-negative values.
 ; framerate = 60
 
 # 'autosens' will attempt to decrease sensitivity if the bars peak. 1 = on, 0 = off
 # new as of 0.6.0 autosens of low values (dynamic range)
-# 'overshoot' allows bars to overshoot (in % of terminal height) without initiating autosens. DEPRECATED as of 0.6.0
 ; autosens = 1
-; overshoot = 20
 
 # Manual sensitivity in %. If autosens is enabled, this will only be the initial value.
 # 200 means double height. Accepts only non-negative values.
@@ -69,8 +60,8 @@
 # For alsa 'source' will be the capture device.
 # For fifo 'source' will be the path to fifo-file.
 # For shmem 'source' will be /squeezelite-AA:BB:CC:DD:EE:FF where 'AA:BB:CC:DD:EE:FF' will be squeezelite's MAC address
-; method = pulse
-; source = auto
+method = pulse
+source = auto
 
 ; method = pipewire
 ; source = auto
@@ -183,35 +174,19 @@ foreground = '#fe8019'
 # You can define as many as 8 different colors. They range from bottom to top of screen
 gradient = 0
 gradient_count = 5
-# gradient_color_1 = '#94e2d5'
-# gradient_color_2 = '#89dceb'
-# gradient_color_1 = '#74c7ec'
-# gradient_color_1 = '#89b4fa'
-# gradient_color_2 = '#cba6f7'
-# gradient_color_3 = '#f5c2e7'
-# gradient_color_4 = '#eba0ac'
-# gradient_color_5 = '#f38ba8'
+gradient_color_1 = '#94e2d5'
+gradient_color_2 = '#89dceb'
+gradient_color_1 = '#74c7ec'
+gradient_color_1 = '#89b4fa'
+gradient_color_2 = '#cba6f7'
+gradient_color_3 = '#f5c2e7'
+gradient_color_4 = '#eba0ac'
+gradient_color_5 = '#f38ba8'
 
 [smoothing]
-
-# Percentage value for integral smoothing. Takes values from 0 - 100.
-# Higher values means smoother, but less precise. 0 to disable.
-# DEPRECATED as of 0.8.0, use noise_reduction instead
-; integral = 77
-
 # Disables or enables the so-called "Monstercat smoothing" with or without "waves". Set to 0 to disable.
 ; monstercat = 0
 ; waves = 0
-
-# Set gravity percentage for "drop off". Higher values means bars will drop faster.
-# Accepts only non-negative values. 50 means half gravity, 200 means double. Set to 0 to disable "drop off".
-# DEPRECATED as of 0.8.0, use noise_reduction instead
-; gravity = 100
-
-
-# In bar height, bars that would have been lower that this will not be drawn.
-# DEPRECATED as of 0.8.0
-; ignore = 0
 
 # Noise reduction, int 0 - 100. default 77
 # the raw visualization is very noisy, this factor adjusts the integral and gravity filters to keep the signal smooth

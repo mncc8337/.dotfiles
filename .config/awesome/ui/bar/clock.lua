@@ -9,6 +9,6 @@ local clock = {
 
 return {
     widget = wibox.container.margin,
-    margins = 3,
+    margins = beautiful.common_padding,
     clock
 }

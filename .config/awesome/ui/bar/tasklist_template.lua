@@ -1,14 +1,15 @@
 local wibox = require("wibox")
+local beautiful = require("beautiful")
 
 return {
     id     = "background_role",
     widget = wibox.container.background,
     {
         widget  = wibox.container.margin,
-        margins = 3,
+        margins = beautiful.common_padding,
         {
             layout = wibox.layout.fixed.horizontal,
-            spacing = 3,
+            spacing = beautiful.common_padding,
             {
                 id     = "icon_role",
                 widget = wibox.widget.imagebox,

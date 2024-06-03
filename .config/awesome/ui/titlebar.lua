@@ -20,7 +20,7 @@ client.connect_signal("request::titlebars", function(c)
             buttons = buttons,
             wibox.widget {
                 widget = wibox.container.margin,
-                margins = 3,
+                margins = beautiful.common_padding,
                 awful.titlebar.widget.iconwidget(c),
             }
         },

@@ -19,11 +19,62 @@ ruled.notification.connect_signal('request::rules', function()
         rule       = { urgency = 'critical' },
         properties = { bg = '#ff0000', fg = '#ffffff' }
     }
-end) 
+end)
 
 naughty.connect_signal("request::display", function(n)
+    local msg_box = wibox.widget {
+        widget = wibox.container.background,
+        bg = beautiful.bg_2,
+        {
+            widget = wibox.container.margin,
+            margins = beautiful.common_padding,
+            {
+                layout = wibox.layout.fixed.vertical,
+                naughty.widget.title,
+                naughty.widget.message,
+            }
+        }
+    }
+
+    local img_box = nil
+    if n.icon then
+        -- using the normal imagebo because naughty.widget.icon only support square image
+        img_box = {
+            widget = wibox.widget.imagebox,
+            image = n.icon,
+            forced_height = beautiful.notification_icon_size
+        }
+    end
+
+    local action_list = {
+        widget = naughty.list.actions,
+        base_layout = wibox.widget {
+            layout = wibox.layout.flex.horizontal,
+            spacing = beautiful.common_padding
+        },
+        widget_template = {
+            widget = wibox.container.margin,
+            top = beautiful.common_padding,
+            {
+                widget = wibox.container.background,
+                bg = beautiful.bg_2,
+                {
+                    widget = wibox.container.margin,
+                    marigns = beautiful.common_padding,
+                    {
+                        widget = wibox.widget.textbox,
+                        id = "text_role",
+                        align = "center"
+                    }
+                }
+            }
+        }
+    }
+
     local notif = naughty.layout.box {
         notification = n,
+        maximum_width = beautiful.notification_width,
+        maximum_height = beautiful.notification_height,
         widget_template = {
             widget = naughty.container.background,
             id     = "background_role",
@@ -33,47 +84,12 @@ naughty.connect_signal("request::display", function(n)
                 {
                     layout = wibox.layout.fixed.vertical,
                     {
-                        layout     = wibox.layout.fixed.horizontal,
-                        spacing    = 4,
-                        naughty.widget.icon,
-                        {
-                            widget = wibox.container.background,
-                            bg = beautiful.bg_2,
-                            {
-                                widget = wibox.container.margin,
-                                margins = 3,
-                                {
-                                    layout = wibox.layout.fixed.vertical,
-                                    naughty.widget.title,
-                                    naughty.widget.message,
-                                }
-                            }
-                        }
+                        layout = wibox.layout.fixed.horizontal,
+                        spacing = beautiful.notification_margin,
+                        img_box,
+                        msg_box,
                     },
-                    {
-                        widget = naughty.list.actions,
-                        base_layout = wibox.widget {
-                            layout = wibox.layout.flex.horizontal,
-                            spacing = 3
-                        },
-                        widget_template = {
-                            widget = wibox.container.margin,
-                            top = 3,
-                            {
-                                widget = wibox.container.background,
-                                bg = beautiful.bg_2,
-                                {
-                                    widget = wibox.container.margin,
-                                    marigns = 3,
-                                    {
-                                        widget = wibox.widget.textbox,
-                                        id = "text_role",
-                                        align = "center"
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    action_list
                 }
             }
         }

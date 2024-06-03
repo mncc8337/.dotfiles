@@ -17,6 +17,9 @@ theme.font_type = {
 
 theme.font          = theme.font_type.normal .. " 8"
 
+theme.common_margin  = dpi(5)
+theme.common_padding = dpi(3)
+
 theme.bg_normal     = "#222222"
 theme.bg_2          = "#303030"
 theme.bg_focus      = "#696969"
@@ -48,7 +51,10 @@ theme.taglist_font        = theme.font_type.mono .. " 8"
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
 theme.notification_font = theme.font_type.normal .. '  10'
-theme.notification_margin = 5
+theme.notification_margin = theme.common_margin
+theme.notification_width = 500
+theme.notification_height = 80
+theme.notification_icon_size = theme.notification_height - theme.notification_margin * 2
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
@@ -113,6 +119,10 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = "Papirus"
+
+-- bling stuff
+theme.playerctl_player = { "mpd", "vlc", "%any", "firefox", "chromium" }
+theme.playerctl_update_on_activity = true
 
 return theme
 

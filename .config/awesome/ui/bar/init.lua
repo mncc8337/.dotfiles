@@ -5,8 +5,8 @@ local beautiful = require("beautiful")
 local spacing_widget = {
     widget = wibox.container.constraint,
     strategy = "exact",
-    width = 5,
-    height = 5,
+    width = beautiful.common_margin,
+    height = beautiful.common_marign,
     nil
 }
 
@@ -71,7 +71,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         },
         layout = {
             layout = wibox.layout.flex.horizontal,
-            spacing = 5
+            spacing = beautiful.common_margin
         },
         widget_template = require("ui.bar.tasklist_template")
     }
@@ -83,7 +83,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         height   = 30,
         widget   = {
             widget = wibox.container.margin,
-            margins = 5,
+            margins = beautiful.common_margin,
             {
                 layout = wibox.layout.align.horizontal,
                 { -- Left widgets
@@ -99,7 +99,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 },
                 { -- Right widgets
                     layout = wibox.layout.fixed.horizontal,
-                    spacing = 5,
+                    spacing = beautiful.common_margin,
+                    widget_container(require("ui.bar.music")),
                     wibox.widget.systray(),
                     widget_container(require("ui.bar.volume")),
                     widget_container(require("ui.bar.clock")),
