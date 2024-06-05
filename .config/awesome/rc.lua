@@ -16,7 +16,7 @@ naughty.connect_signal("request::display_error", function(message, startup)
 end)
 -- }}}
 
--- quick debugging global func
+-- quick debugging global func, will be removed later
 function notify(msg)
     require("naughty").notify {
         message = msg
@@ -25,6 +25,7 @@ end
 
 beautiful.init(require("theme"))
 
+-- TODO: move this to other place
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
@@ -34,6 +35,8 @@ modkey = "Mod4"
 
 require("config")
 require("ui")
+
+-- TODO: move these to other place
 
 -- Enable sloppy focus, so that focus follows mouse.
 -- client.connect_signal("mouse::enter", function(c)
