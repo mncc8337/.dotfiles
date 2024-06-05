@@ -6,6 +6,7 @@ local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 local wallpaper_path = gfs.get_configuration_dir() .. "theme/wallpaper/"
+local icon_path = gfs.get_configuration_dir() .. "theme/icon/"
 
 local theme = {}
 
@@ -31,11 +32,12 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap         = dpi(10)
-theme.border_width        = dpi(1)
-theme.border_color_normal = "#000000"
-theme.border_color_active = theme.bg_focus
-theme.border_color_marked = "#91231c"
+theme.useless_gap            = dpi(10)
+theme.border_width           = dpi(1)
+theme.border_color_normal    = "#000000"
+theme.border_color_active    = theme.bg_focus
+theme.border_color_marked    = "#91231c"
+theme.border_width_maximized = 0
 
 theme.tasklist_bg_normal   = "#444444"
 theme.tasklist_bg_focus    = theme.bg_focus
@@ -50,12 +52,13 @@ theme.taglist_font        = theme.font_type.mono .. " 8"
 -- notification_[bg|fg]
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
-theme.notification_font = theme.font_type.normal .. '  10'
+theme.notification_font = theme.font_type.normal .. " 10"
 theme.notification_margin = theme.common_margin
 theme.notification_width = 500
 theme.notification_height = 80
 theme.notification_icon_size = theme.notification_height - theme.notification_margin * 2
 theme.notification_border_width = 100
+theme.notification_music_fallback_icon = icon_path .. "music_fallback.png"
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
@@ -63,7 +66,6 @@ theme.notification_border_width = 100
 theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
-
 
 -- Define the image to load
 theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"

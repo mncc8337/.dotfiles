@@ -1,6 +1,11 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 
+-- use pulseaudio to exceed the 100% limit
+-- you can use either pulseaudio or alsa though
+-- but dont use both of them at the same time
+require("signal.pulseaudio"):start()
+
 local volume_widget = wibox.widget {
     widget = wibox.widget.textbox,
     font = beautiful.font_type.normal .. " 10",

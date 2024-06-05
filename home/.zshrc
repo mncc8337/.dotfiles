@@ -37,8 +37,6 @@ source $ZSH/oh-my-zsh.sh
 # fix zsh-syntax-highlighter black out comments and variable calling `$var`
 ZSH_HIGHLIGHT_STYLES[comment]='fg=cyan,bold'
 
-eval $(thefuck --alias)
-
 alias py="python3"
 alias mv="mv -v"
 alias cp="cp -v"

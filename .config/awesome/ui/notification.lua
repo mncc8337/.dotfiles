@@ -89,7 +89,7 @@ naughty.connect_signal("request::display", function(n)
                         layout = wibox.layout.fixed.horizontal,
                         spacing = beautiful.notification_margin,
                         img_box,
-                        msg_box,
+                        msg_box
                     },
                     action_list
                 }

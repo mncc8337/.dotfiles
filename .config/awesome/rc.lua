@@ -32,11 +32,6 @@ fileman = "nemo"
 
 modkey = "Mod4"
 
--- use pulseaudio to exceed the 100% limit
--- you can use either pulseaudio or alsa though
--- but dont use both of them at the same time
-require("signal.pulseaudio"):start()
-
 require("config")
 require("ui")
 
@@ -45,15 +40,13 @@ require("ui")
 --     c:activate { context = "mouse_enter", raise = false }
 -- end)
 
--- disable roundcorner and border on maximized clients
+-- disable picom round corner on maximized clients
 local function reconfig_border(c)
     if c.maximized then
-        c.border_width = 0
         awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 0")
     else
-        c.border_width = beautiful.border_width
         awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 1")
     end
 end
-client.connect_signal("manage", reconfig_border)
+client.connect_signal("request::manage", reconfig_border)
 client.connect_signal("property::maximized", reconfig_border)

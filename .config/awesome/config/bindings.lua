@@ -222,14 +222,19 @@ end)
 
 -- Media control
 awful.keyboard.append_global_keybindings({
-    awful.key({ }, "XF86AudioNext", function() awesome.emit_signal("music::play_next_song")     end,
+    awful.key({ }, "XF86AudioNext", function() awesome.emit_signal("playerctl::next")     end,
               {description = "next song", group = "media"}),
-    awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("music::play_previous_song") end,
+    awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("playerctl::prev") end,
               {description = "previous song", group = "media"}),
-    awful.key({ }, "XF86AudioPlay", function() awesome.emit_signal("music::toggle") end,
+    awful.key({ }, "XF86AudioPlay", function() awesome.emit_signal("playerctl::toggle") end,
               {description = "pause/play song", group = "media"}),
-    awful.key({ }, "XF86AudioStop", function() awesome.emit_signal("music::pause") end,
+    awful.key({ }, "XF86AudioStop", function() awesome.emit_signal("playerctl::pause") end,
               {description = "pause song", group = "media"}),
+
+    awful.key({ "Shift" }, "XF86AudioRaiseVolume", function() awesome.emit_signal("playerctl::increase_volume",  0.02) end,
+              {description = "increase playerctl volume", group = "media"}),
+    awful.key({ "Shift" }, "XF86AudioLowerVolume", function() awesome.emit_signal("playerctl::increase_volume", -0.02) end,
+              {description = "decrease playerctl volume", group = "media"}),
 })
 
 -- Audio control

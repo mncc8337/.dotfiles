@@ -1,10 +1,8 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
--- using the lib version will cause awesome to stop if run mpdris2-rs without the --no-notification option
--- maybe related to https://github.com/BlingCorp/bling/issues/215
--- since i dont use the built-in notification of mpdris2-rs, this can be ignored
-local playerctl = require("module.bling.signal.playerctl").lib()
+
+local playerctl = require("signal.playerctl")
 
 local music_widget = wibox.widget {
     widget = wibox.widget.textbox,
@@ -21,14 +19,7 @@ local function turn_off()
     music_widget.markup = "ò<span font=\"sans 6\">w</span>Ó"
     music_icon.markup = "󰝛"
 end
-
-playerctl:connect_signal("metadata", function(_, title, artist, album_path, album, new, player_name)
-    -- empty title and artist is considered empty
-    if #title == 0 and #artist == 0 then
-        turn_off()
-        return
-    end
-
+local function update_widget(title, artist)
     local content = title
     -- artist often omit in some website
     if #artist ~= 0 then
@@ -38,20 +29,34 @@ playerctl:connect_signal("metadata", function(_, title, artist, album_path, albu
     music_icon.markup = "󰝚"
     music_widget.markup = content
 
+    return content
+end
+
+playerctl:connect_signal("metadata", function(_, title, artist, art_path, album, new, player_name)
+    -- empty title and artist is considered empty
+    if #title == 0 and #artist == 0 then
+        turn_off()
+        return
+    end
+
+    local content = update_widget(title, artist)
+
     if not new then return end
     local _album = ""
     if #album ~= 0 then
         _album = "\n" .. album
     end
 
-    local image_file = nil
-    -- check if file size is larger than 0
-    -- if size is 0 then it is garbage
-    local potential_img = io.open(album_path)
-    if potential_img:seek("end") > 0 then
-        image_file = album_path
+    local image_file = beautiful.notification_music_fallback_icon or nil
+    if #art_path ~= 0 then
+        -- check if file size is larger than 0
+        -- if size is 0 then it is garbage
+        local potential_img = io.open(art_path)
+        if potential_img:seek("end") > 0 then
+            image_file = art_path
+        end
+        potential_img:close()
     end
-    potential_img:close()
 
     naughty.notify {
         title = player_name,
@@ -60,7 +65,6 @@ playerctl:connect_signal("metadata", function(_, title, artist, album_path, albu
     }
 end)
 playerctl:connect_signal("no_players", turn_off)
-
 turn_off()
 
 return {
