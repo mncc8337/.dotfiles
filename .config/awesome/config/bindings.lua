@@ -248,14 +248,15 @@ awful.keyboard.append_global_keybindings({
 })
 
 -- Screenshot
+require("signal.screenshot")
 awful.keyboard.append_global_keybindings({
-    awful.key({               }, "Print", function() awful.spawn.with_shell("screenshot full")      end,
+    awful.key({               }, "Print", function() awesome.emit_signal("screenshot::full", false) end,
               {description = "print full screen",               group = "media"}),
-    awful.key({modkey         }, "Print", function() awful.spawn.with_shell("screenshot full save") end,
+    awful.key({modkey         }, "Print", function() awesome.emit_signal("screenshot::full", true)  end,
               {description = "print full screen and save",      group = "media"}),
-    awful.key({        "Shift"}, "Print", function() awful.spawn.with_shell("screenshot area")      end,
+    awful.key({        "Shift"}, "Print", function() awesome.emit_signal("screenshot::area", false) end,
               {description = "print a part of screen",          group = "media"}),
-    awful.key({modkey, "Shift"}, "Print", function() awful.spawn.with_shell("screenshot area save") end,
+    awful.key({modkey, "Shift"}, "Print", function() awesome.emit_signal("screenshot::area", true)  end,
               {description = "print a part of screen and save", group = "media"}),
 })
 
