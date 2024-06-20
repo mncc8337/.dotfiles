@@ -7,7 +7,7 @@
 audio_param=""
 framerate=30
 output="$HOME/Videos/$(date +"%Y-%m-%d_%H-%M-%S").mkv"
-crf="28"
+crf="24"
 
 # default geometry
 x=0
@@ -63,7 +63,7 @@ ffmpeg \
     -framerate $framerate \
     -f x11grab -i :0.0+$x,$y \
     $audio_param \
-    -c:v libx265 \
+    -c:v libx264 \
     -crf $crf \
     -preset ultrafast \
     -y \
