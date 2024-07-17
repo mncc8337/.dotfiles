@@ -53,6 +53,9 @@ function gogh() {
     deactivate
 }
 
+# sometime git commit failed so
+export GPG_TTY=$(tty)
+
 # proxy stuff
 # stolen from https://wiki.archlinux.org/title/Proxy_server
 function proxy-on() {

@@ -14,28 +14,67 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy = require("lazy")
 lazy.setup {
-    { 'echasnovski/mini.nvim', version = false },
+    {"RRethy/base16-nvim"},
+    {
+        "nvim-treesitter/nvim-treesitter",
+        config = true,
+        opts = {
+            highlight = {enable = true}
+        }
+    },
+    {"nvim-tree/nvim-web-devicons"},
+    {
+        "echasnovski/mini.nvim",
+        version = false,
+        config = function()
+            require("mini.pairs").setup()
+            require("mini.move").setup()
+            require("mini.surround").setup {
+                highlight_duration = 500,
+                mappings = {
+                    add = 'sa', -- Add surrounding in Normal and Visual modes
+                    delete = 'sd', -- Delete surrounding
+                    find = 'sf', -- Find surrounding (to the right)
+                    find_left = 'sF', -- Find surrounding (to the left)
+                    highlight = 'sh', -- Highlight surrounding
+                    replace = 'sr', -- Replace surrounding
+                    update_n_lines = 'sn', -- Update `n_lines`
+
+                    suffix_last = 'l', -- Suffix to search with "prev" method
+                    suffix_next = 'n', -- Suffix to search with "next" method
+                },
+
+                -- Number of lines within which surrounding is searched
+                n_lines = 20,
+                respect_selection_type = false,
+                search_method = 'cover',
+            }
+        end
+    },
     {
         "nvim-tree/nvim-tree.lua",
         dependencies = {"nvim-tree/nvim-web-devicons"},
-        lazy = false
+        lazy = false, config = true
     },
     {
         "akinsho/bufferline.nvim",
-        dependencies = {"nvim-tree/nvim-web-devicons"}
+        dependencies = {"nvim-tree/nvim-web-devicons"},
     },
     {
         "nvim-lualine/lualine.nvim",
-        dependencies = {"nvim-tree/nvim-web-devicons"}
+        dependencies = {"nvim-tree/nvim-web-devicons"},
     },
-    {"NvChad/nvim-colorizer.lua"},
-    {"RRethy/base16-nvim"},
+    {"NvChad/nvim-colorizer.lua", config = true},
+    {
+        "kevinhwang91/nvim-ufo",
+        dependencies = "kevinhwang91/promise-async",
+        config = true
+    },
 }
 
---[[ plugins setup ]]--
-require('base16-colorscheme').setup(require("scsman"))
-require("nvim-tree").setup()
-require("colorizer").setup()
+--[[]]--
+require("base16-colorscheme").setup(require("scsman"))
+-- bufferline and lualine must be setup after base16-colorscheme
 require("bufferline").setup {
     options = {
         offsets = {
@@ -49,29 +88,6 @@ require("bufferline").setup {
     }
 }
 require("lualine").setup()
--- mini-nvim
-require("mini.pairs").setup()
-require("mini.move").setup()
-require("mini.surround").setup {
-    highlight_duration = 500,
-    mappings = {
-        add = 'sa', -- Add surrounding in Normal and Visual modes
-        delete = 'sd', -- Delete surrounding
-        find = 'sf', -- Find surrounding (to the right)
-        find_left = 'sF', -- Find surrounding (to the left)
-        highlight = 'sh', -- Highlight surrounding
-        replace = 'sr', -- Replace surrounding
-        update_n_lines = 'sn', -- Update `n_lines`
-
-        suffix_last = 'l', -- Suffix to search with "prev" method
-        suffix_next = 'n', -- Suffix to search with "next" method
-    },
-
-    -- Number of lines within which surrounding is searched
-    n_lines = 20,
-    respect_selection_type = false,
-    search_method = 'cover',
-}
 
 --[[ keymapping ]]--
 require("mappings")
@@ -84,6 +100,12 @@ vim.opt.shiftwidth = 4
 vim.opt.cmdheight = 0
 
 vim.opt.number = true
+
+-- vim.opt.foldmethod = "indent"
+vim.opt.foldcolumn = '1'
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
 
 vim.opt.timeout = true
 vim.opt.timeoutlen = 1000
