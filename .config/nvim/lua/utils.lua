@@ -1,4 +1,3 @@
--- replaced by mini.move
 local function switch_line(idx)
     local cursor = vim.fn.getcurpos(0)
     local curr_line_content = vim.api.nvim_get_current_line()

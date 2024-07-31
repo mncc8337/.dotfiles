@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy = require("lazy")
 lazy.setup {
-    {"RRethy/base16-nvim"},
+    { "RRethy/base16-nvim" },
     {
         "nvim-treesitter/nvim-treesitter",
         config = true,
@@ -22,7 +22,7 @@ lazy.setup {
             highlight = {enable = true}
         }
     },
-    {"nvim-tree/nvim-web-devicons"},
+    { "nvim-tree/nvim-web-devicons" },
     {
         "echasnovski/mini.nvim",
         version = false,
@@ -64,15 +64,35 @@ lazy.setup {
         "nvim-lualine/lualine.nvim",
         dependencies = {"nvim-tree/nvim-web-devicons"},
     },
-    {"NvChad/nvim-colorizer.lua", config = true},
+    { "NvChad/nvim-colorizer.lua", config = true },
     {
         "kevinhwang91/nvim-ufo",
         dependencies = "kevinhwang91/promise-async",
         config = true
     },
+    {
+          "nvim-treesitter/nvim-treesitter",
+          build = "TSUpdate",
+          lazy = false,
+    },
+    {
+        "tpope/vim-fugitive",
+        lazy = true,
+        cmd = "Git",
+    },
+    {
+        "williamboman/mason.nvim",
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "williamboman/mason-lspconfig.nvim",
+            "nvim-lua/plenary.nvim"
+        }
+    },
+    { "mfussenegger/nvim-dap" },
+    { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
 }
 
---[[]]--
+--[[ plugins configs ]]--
 require("base16-colorscheme").setup(require("scsman"))
 -- bufferline and lualine must be setup after base16-colorscheme
 require("bufferline").setup {
@@ -88,6 +108,23 @@ require("bufferline").setup {
     }
 }
 require("lualine").setup()
+
+require("nvim-treesitter.configs").setup {
+    ensure_installed = { "c", "cpp", "python", "lua" },
+    sync_install = true,
+    auto_install = true,
+    highlight = { enable = true },
+    indent = { enable = true }
+}
+
+require("mason").setup()
+require("mason-lspconfig").setup_handlers {
+    function(server_name)
+        require("lspconfig")[server_name].setup {}
+    end
+}
+require("mason-lspconfig").setup()
+vim.diagnostic.config { virtual_text = true }
 
 --[[ keymapping ]]--
 require("mappings")
@@ -114,6 +151,11 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.opt.termguicolors = true
 -- vim.cmd.colorscheme "base16-gruvbox-dark-medium"
+
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undofile = true
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undordir"
 
 -- disable netrw to use nvim-tree
 vim.g.loaded_netrw = 1
