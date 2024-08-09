@@ -144,7 +144,7 @@ cmp.setup {
             function(fallback)
                 if cmp.visible() then 
                     cmp.select_next_item()
-                elseif vim.snippet.jumpable(1) then
+                elseif vim.snippet.active({ direction = 1 }) then
                     vim.snippet.jump(1)
                 else
                     fallback()
