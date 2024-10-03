@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# reduce video size using ffmpeg
+
+filename=$(basename -- "$1")
+extension="${filename##*.}"
+filename="${filename%.*}"
+
+level="24"
+
+if [ "$2" = "-l" ]; then
+    level=$3
+fi
+
+if [ "$3" = "-l" ]; then
+    level=$4
+fi
+
+# just the name
+tmpf=$(mktemp /tmp/vid-$filename-XXXXX.$extension)
+rm $tmpf
+
+if ffmpeg -i $1 -vcodec libx264 -crf $level $tmpf; then
+    if [ "$2" = ""  ] || [ "$2" = "-l" ]; then
+        mv $tmpf $1
+    else
+        mv $tmpf $2
+    fi
+fi

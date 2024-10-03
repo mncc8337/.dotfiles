@@ -1,0 +1,6 @@
+{
+    "nvim": "~/.config/nvim/lua/scsman.lua",
+    "rofi": "~/.config/rofi/scsman.rasi",
+    "alacritty": "~/.config/alacritty.toml",
+    "cava": "~/.config/cava/config"
+}

@@ -1,0 +1,81 @@
+#!/bin/sh
+
+# a simple shell script to record screen using FFmpeg
+# curently only support *.mkv output
+
+# default vals
+audio_param=""
+framerate=30
+output="$HOME/Videos/$(date +"%Y-%m-%d_%H-%M-%S").mkv"
+crf="24"
+
+# default geometry
+x=0
+y=0
+dim=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
+w=$(echo $dim | cut -f1 -dx)
+h=$(echo $dim | cut -f2 -dx)
+
+for token in "$@"; do
+    arg=$(echo $token | cut -f1 -d=)
+    val=$(echo $token | cut -f2 -d=)
+
+    if [ $arg = "--help" ] || [ $arg = "-h" ]; then
+        printf "usage: rec [OPTION]...\n\n"
+        printf "OPTIONS:\n"
+        printf "    -h, --help                      print this text\n"
+        printf "    -a, --audio                     record audio\n"
+        printf "    -o, --output=<file>             specify the output file\n"
+        printf "    -f, --framerate=<rate>          set frame rate, default $framerate\n"
+        printf "    -r, --area                      select the area to be recorded\n"
+        printf "    -g, --geometry=<w>,<h>,<x>,<y>  set geometry of the record area\n"
+        printf "    -c, --crf=<v>                   constant rate factor, range 0 - 51, default $crf\n"
+        printf "                                    the higher it is, the lower the quality\n\n"
+        printf "to stop recording press ctrl-c\n"
+        printf "default geometry is fullscreen\n"
+        exit
+    elif [ $arg = "--audio" ] || [ $arg = "-a" ]; then
+	    audio_param="-f alsa -ac 2 -i default -acodec aac"
+    elif [ $arg = "--output" ] || [ $arg = "-o" ]; then
+        output=$val
+        # add file extension
+        if [ "$(echo $output | cut -f2 -d.)" = "" ]; then
+            printf "empty extension detected, adding '.mkv' to it\n"
+            output="$(echo $output | cut -f1 -d.).mkv"
+        fi
+    elif [ $arg = "--framerate" ] || [ $arg = "-f" ]; then
+        framerate=$val
+    elif [ $arg = "--area" ] || [ $arg = "-r" ]; then
+        geo=$(slop -f "%w %h %x %y") || exit 1
+	    read -r w h x y <<< $geo
+    elif [ $arg = "--geometry" ] || [ $arg = "-g" ]; then
+        w=$(echo $val | cut -f1 -d,)
+        h=$(echo $val | cut -f2 -d,)
+        x=$(echo $val | cut -f3 -d,)
+        y=$(echo $val | cut -f4 -d,)
+    elif [ $arg = "--crf" ] || [ $arg = "-c" ]; then
+        crf=$val
+    fi
+done
+
+ffmpeg \
+    -s "$w"x"$h" \
+    -framerate $framerate \
+    -f x11grab -i :0.0+$x,$y \
+    $audio_param \
+    -c:v libx264 \
+    -crf $crf \
+    -preset ultrafast \
+    -y \
+    "$output"
+
+printf "\n"
+printf "recording ended with the following settings:\n"
+printf "    framerate: $framerate\n"
+printf "    geometry:  $w,$h,$x,$y\n"
+printf "    crf:       $crf\n"
+if [ "$audio_param" != "" ]; then
+    printf "    audio:     yes\n"
+else
+    printf "    audio:     no\n"
+fi

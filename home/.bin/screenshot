@@ -1,0 +1,22 @@
+#!/bin/sh
+
+area_option=''
+if [ "$1" = 'area' ]; then
+    area_option='-s'
+fi
+
+tmpf=$(mktemp /tmp/scrsht-XXXXX.png)
+if maim $area_option $tmpf --hidecursor; then
+    cat $tmpf | xclip -selection clipboard -t image/png
+
+    savedir=''
+    prefix=''
+    if [ "$2" = 'save' ]; then
+        savedir="$HOME/Pictures/$(date +"%Y-%m-%d_%H-%M-%S").png"
+        prefix="and saved"
+        cp $tmpf $savedir
+    fi
+
+    #$tmpf -resize x100 $tmpf
+    notify-send "Screen captured" "Image copied to clipboard $prefix" -i $tmpf
+fi

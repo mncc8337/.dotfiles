@@ -1,0 +1,16 @@
+# /etc/environment
+#
+# This file is parsed by pam_env module
+#
+# Syntax: simple "KEY=VAL" pairs on separate lines
+#
+GTK_IM_MODULE=ibus
+QT_IM_MODULE=ibus
+XMODIFIERS=@im=ibus
+QT4_IM_MODULE=ibus
+CLUTTER_IM_MODULE=ibus
+GLFW_IM_MODULE=ibus
+
+# fix GTK4 apps failed to display text
+GSK_RENDERER=gl
+GDK_DEBUG=gl-prefer-gl
