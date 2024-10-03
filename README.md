@@ -13,6 +13,6 @@ my .files
 ### theme and icon
 you can use themix to generate the theme and icon using themix color file `misc/bern`
 ### vivaldi
-exported vivaldi can be found in `misc/bern-vivaldi.zip`
+exported vivaldi theme can be found in `misc/bern-vivaldi.zip`
 ## notes
 - if you are using `scsman`: alacritty, cava and rofi configs are managed by `scsman`, so to modify their config you must modify the files in `.config/scsman/templates`, not those in `.config`
