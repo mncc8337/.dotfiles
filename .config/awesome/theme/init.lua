@@ -16,35 +16,50 @@ theme.font_type = {
     icon   = "Symbols Nerd Font"
 }
 
-theme.font          = theme.font_type.normal .. " 8"
+theme.font = theme.font_type.normal .. " 8"
 
 theme.common_margin  = dpi(5)
 theme.common_padding = dpi(3)
 
-theme.bg_normal     = "#170508"
-theme.bg_2          = "#2d0c11"
-theme.bg_focus      = "#6d313b"
-theme.bg_urgent     = "#e3483f"
-theme.bg_systray    = theme.bg_2
+theme.bgs = {
+    "#170508",
+    "#2d0c11",
+    "#41151c",
+    "#6d313b",
+    "#8d3f4c",
+    "#e3483f",
+}
 
-theme.fg_normal     = "#e6d8ea"
-theme.fg_focus      = "#e3c6ca"
-theme.fg_urgent     = "#e3c6ca"
-theme.fg_minimize   = "#e3c6ca"
+theme.fgs = {
+    "#e6c3b8",
+    "#e3c6ca",
+    "#e6d8ea",
+    "#e6ffff",
+}
+
+theme.bg_normal     = theme.bgs[1]
+theme.bg_focus      = theme.bgs[4]
+theme.bg_urgent     = theme.bgs[6]
+theme.bg_systray    = theme.bgs[2]
+
+theme.fg_normal     = theme.fgs[3]
+theme.fg_focus      = theme.fgs[2]
+theme.fg_urgent     = theme.fgs[2]
+theme.fg_minimize   = theme.fgs[2]
 
 theme.useless_gap            = dpi(10)
 theme.border_width           = dpi(4)
 theme.border_color_normal    = theme.bg_normal
 theme.border_color_active    = theme.bg_focus
-theme.border_color_marked    = "#6d313b"
+theme.border_color_marked    = theme.bgs[5]
 theme.border_width_maximized = 0
 
-theme.tasklist_bg_normal   = "#41151c"
+theme.tasklist_bg_normal   = theme.bgs[3]
 theme.tasklist_bg_focus    = theme.bg_focus
-theme.tasklist_bg_minimize = "#2d0c11"
+theme.tasklist_bg_minimize = theme.bg_normal
 
-theme.taglist_bg_empty    = theme.bg_2
-theme.taglist_bg_occupied = "#41151c"
+theme.taglist_bg_empty    = theme.bgs[2]
+theme.taglist_bg_occupied = theme.bgs[3]
 theme.taglist_font        = theme.font_type.mono .. " 8"
 
 -- Variables set for theming notifications:

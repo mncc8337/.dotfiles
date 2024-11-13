@@ -10,7 +10,3 @@ XMODIFIERS=@im=ibus
 QT4_IM_MODULE=ibus
 CLUTTER_IM_MODULE=ibus
 GLFW_IM_MODULE=ibus
-
-# fix GTK4 apps failed to display text
-GSK_RENDERER=gl
-GDK_DEBUG=gl-prefer-gl

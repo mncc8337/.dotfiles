@@ -14,11 +14,11 @@ local spacing_widget = {
     nil
 }
 
-local function widget_container(w)
+local function widget_container(widget)
     return {
         widget = wibox.container.background,
-        bg = beautiful.bg_2,
-        w
+        bg = beautiful.bgs[2],
+        widget
     }
 end
 
