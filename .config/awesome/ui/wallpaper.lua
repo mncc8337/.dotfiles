@@ -1,9 +1,8 @@
 local awful = require("awful")
--- Widget and layout library
+-- widget and layout library
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 
--- {{{ Wallpaper
 screen.connect_signal("request::wallpaper", function(s)
     awful.wallpaper {
         screen = s,
@@ -21,4 +20,3 @@ screen.connect_signal("request::wallpaper", function(s)
         }
     }
 end)
--- }}}

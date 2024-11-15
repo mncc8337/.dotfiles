@@ -54,7 +54,7 @@ client.connect_signal("request::titlebars", function(c)
             -- right
             {
                 layout = wibox.layout.fixed.horizontal,
-                spacing = 1,
+                spacing = 2,
                 cell_background(awful.titlebar.widget.floatingbutton(c)),
                 -- cell_background(awful.titlebar.widget.maximizedbutton(c)),
                 cell_background(awful.titlebar.widget.stickybutton(c)),

@@ -41,16 +41,16 @@ draw_bold_text_with_bright_colors = false
 # ]
 
 [colors.cursor]
-text = "#2d0c11"
-cursor = "#e3c6ca"
+text = "#282828"
+cursor = "#d5c4a1"
 
 # [colors.vi_mode_cursor]
 # text = "#1e1e2e"
 # cursor = "#b4befe"
 
 [colors.selection]
-text = "#2d0c11"
-background = "#e3c6ca"
+text = "#282828"
+background = "#d5c4a1"
 
 # [colors.footer_bar]
 # foreground = "#1e1e2e"
@@ -73,30 +73,30 @@ background = "#e3c6ca"
 # background = "#a6acd8"
 
 [colors.primary]
-background = "#2d0c11"
-foreground = "#e6d8ea"
+background = "#282828"
+foreground = "#ebdbb2"
 # dim_foreground = "#cdd6f4"
 # bright_foreground = "#cdd6f4"
 
 [colors.normal]
-black = "#2d0c11"
-red = "#e3483f"
-green = "#33c161"
-yellow = "#e3b53f"
-blue = "#5092dc"
-magenta = "#e33f6f"
-cyan = "#33a4c1"
-white = "#e6d8ea"
+black = "#282828"
+red = "#fb4934"
+green = "#b8bb26"
+yellow = "#fabd2f"
+blue = "#83a598"
+magenta = "#d3869b"
+cyan = "#8ec07c"
+white = "#ebdbb2"
 
-# [colors.bright]
-# black = "#928374"
-# red = "#FB4934"
-# green = "#B8BB26"
-# yellow = "#FABD2F"
-# blue = "#83A598"
-# magenta = "#D3869B"
-# cyan = "#8EC07C"
-# white = "#EBDBB2"
+[colors.bright]
+black = "#928374"
+red = "#FB4934"
+green = "#B8BB26"
+yellow = "#FABD2F"
+blue = "#83A598"
+magenta = "#D3869B"
+cyan = "#8EC07C"
+white = "#EBDBB2"
 
 # [colors.dim]
 # black = "#45475a"

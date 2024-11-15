@@ -1,12 +1,11 @@
-
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
-local themes_path = gfs.get_themes_dir()
+local themes_path    = gfs.get_themes_dir()
 local wallpaper_path = gfs.get_configuration_dir() .. "theme/wallpaper/"
-local icon_path = gfs.get_configuration_dir() .. "theme/icon/"
+local icon_path      = gfs.get_configuration_dir() .. "theme/icon/"
 
 local theme = {}
 
@@ -22,19 +21,19 @@ theme.common_margin  = dpi(5)
 theme.common_padding = dpi(3)
 
 theme.bgs = {
-    "#170508",
-    "#2d0c11",
-    "#41151c",
-    "#6d313b",
-    "#8d3f4c",
-    "#e3483f",
+    "#282828",
+    "#3c3836",
+    "#504945",
+    "#665c54",
+    "#bdae93",
+    "#fe8019",
 }
 
 theme.fgs = {
-    "#e6c3b8",
-    "#e3c6ca",
-    "#e6d8ea",
-    "#e6ffff",
+    "#bdae93",
+    "#d5c4a1",
+    "#ebdbb2",
+    "#fbf1c7",
 }
 
 theme.bg_normal     = theme.bgs[1]
@@ -69,10 +68,10 @@ theme.taglist_font        = theme.font_type.mono .. " 8"
 -- notification_[border_color|border_width|shape|opacity]
 theme.notification_font = theme.font_type.normal .. " 10"
 theme.notification_margin = theme.common_margin
-theme.notification_width = 500
-theme.notification_height = 80
+theme.notification_width = dpi(500)
+theme.notification_height = dpi(80)
 theme.notification_icon_size = theme.notification_height - theme.notification_margin * 2
-theme.notification_border_width = 2
+theme.notification_border_width = dpi(2)
 theme.notification_border_color = theme.bg_focus
 theme.notification_music_fallback_icon = icon_path .. "music_fallback.png"
 
@@ -110,7 +109,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = wallpaper_path.."city-of-today-crop.png"
+theme.wallpaper = wallpaper_path.."birbs.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
@@ -137,7 +136,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = "Papirus"
+theme.icon_theme = "oomox-gruvbox"
 
 -- bling stuff
 theme.playerctl_player = { "mpd", "vlc", "%any", "firefox", "chromium" }

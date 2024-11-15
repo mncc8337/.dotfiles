@@ -105,7 +105,7 @@ lazy.setup {
 }
 
 --[[ plugins configs ]]--
-require("base16-colorscheme").setup(require("scsman"))
+require("base16-colorscheme").setup()
 -- bufferline and lualine must be setup after base16-colorscheme
 require("bufferline").setup {
     options = {
@@ -206,7 +206,7 @@ vim.opt.timeoutlen = 1000
 vim.opt.clipboard = "unnamedplus"
 
 vim.opt.termguicolors = true
--- vim.cmd.colorscheme "base16-gruvbox-dark-medium"
+vim.cmd.colorscheme "base16-gruvbox-dark-medium"
 
 vim.opt.swapfile = false
 vim.opt.backup = false
