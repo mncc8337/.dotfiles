@@ -101,7 +101,8 @@ lazy.setup {
         "MeanderingProgrammer/render-markdown.nvim",
         dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
         config = true
-    }
+    },
+    { "windwp/nvim-ts-autotag", config = true }
 }
 
 --[[ plugins configs ]]--

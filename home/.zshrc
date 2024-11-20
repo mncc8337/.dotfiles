@@ -45,6 +45,7 @@ alias rm="rm -v"
 export PATH="$HOME/.bin:$HOME/.local/bin:"$PATH
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+export MANPAGER="nvim +Man!"
 
 # set terminal colorscheme
 function gogh() {

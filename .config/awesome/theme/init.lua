@@ -42,20 +42,21 @@ theme.bg_urgent     = theme.bgs[6]
 theme.bg_systray    = theme.bgs[2]
 
 theme.fg_normal     = theme.fgs[3]
-theme.fg_focus      = theme.fgs[2]
-theme.fg_urgent     = theme.fgs[2]
-theme.fg_minimize   = theme.fgs[2]
+theme.fg_focus      = theme.fgs[4]
+theme.fg_urgent     = theme.fgs[4]
+theme.fg_minimize   = theme.fgs[1]
 
 theme.useless_gap            = dpi(10)
 theme.border_width           = dpi(4)
 theme.border_color_normal    = theme.bg_normal
 theme.border_color_active    = theme.bg_focus
 theme.border_color_marked    = theme.bgs[5]
+theme.border_color_urgent    = theme.bgs[6]
 theme.border_width_maximized = 0
 
 theme.tasklist_bg_normal   = theme.bgs[3]
 theme.tasklist_bg_focus    = theme.bg_focus
-theme.tasklist_bg_minimize = theme.bg_normal
+theme.tasklist_bg_minimize = theme.bgs[2]
 
 theme.taglist_bg_empty    = theme.bgs[2]
 theme.taglist_bg_occupied = theme.bgs[3]
