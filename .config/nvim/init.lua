@@ -80,11 +80,6 @@ lazy.setup {
           lazy = false,
     },
     {
-        "tpope/vim-fugitive",
-        lazy = true,
-        cmd = "Git",
-    },
-    {
         "williamboman/mason.nvim",
         dependencies = {
             "neovim/nvim-lspconfig",

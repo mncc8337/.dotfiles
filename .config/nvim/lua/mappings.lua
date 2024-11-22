@@ -1,11 +1,11 @@
-local utils = require("utils")
 local map = vim.keymap.set
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- line mover
 -- replaced by mini.move
+-- -- line mover
+-- local utils = require("utils")
 -- map({'n', 'i'}, "<C-Up>", function()
 --     utils.switch_line(-1)
 -- end)
@@ -29,7 +29,13 @@ map({'n'}, "<C-j>", "<cmd>wincmd j<CR>")
 map({'n'}, "<C-k>", "<cmd>wincmd k<CR>")
 map({'n'}, "<C-l>", "<cmd>wincmd l<CR>")
 
-map({'n'}, "<leader>gs", vim.cmd.Git)
+-- telescope
+local telescope_builtin = require('telescope.builtin')
+map({'n'}, "<C-f><C-f>", telescope_builtin.find_files)
+map({'n'}, "<C-f><C-g>", telescope_builtin.live_grep)
+map({'n'}, "<C-f><C-b>", telescope_builtin.buffers)
+map({'n'}, "<leader>gc", telescope_builtin.git_commits)
+map({'n'}, "<leader>gst", telescope_builtin.git_status)
 
 -- bufferline
 map({'n'}, "<Tab>", vim.cmd.BufferLineCycleNext)
