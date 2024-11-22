@@ -2,7 +2,7 @@
 --[[
     screenshot::full
     screenshot::area
---]] 
+--]]
 
 -- dependency: maim, xclip
 
@@ -42,7 +42,7 @@ local function copy(tmpf, notif)
     naughty.replace_text(notif, notif.title, notif.message .. " and saved to " .. savepath)
 end
 
-local function dummy(a, b) end
+local function dummy(_, _) end
 
 awesome.connect_signal("screenshot::full", function(save)
     local callback = dummy

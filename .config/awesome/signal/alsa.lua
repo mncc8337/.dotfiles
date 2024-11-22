@@ -22,12 +22,12 @@ local last_mute = nil
 local function get_info(stdout)
     stdout = stdout:sub(1, -2)
     local lines = gears.string.split(stdout, "\n")
-    
+
     local left_v = 0
     local left_m = false
     local right_v = 0
     local right_m = false
-    
+
     for _, line in ipairs(lines) do
         local v, m = line:match("([%d]+)%%.*%[([%l]*)") -- [vol%] [on/off]
         if line:match("([%d]+)%%.*%[([%l]*)") then

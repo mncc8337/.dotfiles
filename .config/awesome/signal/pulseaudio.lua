@@ -22,7 +22,7 @@ local last_mute = nil
 local function get_volume(stdout)
     stdout = stdout:sub(1, -2)
     local line = gears.string.split(stdout, "\n")[1]
-   
+
     local left  = line:match("front%-left:%s%d+%s/%s+(%d+)%%")
     local right = line:match("front%-right:%s%d+%s/%s+(%d+)%%")
 

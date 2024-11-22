@@ -22,6 +22,10 @@ lazy.setup {
             highlight = {enable = true}
         }
     },
+    {
+        "nvim-telescope/telescope.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" }
+    },
     { "nvim-tree/nvim-web-devicons" },
     {
         "echasnovski/mini.nvim",
@@ -148,7 +152,7 @@ cmp.setup {
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         ['<Tab>'] = cmp.mapping(
             function(fallback)
-                if cmp.visible() then 
+                if cmp.visible() then
                     cmp.select_next_item()
                 elseif vim.snippet.active({ direction = 1 }) then
                     vim.snippet.jump(1)
@@ -173,14 +177,32 @@ cmp.setup.cmdline(':', {
 -- LSP
 require("mason").setup()
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lspconfig = require("lspconfig")
 require("mason-lspconfig").setup_handlers {
     function(server_name)
-        require("lspconfig")[server_name].setup {
+        lspconfig[server_name].setup {
             capabilities = capabilities
         }
     end
 }
 require("mason-lspconfig").setup()
+lspconfig["lua_ls"].setup {
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = {
+                    -- nvim
+                    "vim",
+                    -- awesome
+                    "client",
+                    "tag",
+                    "screen",
+                }
+            }
+        }
+    }
+}
 vim.diagnostic.config { virtual_text = true }
 
 --[[ keymapping ]]--

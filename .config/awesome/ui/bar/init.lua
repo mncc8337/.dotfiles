@@ -22,8 +22,6 @@ local function widget_container(widget)
     }
 end
 
-local myclientlist = awful.menu.client_list { theme = { width = 250 } }
-
 screen.connect_signal("request::desktop_decoration", function(s)
     s.mylayoutbox = layoutbox(s)
 

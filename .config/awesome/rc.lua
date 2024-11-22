@@ -1,11 +1,10 @@
-local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 
--- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
+-- error handling
+-- check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 naughty.connect_signal("request::display_error", function(message, startup)
     naughty.notification {
@@ -15,13 +14,6 @@ naughty.connect_signal("request::display_error", function(message, startup)
     }
 end)
 -- }}}
-
--- quick debugging global func, will be removed later
-function notify(msg)
-    require("naughty").notify {
-        message = msg
-    }
-end
 
 beautiful.init(require("theme"))
 
@@ -35,8 +27,6 @@ modkey = "Mod4"
 
 require("config")
 require("ui")
-
--- TODO: move these to other place
 
 -- Enable sloppy focus, so that focus follows mouse.
 -- client.connect_signal("mouse::enter", function(c)
