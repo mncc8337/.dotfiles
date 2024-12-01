@@ -19,10 +19,10 @@ local function turn_off()
     music_widget.markup = "ò<span font=\"sans 6\">w</span>Ó"
     music_icon.markup = "󰝛"
 end
-local function update_widget(title, artist)
+local function update_widget(title, artist, player_name)
     local content = title
-    -- artist often omit in some website
-    if #artist ~= 0 then
+
+    if player_name ~= "chromium" and player_name ~= "firefox" and #artist ~= 0 then
         content = artist .. " - " .. title
     end
 
@@ -39,7 +39,7 @@ playerctl:connect_signal("metadata", function(_, title, artist, art_path, album,
         return
     end
 
-    local content = update_widget(title, artist)
+    local content = update_widget(title, artist, player_name)
 
     if not new then return end
 

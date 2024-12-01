@@ -11,8 +11,8 @@ local theme = {}
 
 theme.font_type = {
     normal = "Roboto",
-    mono   = "Cascadia Code",
-    icon   = "Symbols Nerd Font"
+    mono   = "CaskaydiaCove Nerd Font",
+    icon   = "CaskaydiaCove Nerd Font"
 }
 
 theme.font = theme.font_type.normal .. " 8"
@@ -44,7 +44,7 @@ theme.bg_systray    = theme.bgs[2]
 theme.fg_normal     = theme.fgs[3]
 theme.fg_focus      = theme.fgs[4]
 theme.fg_urgent     = theme.fgs[4]
-theme.fg_minimize   = theme.fgs[1]
+theme.fg_minimize   = theme.fgs[2]
 
 theme.useless_gap            = dpi(10)
 theme.border_width           = dpi(4)
