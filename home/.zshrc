@@ -104,7 +104,7 @@ function proxy-off(){
     echo -e "Proxy environment variable removed."
 }
 
-# only print this if is in a terminal emulator
+# only print this if not inside a tty
 if [ -z "$(tty | grep tty)" ]; then
     crunchbang-mini
 fi

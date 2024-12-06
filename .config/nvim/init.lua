@@ -101,7 +101,16 @@ lazy.setup {
         dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
         config = true
     },
-    { "windwp/nvim-ts-autotag", config = true }
+    { "windwp/nvim-ts-autotag", config = true },
+    {
+        "nvim-flutter/flutter-tools.nvim",
+        lazy = false,
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'stevearc/dressing.nvim', -- optional for vim.ui.select
+        },
+        config = true,
+    },
 }
 
 --[[ plugins configs ]]--
@@ -238,3 +247,4 @@ vim.g.loaded_netrwPlugin = 1
 -- filetype options
 local utils = require("utils")
 utils.set_filetype_option({"c", "cpp"}, "commentstring", "// %s")
+utils.set_filetype_option({"dart"}, "commentstring", "// %s")
