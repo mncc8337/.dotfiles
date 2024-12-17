@@ -1,14 +1,14 @@
 --[[ lazy.nvim ]]--
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -28,6 +28,11 @@ lazy.setup {
     },
     { "nvim-tree/nvim-web-devicons" },
     {
+        "nvim-tree/nvim-tree.lua",
+        dependencies = {"nvim-tree/nvim-web-devicons"},
+        lazy = false, config = true
+    },
+    {
         "echasnovski/mini.nvim",
         version = false,
         config = function()
@@ -36,29 +41,23 @@ lazy.setup {
             require("mini.surround").setup {
                 highlight_duration = 500,
                 mappings = {
-                    add = 'sa', -- Add surrounding in Normal and Visual modes
-                    delete = 'sd', -- Delete surrounding
-                    find = 'sf', -- Find surrounding (to the right)
-                    find_left = 'sF', -- Find surrounding (to the left)
-                    highlight = 'sh', -- Highlight surrounding
-                    replace = 'sr', -- Replace surrounding
-                    update_n_lines = 'sn', -- Update `n_lines`
+                    add = 'sa',
+                    delete = 'sd',
+                    find = 'sf',
+                    find_left = 'sF',
+                    highlight = 'sh',
+                    replace = 'sr',
+                    update_n_lines = 'sn',
 
-                    suffix_last = 'l', -- Suffix to search with "prev" method
-                    suffix_next = 'n', -- Suffix to search with "next" method
+                    suffix_last = 'l',
+                    suffix_next = 'n',
                 },
 
-                -- Number of lines within which surrounding is searched
                 n_lines = 20,
                 respect_selection_type = false,
                 search_method = 'cover',
             }
         end
-    },
-    {
-        "nvim-tree/nvim-tree.lua",
-        dependencies = {"nvim-tree/nvim-web-devicons"},
-        lazy = false, config = true
     },
     {
         "akinsho/bufferline.nvim",
@@ -84,7 +83,7 @@ lazy.setup {
         dependencies = {
             "neovim/nvim-lspconfig",
             "williamboman/mason-lspconfig.nvim",
-            "nvim-lua/plenary.nvim"
+            "nvim-lua/plenary.nvim",
         }
     },
     {
@@ -97,20 +96,29 @@ lazy.setup {
         },
     },
     {
+        "Bekaboo/dropbar.nvim",
+        -- dependencies = {
+        --   'nvim-telescope/telescope-fzf-native.nvim',
+        --   build = 'make'
+        -- },
+        config = true,
+    },
+    {
+        "stevearc/dressing.nvim",
+        config = {
+            input = {
+                border = "solid",
+            }
+        },
+    },
+
+    --[[ language specific ]]--
+    {
         "MeanderingProgrammer/render-markdown.nvim",
         dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
         config = true
     },
     { "windwp/nvim-ts-autotag", config = true },
-    {
-        "nvim-flutter/flutter-tools.nvim",
-        lazy = false,
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'stevearc/dressing.nvim', -- optional for vim.ui.select
-        },
-        config = true,
-    },
 }
 
 --[[ plugins configs ]]--
@@ -118,6 +126,12 @@ require("base16-colorscheme").setup()
 -- bufferline and lualine must be setup after base16-colorscheme
 require("bufferline").setup {
     options = {
+        separator_style = "slant",
+        diagnostics = "nvim_lsp",
+        diagnostics_indicator = function(count, level)
+            local icon = level:match("error") and " " or " "
+            return " " .. icon .. count
+        end,
         offsets = {
             {
                 filetype = "NvimTree",
@@ -125,7 +139,7 @@ require("bufferline").setup {
                 text_align = "center",
                 separator = true
             }
-        }
+        },
     }
 }
 require("lualine").setup()
@@ -139,6 +153,33 @@ require("nvim-treesitter.configs").setup {
 }
 
 -- completions
+local kind_icons = {
+    Text = "",
+    Method = "󰆧",
+    Function = "󰊕",
+    Constructor = "",
+    Field = "󰇽",
+    Variable = "󰂡",
+    Class = "󰠱",
+    Interface = "",
+    Module = "",
+    Property = "󰜢",
+    Unit = "",
+    Value = "󰎠",
+    Enum = "",
+    Keyword = "󰌋",
+    Snippet = "",
+    Color = "󰏘",
+    File = "󰈙",
+    Reference = "",
+    Folder = "󰉋",
+    EnumMember = "",
+    Constant = "󰏿",
+    Struct = "",
+    Event = "",
+    Operator = "󰆕",
+    TypeParameter = "󰅲",
+}
 local cmp = require("cmp")
 cmp.setup {
     snippet = {
@@ -147,6 +188,9 @@ cmp.setup {
     window = {
         -- completion = cmp.config.window.bordered(),
         -- documentation = cmp.config.window.bordered(),
+    },
+    view = {
+        entries = { name = 'custom', selection_order = 'near_cursor' },
     },
     mapping = cmp.mapping.preset.insert {
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -166,7 +210,20 @@ cmp.setup {
             end, { 'i', 's' }
         ),
     },
-    sources = cmp.config.sources({{ name = "nvim_lsp" }}, {{ name = "buffer" }})
+    sources = cmp.config.sources({{ name = "nvim_lsp" }}, {{ name = "buffer" }}),
+    formatting = {
+        format = function(_, vim_item)
+            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+            -- vim_item.menu = ({
+            --     buffer = "[Buffer]",
+            --     nvim_lsp = "[LSP]",
+            --     luasnip = "[LuaSnip]",
+            --     nvim_lua = "[Lua]",
+            --     latex_symbols = "[LaTeX]",
+            -- })[entry.source.name]
+            return vim_item
+        end
+    },
 }
 cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
@@ -216,9 +273,7 @@ require("mappings")
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-
 vim.opt.cmdheight = 0
-
 vim.opt.number = true
 
 -- vim.opt.foldmethod = "indent"
@@ -244,7 +299,8 @@ vim.opt.undodir = os.getenv("HOME") .. "/.vim/undordir"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.ui.select = require('dropbar.utils.menu').select
+
 -- filetype options
 local utils = require("utils")
 utils.set_filetype_option({"c", "cpp"}, "commentstring", "// %s")
-utils.set_filetype_option({"dart"}, "commentstring", "// %s")

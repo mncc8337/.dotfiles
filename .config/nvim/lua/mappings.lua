@@ -17,36 +17,40 @@ vim.g.maplocalleader = " "
 map({'n'}, "<esc>", vim.cmd.noh)
 
 -- save file
-map({'n'}, "<C-s>", vim.cmd.w)
+map({'n'}, "<C-s>", vim.cmd.w, { desc = "Save current file" })
 
 -- nvim-tree
-map({'n'}, "<leader>t", vim.cmd.NvimTreeToggle)
-map({'n'}, "<leader>tt", vim.cmd.NvimTreeFocus)
+map({'n'}, "<leader>t", vim.cmd.NvimTreeToggle, { desc = "NvimTree toggle" })
+map({'n'}, "<leader>tt", vim.cmd.NvimTreeFocus, { desc = "NvimTree focus" })
 
 -- move between windows using hjkl
-map({'n'}, "<C-h>", "<cmd>wincmd h<CR>")
-map({'n'}, "<C-j>", "<cmd>wincmd j<CR>")
-map({'n'}, "<C-k>", "<cmd>wincmd k<CR>")
-map({'n'}, "<C-l>", "<cmd>wincmd l<CR>")
+map({'n'}, "<C-h>", "<cmd>wincmd h<CR>", { desc = "To left window" })
+map({'n'}, "<C-j>", "<cmd>wincmd j<CR>", { desc = "To down window" })
+map({'n'}, "<C-k>", "<cmd>wincmd k<CR>", { desc = "To up window" })
+map({'n'}, "<C-l>", "<cmd>wincmd l<CR>", { desc = "To right window" })
 
 -- telescope
 local telescope_builtin = require('telescope.builtin')
-map({'n'}, "<C-f><C-f>", telescope_builtin.find_files)
-map({'n'}, "<C-f><C-g>", telescope_builtin.live_grep)
-map({'n'}, "<C-f><C-b>", telescope_builtin.buffers)
-map({'n'}, "<leader>gc", telescope_builtin.git_commits)
-map({'n'}, "<leader>gst", telescope_builtin.git_status)
+map({'n'}, "<C-f><C-f>", telescope_builtin.find_files, { desc = "Find files" })
+map({'n'}, "<C-f><C-b>", telescope_builtin.buffers, { desc = "List all buffers" })
+map({'n'}, "<leader>gc", telescope_builtin.git_commits, { desc = "Git checkout commits" })
+map({'n'}, "<leader>gst", telescope_builtin.git_status, { desc = "Git status" })
+
+-- dropbar
+local dropbar = require("dropbar.api")
+map({'n'}, "<leader>;", dropbar.pick, { desc = "Pick from dropbar" })
 
 -- bufferline
-map({'n'}, "<Tab>", vim.cmd.BufferLineCycleNext)
-map({'n'}, "<C-Tab>", vim.cmd.BufferLineCyclePrev)
+map({'n'}, "<Tab>", vim.cmd.BufferLineCycleNext, { desc = "Next buffer" })
+map({'n'}, "<C-Tab>", vim.cmd.BufferLineCyclePrev, { desc = "Prev buffer" })
+map({'n'}, "<C-b>", vim.cmd.BufferLinePick, { desc = "Pick buffer" })
 
-map({'n'}, "gd", vim.lsp.buf.definition)
-map({'n'}, "K", vim.lsp.buf.hover)
+map({'n'}, "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+map({'n'}, "K", vim.lsp.buf.hover, { desc = "Show definition" })
 -- map({'n'}, "<leader>vws", vim.lsp.buf.workspace_symbol)
--- map({'n'}, "<leader>vd", vim.diagnostic.open_float)
-map({'n'}, "[d", vim.diagnostic.goto_next)
-map({'n'}, "]d", vim.diagnostic.goto_prev)
-map({'n'}, "<leader>vca", vim.lsp.buf.code_action)
-map({'n'}, "<leader>vrr", vim.lsp.buf.references)
-map({'n'}, "<leader>vrn", vim.lsp.buf.rename)
+map({'n'}, "<leader>vd", vim.diagnostic.open_float, { desc = "Open diagnostic" })
+map({'n'}, "[d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+map({'n'}, "]d", vim.diagnostic.goto_prev, { desc = "Go to prev diagnostic" })
+map({'n'}, "<leader>vca", vim.lsp.buf.code_action, { desc = "Show code action" })
+map({'n'}, "<leader>vrr", vim.lsp.buf.references, { desc = "Show all references" })
+map({'n'}, "<leader>vrn", vim.lsp.buf.rename, { desc = "LSP rename" })
