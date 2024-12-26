@@ -8,15 +8,15 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey,           }, "s", hotkeys_popup.show_help,
               {description = "show help", group = "awesome"}),
-    awful.key({ modkey,           }, "w", function() awful.spawn("rofi -show drun") end,
-              {description = "show main menu", group = "awesome"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
-    awful.key({ modkey,           }, "Return", function() awful.spawn(terminal)         end,
+    awful.key({ modkey,           }, "Return", function() awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey,           }, "r",      function() awful.spawn("rofi -show run") end,
+    awful.key({ modkey,           }, "w", function() awful.spawn(applauncher) end,
+              {description = "show app launcher", group = "launcher"}),
+    awful.key({ modkey,           }, "r", function() awful.spawn(promptrunner) end,
               {description = "run prompt", group = "launcher"}),
 })
 

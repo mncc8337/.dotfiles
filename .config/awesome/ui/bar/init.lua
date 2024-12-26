@@ -17,7 +17,7 @@ local spacing_widget = {
 local function widget_container(widget)
     return {
         widget = wibox.container.background,
-        bg = beautiful.bgs[2],
+        bg = beautiful.bg[2],
         widget
     }
 end

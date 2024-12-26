@@ -18,9 +18,7 @@ lazy.setup {
     {
         "nvim-treesitter/nvim-treesitter",
         config = true,
-        opts = {
-            highlight = {enable = true}
-        }
+        opts = { highlight = {enable = true} }
     },
     {
         "nvim-telescope/telescope.nvim",
@@ -38,6 +36,12 @@ lazy.setup {
         config = function()
             require("mini.pairs").setup()
             require("mini.move").setup()
+            require("mini.cursorword").setup()
+            require("mini.splitjoin").setup {
+                mappings = {
+                    toggle=" j",
+                },
+            }
             require("mini.surround").setup {
                 highlight_duration = 500,
                 mappings = {
@@ -66,6 +70,14 @@ lazy.setup {
     {
         "nvim-lualine/lualine.nvim",
         dependencies = {"nvim-tree/nvim-web-devicons"},
+    },
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = {},
+        config = {
+            indent = { char = "▏" },
+        },
     },
     { "NvChad/nvim-colorizer.lua", config = true },
     {
@@ -105,11 +117,12 @@ lazy.setup {
     },
     {
         "stevearc/dressing.nvim",
-        config = {
+        opts = {
             input = {
                 border = "solid",
             }
         },
+        config = true,
     },
 
     --[[ language specific ]]--
@@ -126,7 +139,9 @@ require("base16-colorscheme").setup()
 -- bufferline and lualine must be setup after base16-colorscheme
 require("bufferline").setup {
     options = {
-        separator_style = "slant",
+        indicator = {
+            style = "none",
+        },
         diagnostics = "nvim_lsp",
         diagnostics_indicator = function(count, level)
             local icon = level:match("error") and " " or " "
@@ -253,9 +268,8 @@ lspconfig["lua_ls"].setup {
         Lua = {
             diagnostics = {
                 globals = {
-                    -- nvim
                     "vim",
-                    -- awesome
+                    "awesome",
                     "client",
                     "tag",
                     "screen",

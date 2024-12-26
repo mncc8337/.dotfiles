@@ -6,7 +6,7 @@ local beautiful = require("beautiful")
 local function cell_background(widget)
     return wibox.widget {
         widget = wibox.container.background,
-        bg = beautiful.bgs[2],
+        bg = beautiful.bg[2],
         widget
     }
 end

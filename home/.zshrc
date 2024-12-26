@@ -6,17 +6,16 @@ ZSH_THEME="gianu" # murilasso dst duellj gianu
 # HYPHEN_INSENSITIVE="true"
 
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-zstyle ':omz:update' frequency 15
+zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+# zstyle ':omz:update' frequency 15
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
 
 # DISABLE_LS_COLORS="true"
 # DISABLE_AUTO_TITLE="true"
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 COMPLETION_WAITING_DOTS="false"
 
@@ -35,7 +34,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # fix zsh-syntax-highlighter black out comments and variable calling `$var`
-ZSH_HIGHLIGHT_STYLES[comment]='fg=cyan,bold'
+# ZSH_HIGHLIGHT_STYLES[comment]='fg=cyan,bold'
 
 alias py="python3"
 alias mv="mv -v"

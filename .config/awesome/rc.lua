@@ -13,16 +13,19 @@ naughty.connect_signal("request::display_error", function(message, startup)
         message = message
     }
 end)
--- }}}
 
-beautiful.init(require("theme"))
+local colorscheme = require("theme.colorscheme.dynamic")
+colorscheme.tint("#dfadff", 0.4)
+
+local theme = require("theme")
+theme.set_colorscheme(colorscheme)
+beautiful.init(theme.build())
 
 -- TODO: move this to other place
 terminal = "alacritty"
-editor = os.getenv("EDITOR") or "nano"
-editor_cmd = terminal .. " -e " .. editor
 fileman = "nemo"
-
+applauncher = "rofi -show drun"
+promptrunner = "rofi -show run"
 modkey = "Mod4"
 
 require("config")
@@ -33,7 +36,7 @@ require("ui")
 --     c:activate { context = "mouse_enter", raise = false }
 -- end)
 
--- disable picom round corner on maximized clients
+-- disable round corner on maximized clients
 local function reconfig_border(c)
     if c.maximized then
         awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 0")

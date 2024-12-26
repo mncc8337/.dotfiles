@@ -27,7 +27,7 @@ end)
 naughty.connect_signal("request::display", function(n)
     local msg_box = wibox.widget {
         widget = wibox.container.background,
-        bg = beautiful.bgs[2],
+        bg = beautiful.bg[2],
         {
             widget = wibox.container.margin,
             margins = beautiful.common_padding,
@@ -87,7 +87,7 @@ naughty.connect_signal("request::display", function(n)
             top = beautiful.common_padding,
             {
                 widget = wibox.container.background,
-                bg = beautiful.bgs[2],
+                bg = beautiful.bg[2],
                 {
                     widget = wibox.container.margin,
                     marigns = beautiful.common_padding,
