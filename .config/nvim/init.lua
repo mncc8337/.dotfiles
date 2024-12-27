@@ -302,7 +302,7 @@ vim.opt.timeoutlen = 1000
 vim.opt.clipboard = "unnamedplus"
 
 vim.opt.termguicolors = true
-vim.cmd.colorscheme "base16-gruvbox-dark-medium"
+vim.cmd.colorscheme("base16-gruvbox-dark-medium")
 
 vim.opt.swapfile = false
 vim.opt.backup = false

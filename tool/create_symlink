@@ -6,14 +6,16 @@ import shutil
 cwd = os.path.abspath(os.path.dirname(__file__))
 cwd = os.path.abspath(os.path.join(cwd, os.pardir))
 
-home   = os.path.expanduser("~/")
+home = os.path.expanduser("~/")
 config = os.path.expanduser("~/.config")
+zsh_custom = os.path.join(home, ".oh-my-zsh/custom")
 
 if not os.path.exists(config):
     os.mkdir(config)
 
-dots_home   = os.path.join(cwd, "home")
+dots_home = os.path.join(cwd, "home")
 dots_config = os.path.join(cwd, ".config")
+dots_zsh_custom = os.path.join(cwd, "oh-my-zsh-custom")
 
 def prompt(message):
     print(message, end='')
@@ -54,10 +56,15 @@ def bulk_symlink(of, to):
         symlink(path, target)
     print("--------------------\n")
 
-ans = prompt("link to HOME? (Y/n): ")
+ans = prompt("link HOME? (Y/n): ")
 if len(ans) == 0 or ans[0] == 'y':
     bulk_symlink(dots_home, home)
 
-ans = prompt("link to .config? (Y/n): ")
+ans = prompt("link .config? (Y/n): ")
 if len(ans) == 0 or ans[0] == 'y':
     bulk_symlink(dots_config, config)
+
+if os.path.exists(zsh_custom):
+    ans = prompt("link custom oh my zsh plugins? (Y/n): ")
+    if len(ans) == 0 or ans[0] == 'y':
+        bulk_symlink(dots_zsh_custom, zsh_custom)
