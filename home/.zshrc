@@ -27,7 +27,7 @@ ENABLE_CORRECTION=true
 
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-plugins=(fzf z zsh-autosuggestions zsh-syntax-highlighting git tmux)
+plugins=(fzf zoxide zsh-autosuggestions zsh-syntax-highlighting git)
 
 source $ZSH/oh-my-zsh.sh
 
