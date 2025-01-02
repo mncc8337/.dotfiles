@@ -8,14 +8,14 @@ cwd = os.path.abspath(os.path.join(cwd, os.pardir))
 
 home = os.path.expanduser("~/")
 config = os.path.expanduser("~/.config")
-zsh_custom = os.path.join(home, ".oh-my-zsh/custom")
+zsh_custom = os.path.join(home, ".oh-my-zsh/plugins")
 
 if not os.path.exists(config):
     os.mkdir(config)
 
 dots_home = os.path.join(cwd, "home")
 dots_config = os.path.join(cwd, ".config")
-dots_zsh_custom = os.path.join(cwd, "oh-my-zsh-custom")
+dots_zsh_custom = os.path.join(cwd, "oh-my-zsh-plugins")
 
 def prompt(message):
     print(message, end='')
