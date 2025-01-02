@@ -1,9 +1,9 @@
 [submodule ".config/awesome/module/bling"]
 	path = .config/awesome/module/bling
 	url = https://github.com/BlingCorp/bling
-[submodule "oh-my-zsh-custom/plugins/zsh-autosuggestions"]
+[submodule "oh-my-zsh-plugins/zsh-autosuggestions"]
 	path = oh-my-zsh-plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "oh-my-zsh-custom/plugins/zsh-syntax-highlighting"]
+[submodule "oh-my-zsh-plugins/zsh-syntax-highlighting"]
 	path = oh-my-zsh-plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
