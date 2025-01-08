@@ -15,7 +15,7 @@ img not provided bc im lazy
 - some shell scripts collected from internet
 ## before installing
 > [!CAUTION]
-> the config was only made for my use, thus it is not stable and will be changed constantly. you should only use this config as a preference.
+> the config was made only for my use, thus it is not stable and will be changed constantly. you should only use this config as a reference.
 - install [oh my zsh](https://ohmyz.sh/) if using zsh, `home/.zshrc` relies heavily on it
 - change value of `$DOTFILES` in `home/.zshrc` to `.dotfiles` location (including its name), default to `~/.dotfiles`
 - install these packages, marked (*) items are optional and replaceable:
@@ -24,13 +24,13 @@ img not provided bc im lazy
     - [alacritty](https://alacritty.org/) (terminal emulator) (*)
     - [rofi](https://github.com/davatorium/rofi) (app launcher) (*)
     - [playerctl](https://github.com/altdesktop/playerctl) (control mpris2 based media)
-    - libpulse for pactl (pulseaudio) or wireplumber for wpctl (pipewire)
+    - libpulse for pactl (pulseaudio) or wireplumber for wpctl (pipewire)  
     `yay -S zsh nemo alacritty rofi playerctl libpulse`
 - i don't use `bash` anymore so `home/.bashrc` maybe outdated compared to `home/.zshrc`
 - these are fonts and cursor theme used by default
     - cascadia-code-nerd
     - roboto
-    - bibata-cursor-theme
+    - bibata-cursor-theme  
     `yay -S ttf-cascadia-code-nerd ttf-roboto bibata-cursor-theme`
 - the gtk theme is not included because i use [oomox](https://github.com/themix-project/oomox-gtk-theme) to generate it (config will be added later)
 > [!NOTE]
@@ -40,17 +40,17 @@ these dependencies are only needed for awesomewm.
 - [awesome](https://awesomewm.org/)
 - [picom](https://github.com/yshui/picom)
 - [maim](https://github.com/naelstrof/maim)
-- [xclip](https://github.com/astrand/xclip)
+- [xclip](https://github.com/astrand/xclip)  
 `yay -S awesome-git picom-git maim xclip`
 ### hyprland
 these dependencies are only needed for hyprland.
 - [hyprland](https://hyprland.org/)
 - [hyprpaper](https://github.com/hyprwm/hyprpaper)
-- [cliphist](https://github.com/sentriz/cliphist)
+- [cliphist](https://github.com/sentriz/cliphist)  
 `yay -S hyprland hyprpaper cliphist`
 ## install
 `create-symlink` will create symlinks of `.bin`, `home` children and `.config` children and place them to `~/.bin`, `~/` and `~/.config` in that order. you may not need to run it if you prefer doing it manually. remember to backup your file before doing this as they may be lost in the process.
 ```
-git clone https://github.com/mncc8337/.dotfiles --recurse-submodules`
+git clone https://github.com/mncc8337/.dotfiles --recurse-submodules
 .dotfiles/tool/create-symlink
 ```
