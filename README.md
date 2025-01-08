@@ -51,6 +51,6 @@ these dependencies are only needed for hyprland.
 ## install
 `create-symlink` will create symlinks of `.bin`, `home` children and `.config` children and place them to `~/.bin`, `~/` and `~/.config` in that order. you may not need to run it if you prefer doing it manually. remember to backup your file before doing this as they may be lost in the process.
 ```
-git clone https://github.com/mncc8337/.dotfiles --recurse-submodules
+git clone https://github.com/mncc8337/.dotfiles.git --recurse-submodules
 .dotfiles/tool/create-symlink
 ```
