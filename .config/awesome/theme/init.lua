@@ -3,7 +3,7 @@ local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
 local themes_path    = gfs.get_themes_dir()
-local wallpaper_path = gfs.get_configuration_dir() .. "theme/wallpaper/"
+local wallpaper_path = os.getenv("DOTFILES") .. "/wallpaper/"
 local icon_path      = gfs.get_configuration_dir() .. "theme/icon/"
 
 local theme = {}

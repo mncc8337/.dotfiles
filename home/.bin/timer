@@ -1,5 +1,7 @@
 #!/bin/env python3
 
+# count time until enter
+
 import time
 
 tm = time.time()

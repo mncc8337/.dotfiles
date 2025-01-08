@@ -46,6 +46,9 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 export MANPAGER="nvim +Man!"
 
+# change this to your dotfiles location
+export DOTFILES=~/.dotfiles
+
 # set terminal colorscheme
 function gogh() {
     source ~/PLAYGROUND/py-env/bin/activate

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# make screenshot using maim
+# only works on X
+
 area_option=''
 if [ "$1" = 'area' ]; then
     area_option='-s'

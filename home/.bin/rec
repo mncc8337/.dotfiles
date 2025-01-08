@@ -1,7 +1,8 @@
 #!/bin/sh
 
-# a simple shell script to record screen using FFmpeg
+# a simple shell script to record screen using ffmpeg
 # curently only support *.mkv output
+# only works on X
 
 # default vals
 audio_param=""
