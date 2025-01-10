@@ -1,25 +1,54 @@
 #!/bin/sh
 
-# make screenshot using maim
-# only works on X
+# make a screenshot using maim / grim + slurp
+# args must be
+# - screenshot
+# - screenshot <anyword here works> save
+# - screenshot area
+# - screenshot area full
 
-area_option=''
-if [ "$1" = 'area' ]; then
-    area_option='-s'
-fi
+pgrep -x wayland
+waylander=$?
 
 tmpf=$(mktemp /tmp/scrsht-XXXXX.png)
-if maim $area_option $tmpf --hidecursor; then
-    cat $tmpf | xclip -selection clipboard -t image/png
+
+if [ $waylander -ne 0 ]; then
+    if [ "$1" = 'area' ]; then
+        grim -g "`slurp`" $tmpf
+    else
+        grim $tmpf
+    fi
+else
+    if [ "$1" = 'area' ]; then
+        maim -s $tmpf --hidecursor
+    else
+        maim $tmpf --hidecursor
+    fi
+fi
+
+success=$?
+
+if [ $success -eq 0 ]; then
+    if [ $waylander -ne 0 ]; then
+        cat $tmpf | wl-copy
+    else
+        cat $tmpf | xclip -selection clipboard -t image/png
+    fi
 
     savedir=''
     prefix=''
     if [ "$2" = 'save' ]; then
-        savedir="$HOME/Pictures/$(date +"%Y-%m-%d_%H-%M-%S").png"
-        prefix="and saved"
+        savedir="$(xdg-user-dir PICTURES)/$(date +"%Y-%m-%d_%H-%M-%S").png"
+        prefix="and saved to $(xdg-user-dir PICTURES)"
         cp $tmpf $savedir
     fi
 
     #$tmpf -resize x100 $tmpf
     notify-send "Screen captured" "Image copied to clipboard $prefix" -i $tmpf
+fi
+
+rm $tmpf
+
+if [ $success -ne 0 ]; then
+    exit 1
 fi

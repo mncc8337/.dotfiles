@@ -76,7 +76,7 @@ lazy.setup {
         main = "ibl",
         opts = {},
         config = {
-            indent = { char = "▏" },
+            indent = { char = "╎" },
         },
     },
     { "NvChad/nvim-colorizer.lua", config = true },
@@ -106,14 +106,6 @@ lazy.setup {
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-cmdline",
         },
-    },
-    {
-        "Bekaboo/dropbar.nvim",
-        -- dependencies = {
-        --   'nvim-telescope/telescope-fzf-native.nvim',
-        --   build = 'make'
-        -- },
-        config = true,
     },
     {
         "stevearc/dressing.nvim",
@@ -312,8 +304,6 @@ vim.opt.undodir = os.getenv("HOME") .. "/.vim/undordir"
 -- disable netrw to use nvim-tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-
-vim.ui.select = require('dropbar.utils.menu').select
 
 -- filetype options
 local utils = require("utils")

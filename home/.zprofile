@@ -15,7 +15,7 @@ function wayland_start {
         mv ~/.$wayland_compositor.log ~/.$wayland_compositor.old.log
     fi
 
-    $wayland_compositor
+    $wayland_compositor > ~/.$wayland_compositor.log 2>&1
 }
 
 if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then

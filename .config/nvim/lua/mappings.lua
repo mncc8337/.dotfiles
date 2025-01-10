@@ -36,10 +36,6 @@ map({'n'}, "<C-f><C-b>", telescope_builtin.buffers, { desc = "List all buffers" 
 map({'n'}, "<leader>gc", telescope_builtin.git_commits, { desc = "Git checkout commits" })
 map({'n'}, "<leader>gst", telescope_builtin.git_status, { desc = "Git status" })
 
--- dropbar
-local dropbar = require("dropbar.api")
-map({'n'}, "<leader>;", dropbar.pick, { desc = "Pick from dropbar" })
-
 -- bufferline
 map({'n'}, "<Tab>", vim.cmd.BufferLineCycleNext, { desc = "Next buffer" })
 map({'n'}, "<C-Tab>", vim.cmd.BufferLineCyclePrev, { desc = "Prev buffer" })

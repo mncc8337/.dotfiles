@@ -41,70 +41,7 @@ alias mv="mv -v"
 alias cp="cp -v"
 alias rm="rm -v"
 
-export PATH="$HOME/.bin:$HOME/.local/bin:"$PATH
-export VISUAL=nvim
-export EDITOR="$VISUAL"
-export MANPAGER="nvim +Man!"
-
-# change this to your dotfiles location
-export DOTFILES=~/.dotfiles
-
-# set terminal colorscheme
-function gogh() {
-    source ~/PLAYGROUND/py-env/bin/activate
-    bash -c "$(curl -sLo- https://git.io/vQgMr)"
-    deactivate
-}
-
-# sometime git commit failed so
-export GPG_TTY=$(tty)
-
-# proxy stuff
-# stolen from https://wiki.archlinux.org/title/Proxy_server
-function proxy-on() {
-    export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
-
-    if (( $# > 0 )); then
-        valid=$(echo $@ | sed -n 's/\([0-9]\{1,3\}.\?\)\{4\}:\([0-9]\+\)/&/p')
-        if [[ $valid != $@ ]]; then
-            >&2 echo "Invalid address"
-            return 1
-        fi
-        local proxy=$1
-        export http_proxy="$proxy" \
-               https_proxy=$proxy \
-               ftp_proxy=$proxy \
-               rsync_proxy=$proxy
-        echo "Proxy environment variable set."
-        return 0
-    fi
-
-    echo -n "username: "; read username
-    if [[ $username != "" ]]; then
-        echo -n "password: "
-        read -es password
-        local pre="$username:$password@"
-    fi
-
-    echo -n "server: "; read server
-    echo -n "port: "; read port
-    local proxy=$pre$server:$port
-    export http_proxy="$proxy" \
-           https_proxy=$proxy \
-           ftp_proxy=$proxy \
-           rsync_proxy=$proxy \
-           HTTP_PROXY=$proxy \
-           HTTPS_PROXY=$proxy \
-           FTP_PROXY=$proxy \
-           RSYNC_PROXY=$proxy
-    echo "Proxy environment variable set."
-}
-
-function proxy-off(){
-    unset http_proxy https_proxy ftp_proxy rsync_proxy \
-          HTTP_PROXY HTTPS_PROXY FTP_PROXY RSYNC_PROXY
-    echo -e "Proxy environment variable removed."
-}
+source ~/.zsh_functions
 
 # only print this if not inside a tty
 if [ -z "$(tty | grep tty)" ]; then

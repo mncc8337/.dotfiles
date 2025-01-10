@@ -7,7 +7,7 @@
 # default vals
 audio_param=""
 framerate=30
-output="$HOME/Videos/$(date +"%Y-%m-%d_%H-%M-%S").mkv"
+output="$(xdg-user-dir VIDEOS)/$(date +"%Y-%m-%d_%H-%M-%S").mkv"
 crf="24"
 
 # default geometry
@@ -30,7 +30,6 @@ for token in "$@"; do
         printf "    -f, --framerate=<rate>          set frame rate, default $framerate\n"
         printf "    -r, --area                      select the area to be recorded\n"
         printf "    -g, --geometry=<w>,<h>,<x>,<y>  set geometry of the record area\n"
-        printf "    -c, --crf=<v>                   constant rate factor, range 0 - 51, default $crf\n"
         printf "                                    the higher it is, the lower the quality\n\n"
         printf "to stop recording press ctrl-c\n"
         printf "default geometry is fullscreen\n"
@@ -54,15 +53,14 @@ for token in "$@"; do
         h=$(echo $val | cut -f2 -d,)
         x=$(echo $val | cut -f3 -d,)
         y=$(echo $val | cut -f4 -d,)
-    elif [ $arg = "--crf" ] || [ $arg = "-c" ]; then
-        crf=$val
     fi
 done
 
 ffmpeg \
     -s "$w"x"$h" \
     -framerate $framerate \
-    -f x11grab -i :0.0+$x,$y \
+    -f x11grab \
+    -i :0.0+$x,$y \
     $audio_param \
     -c:v libx264 \
     -crf $crf \
