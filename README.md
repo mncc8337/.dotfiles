@@ -49,7 +49,6 @@ these dependencies are only needed for hyprland.
 - [hyprpaper](https://github.com/hyprwm/hyprpaper)
 - [fabric](https://wiki.ffpy.org/)
 - [wl-clipboard](https://github.com/bugaevc/wl-clipboard)
-- [mako](https://github.com/emersion/mako)
 - [grim](https://sr.ht/~emersion/grim/) and [slurp](https://github.com/emersion/slurp)  
 `yay -S hyprland hyprpaper wl-clipboard grim slurp`
 ## install

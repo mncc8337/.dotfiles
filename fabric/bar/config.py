@@ -12,8 +12,6 @@ from fabric.widgets.wayland import WaylandWindow as Window
 from fabric.system_tray.widgets import SystemTray
 from fabric.hyprland.widgets import ActiveWindow, Workspaces, WorkspaceButton
 from fabric.utils import (
-    FormattedString,
-    bulk_replace,
     invoke_repeater,
     get_relative_path,
 )
@@ -47,9 +45,9 @@ class VolumeProgressBar(Box):
     def on_scroll(self, _, event):
         match event.direction:
             case 0:
-                self.audio.speaker.volume += 2
-            case 1:
                 self.audio.speaker.volume -= 2
+            case 1:
+                self.audio.speaker.volume += 2
         return
 
     def on_speaker_changed(self, *_):
@@ -60,6 +58,26 @@ class VolumeProgressBar(Box):
             "volume", "value", self.progress_bar, lambda _, v: v / 100
         )
         return
+
+# SystemTray but automatically hide when there is no icons
+class SelfHiddingSystemTray(SystemTray):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._watcher.on_item_added = self.on_item_added
+        self._watcher.on_item_removed = self.on_item_removed
+
+        # hide the widget after 10ms. hiding it instantly will not work
+        invoke_repeater(10, self.hide)
+
+    def on_item_added(self, _, item_identifier):
+        super().on_item_added(_, item_identifier)
+        if not self.is_visible:
+            self.show()
+
+    def on_item_removed(self, _, item_identifier):
+        super().on_item_removed(_, item_identifier)
+        if len(self._items) == 0:
+            self.hide()
 
 class StatusBar(Window):
     def __init__(self):
@@ -87,9 +105,10 @@ class StatusBar(Window):
             interval = 15 * 1000,
         ))
 
-        self.status_container = self.generate_widgets_container(4)
-        self.status_container.add(SystemTray(name = "system-tray", spacing = 4))
-        self.status_container.add(VolumeProgressBar())
+        self.system_tray = SelfHiddingSystemTray(name = "system-tray", spacing = 4, style_classes = "widgets-container")
+
+        self.volume_widget = self.generate_widgets_container(4)
+        self.volume_widget.add(VolumeProgressBar())
 
         self.children = CenterBox(
             name = "bar-inner",
@@ -113,7 +132,8 @@ class StatusBar(Window):
                 orientation = "v",
                 children = [
                     self.datetime_container,
-                    self.status_container,
+                    self.system_tray,
+                    self.volume_widget,
                 ],
             ),
         )
@@ -133,7 +153,7 @@ class StatusBar(Window):
         container = Box(
             spacing = spacing,
             orientation = 'v',
-            style_classes = [ "widgets-container" ],
+            style_classes = "widgets-container",
         )
         return container
 

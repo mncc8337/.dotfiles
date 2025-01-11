@@ -1,45 +1,39 @@
 :vars {
-    --background: #150d16;
-    --foreground: #f5dbc4;
-    --color0: #150d16;
-    --color1: #72448D;
-    --color2: #9C5995;
-    --color3: #D5719F;
-    --color4: #9A62F3;
-    --color5: #E075DF;
-    --color6: #F98F9F;
-    --color7: #f5dbc4;
-    --color8: #ab9989;
-    --color9: #72448D;
-    --color10: #9C5995;
-    --color11: #D5719F;
-    --color12: #9A62F3;
-    --color13: #E075DF;
-    --color14: #F98F9F;
-    --color15: #f5dbc4;
+    --color0: #282828;
+    --color1: #3c3836;
+    --color2: #504945;
+    --color3: #665c54;
+    --color4: #bdae93;
+    --color5: #d5c4a1;
+    --color6: #ebdbb2;
+    --color7: #fbf1c7;
+    --accent: #fe9019;
 
-    --window-bg: alpha(var(--background), 0.6);
-    --module-bg: alpha(var(--background), 0.4);
+    --bg: var(--color0);
+    --fg: var(--color7);
 
-    --border-color: var(--color11);
+    --window-bg: alpha(var(--bg), 0.6);
+    --module-bg: var(--bg);
 
-    --ws-active: var(--color7);
-    --ws-inactive: var(--color8);
-    --ws-empty: var(--color8);
-    --ws-hover: var(--color1);
-    --ws-urgent: var(--color14);
+    --border-color: var(--color2);
 
-    --datetime-fg: var(--color11);
+    --ws-active: var(--accent);
+    --ws-inactive: var(--color4);
+    --ws-empty: var(--color2);
+    --ws-hover: var(--color7);
+    --ws-urgent: var(--color7);
+
+    --widgets-container-bg: var(--color1);
+
+    --datetime-fg: var(--accent);
+
+    --menuitem-hover: var(--border-color);
+    --menuitem-disabled: var(--color2);
 }
 
-/* unset so we can style everything from the ground up. */
 * {
     all: unset;
-    /*font-family: "Roboto", sans-serif;*/
-}
-
-button {
-    background-size: 400% 400%;
+    font-family: "Roboto", sans-serif;
 }
 
 #bar-inner {
@@ -51,22 +45,23 @@ button {
 }
 
 .widgets-container {
-    background-color: var(--color1);
+    background-color: var(--widgets-container-bg);
     padding: 2px;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 #workspaces {
     padding: 6px;
     min-width: 0px;
     min-height: 0px;
+    border-radius: 12px;
     background-color: var(--module-bg);
 }
 
 #workspaces>button {
     padding: 8px 8px;
     border-radius: 8px;
-    transition: padding 0.1s steps(8);
+    transition: padding 0.1s, background-color 0.3s;
     background-color: var(--ws-inactive);
 }
 
@@ -74,7 +69,8 @@ button {
     font-size: 0px;
 }
 
-#workspaces>button:hover {
+#workspaces>button:hover,
+#workspaces>button.empty:hover {
     background-color: var(--ws-hover);
 }
 
@@ -104,19 +100,19 @@ menu>menuitem>label,
 
 #datetime {
     color: var(--datetime-fg);
-    font: bold 18px Roboto;
+    font-weight: 900;
 }
 
-/* system tray */
-#system-tray {
-    padding: 2px 4px;
-    background-color: var(--module-bg);
+#volume-progress-bar {
+    color: transparent;
+    background-color: transparent;
+    border: solid 0px var(--accent);
 }
 
 /* menu and menu items (written for the system tray) */
 menu {
     border: solid 2px;
-    border-radius: 10px;
+    border-radius: 3px;
     border-color: var(--border-color);
     background-color: var(--window-bg);
 }
@@ -127,32 +123,30 @@ menu>menuitem {
     padding: 6px;
     margin-left: 2px;
     margin-right: 2px;
+    transition: background-color 0.1s;
+}
+
+menu>menuitem:disabled {
+    color: var(--menuitem-disabled);
 }
 
 menu>menuitem:first-child {
-    margin-top: 1px;
-    border-radius: 8px 8px 0px 0px;
+    margin-top: 2px;
 }
 
 menu>menuitem:last-child {
-    margin-bottom: 1px;
-    border-radius: 0px 0px 8px 8px;
+    margin-bottom: 2px;
 }
 
 menu>menuitem:hover {
-    background-color: var(--border-color);
-}
-
-#volume-progress-bar {
-    color: transparent;
-    background-color: transparent;
-    border: solid 0px var(--border-color);
+    background-color: var(--menuitem-hover);
 }
 
 tooltip {
     border: solid 2px;
     border-color: var(--border-color);
-    background-color: var(--window-bg);
+    border-radius: 3px;
+    background-color: var(--bg);
 }
 
 tooltip>* {
