@@ -12,9 +12,6 @@
     --bg: var(--color0);
     --fg: var(--color7);
 
-    --window-bg: alpha(var(--bg), 0.6);
-    --module-bg: var(--bg);
-
     --border-color: var(--color2);
 
     --ws-active: var(--accent);
@@ -29,6 +26,9 @@
 
     --menuitem-hover: var(--border-color);
     --menuitem-disabled: var(--color2);
+
+    --button-normal: var(--widgets-container-bg);
+    --button-hover: var(--accent);
 }
 
 * {
@@ -41,7 +41,18 @@
     padding: 4px;
     border: solid 2px;
     border-color: var(--border-color);
-    background-color: var(--window-bg);
+    background-color: alpha(var(--bg), 0.6);
+}
+
+#bar-start-box>button {
+    background-color: var(--button-normal);
+    padding: 2px;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+#bar-start-box>button:hover {
+    background-color: var(--button-hover);
 }
 
 .widgets-container {
@@ -50,55 +61,59 @@
     border-radius: 3px;
 }
 
-#workspaces {
+.panel-inner {
+    border-radius: 3px;
+    padding: 4px;
+    border: solid 2px;
+    border-color: var(--border-color);
+    background-color: var(--bg);
+    min-width: 300px;
+}
+
+#workspace-buttons {
     padding: 6px;
     min-width: 0px;
     min-height: 0px;
     border-radius: 12px;
-    background-color: var(--module-bg);
+    background-color: var(--bg);
 }
 
-#workspaces>button {
+#workspace-buttons>button {
     padding: 8px 8px;
     border-radius: 8px;
     transition: padding 0.1s, background-color 0.3s;
     background-color: var(--ws-inactive);
 }
 
-#workspaces>button>label {
+#workspace-buttons>button>label {
     font-size: 0px;
 }
 
-#workspaces>button:hover,
-#workspaces>button.empty:hover {
+#workspace-buttons>button:hover,
+#workspace-buttons>button.empty:hover {
     background-color: var(--ws-hover);
 }
 
-#workspaces>button.urgent {
+#workspace-buttons>button.urgent {
     background-color: var(--ws-urgent);
 }
 
-#workspaces>button.active {
+#workspace-buttons>button.active {
     padding: 24px 8px;
     background-color: var(--ws-active);
 }
 
-#workspaces>button.empty {
+#workspace-buttons>button.empty {
     background-color: var(--ws-empty);
 }
 
 
 #hyprland-window {
-    background-color: var(--module-bg);
+    background-color: var(--bg);
     padding: 0px 8px;
 }
 
-menu>menuitem>label,
-#hyprland-window>label {
-    font-weight: 900;
-}
-
-#datetime {
+#datetime-widget {
     color: var(--datetime-fg);
     font-weight: 900;
 }
@@ -114,16 +129,15 @@ menu {
     border: solid 2px;
     border-radius: 3px;
     border-color: var(--border-color);
-    background-color: var(--window-bg);
+    background-color: var(--bg);
 }
 
 menu>menuitem {
     border-radius: 0px;
-    background-color: var(--module-bg);
+    background-color: var(--bg);
     padding: 6px;
     margin-left: 2px;
     margin-right: 2px;
-    transition: background-color 0.1s;
 }
 
 menu>menuitem:disabled {
