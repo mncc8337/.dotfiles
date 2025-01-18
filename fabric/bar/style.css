@@ -1,42 +1,4 @@
-:vars {
-    --color0: #282828;
-    --color1: #3c3836;
-    --color2: #504945;
-    --color3: #665c54;
-    --color4: #bdae93;
-    --color5: #d5c4a1;
-    --color6: #ebdbb2;
-    --color7: #fbf1c7;
-    --accent: #fe9019;
-
-    --bg: var(--color0);
-    --fg: var(--color7);
-
-    --border-color: var(--color2);
-
-    --ws-active: var(--accent);
-    --ws-inactive: var(--color4);
-    --ws-empty: var(--color2);
-    --ws-hover: var(--color7);
-    --ws-urgent: var(--color7);
-
-    --widgets-container-bg: var(--color1);
-
-    --datetime-fg: var(--accent);
-
-    --menuitem-hover: var(--border-color);
-    --menuitem-disabled: var(--color2);
-
-    --button-normal: var(--widgets-container-bg);
-    --button-hover: var(--color3);
-
-    --volume: var(--accent);
-}
-
-* {
-    all: unset;
-    font-family: "Roboto", sans-serif;
-}
+@import url("colors.css");
 
 #bar-inner {
     border-radius: 3px;
@@ -46,14 +8,14 @@
     background-color: var(--bg);
 }
 
-#bar-start-box>button {
+#bar-inner button {
     background-color: var(--button-normal);
     padding: 2px;
     border-radius: 3px;
     transition: background-color 0.3s;
 }
 
-#bar-start-box>button:hover {
+#bar-inner button:hover {
     background-color: var(--button-hover);
 }
 
@@ -61,15 +23,6 @@
     background-color: var(--widgets-container-bg);
     padding: 2px;
     border-radius: 3px;
-}
-
-.panel-inner {
-    border-radius: 3px;
-    padding: 4px;
-    border: solid 2px;
-    border-color: var(--border-color);
-    background-color: var(--bg);
-    min-width: 300px;
 }
 
 #workspace-buttons {
@@ -109,62 +62,13 @@
     background-color: var(--ws-empty);
 }
 
-
-#hyprland-window {
-    background-color: var(--bg);
-    padding: 0px 8px;
-}
-
 #datetime-widget {
     color: var(--datetime-fg);
-    font-weight: 900;
+    font-weight: bold;
 }
 
 #volume-progress-bar {
     color: transparent;
     background-color: transparent;
     border: solid 0px var(--volume);
-}
-
-/* menu and menu items (written for the system tray) */
-menu {
-    border: solid 2px;
-    border-radius: 3px;
-    border-color: var(--border-color);
-    background-color: var(--bg);
-}
-
-menu>menuitem {
-    border-radius: 0px;
-    background-color: var(--bg);
-    padding: 6px;
-    margin-left: 2px;
-    margin-right: 2px;
-}
-
-menu>menuitem:disabled {
-    color: var(--menuitem-disabled);
-}
-
-menu>menuitem:first-child {
-    margin-top: 2px;
-}
-
-menu>menuitem:last-child {
-    margin-bottom: 2px;
-}
-
-menu>menuitem:hover {
-    background-color: var(--menuitem-hover);
-}
-
-tooltip {
-    border: solid 2px;
-    border-color: var(--border-color);
-    border-radius: 3px;
-    background-color: var(--bg);
-}
-
-tooltip>* {
-    padding: 2px 4px
 }

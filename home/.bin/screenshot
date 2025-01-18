@@ -6,6 +6,7 @@
 # - screenshot <anyword here works> save
 # - screenshot area
 # - screenshot area full
+# requires imagemagick v7
 
 pgrep -x wayland
 waylander=$?
@@ -43,7 +44,16 @@ if [ $success -eq 0 ]; then
         cp $tmpf $savedir
     fi
 
-    #$tmpf -resize x100 $tmpf
+    width_by_height=$(magick identify -format "%[fx:round(w*1000/h)]" "$tmpf")
+    height_by_width=$(magick identify -format "%[fx:round(h*1000/w)]" "$tmpf")
+
+    if [ "$width_by_height" -gt "3000" ]; then
+        magick $tmpf -resize 1200x900 -gravity center -background '#00000000' -extent 1200x900 $tmpf
+    fi
+    if [ "$height_by_width" -gt "3000" ]; then
+        magick $tmpf -resize 900x1200 -gravity center -background '#00000000' -extent 900x1200 $tmpf
+    fi
+
     notify-send "Screen captured" "Image copied to clipboard $prefix" -i $tmpf
 fi
 

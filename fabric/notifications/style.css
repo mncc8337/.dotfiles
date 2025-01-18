@@ -1,0 +1,39 @@
+@import url("colors.css");
+
+.notification {
+    border: solid 2px var(--border-color);
+    border-radius: 3px;
+}
+
+.notification.normal {
+    background-color: var(--notification-normal);
+}
+
+.notification.urgent {
+    background-color: var(--notification-urgent);
+}
+
+.notification>.notification-container {
+    padding: 6px;
+}
+
+.notification .summary {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.notification .body {
+    color: var(--fg);
+    font-weight: normal;
+}
+
+.notification button {
+    padding: 4px;
+    font-weight: bold;
+    border-radius: 3px;
+    background-color: var(--button-normal);
+}
+
+.notification button:hover {
+    background-color: var(--button-hover);
+}

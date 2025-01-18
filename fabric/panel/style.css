@@ -1,0 +1,11 @@
+@import url("colors.css");
+
+.panel-inner {
+    border-radius: 3px;
+    padding: 4px;
+    border: solid 2px;
+    border-color: var(--border-color);
+    background-color: var(--bg);
+    min-width: 300px;
+}
+

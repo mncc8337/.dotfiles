@@ -7,7 +7,6 @@ class Panel(Window):
         super().__init__(
             style_classes = "panel",
             layer = "overlay",
-            type = "popup",
             anchor = "top left",
             exclusivity = "none",
             visible = False,

@@ -24,6 +24,7 @@ img not provided bc im lazy
     - [alacritty](https://alacritty.org/) (terminal emulator) (*)
     - [rofi](https://github.com/davatorium/rofi) (app launcher) (*)
     - [playerctl](https://github.com/altdesktop/playerctl) (control mpris2 based media)
+    - imagemagick for `magick`
     - libnotify for `notify-send`
     - libpulse for pactl (pulseaudio) or wireplumber for wpctl (pipewire)  
     `yay -S zsh nemo alacritty rofi playerctl libnotify libpulse`

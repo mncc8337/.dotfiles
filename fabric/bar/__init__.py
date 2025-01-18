@@ -5,9 +5,10 @@ from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.wayland import WaylandWindow as Window
 from fabric.hyprland.widgets import Workspaces, WorkspaceButton
 
-from bar.panel import Panel
 from bar.volume_progress import VolumeProgressBar
 from bar.system_tray import SelfHiddingSystemTray
+
+from panel import Panel
 
 class Bar(Window):
     def __init__(self):
@@ -57,7 +58,6 @@ class Bar(Window):
             name = "bar-inner",
             orientation = "v",
             start_children = Box(
-                name = "bar-start-box",
                 spacing = 4,
                 orientation = "v",
                 children = [
@@ -66,13 +66,11 @@ class Bar(Window):
                 ],
             ),
             center_children = Box(
-                name = "bar-middle-box",
                 spacing = 4,
                 orientation = "v",
                 children = self.workspace_buttons,
             ),
             end_children = Box(
-                name = "bar-end-box",
                 spacing = 4,
                 orientation = "v",
                 children = [

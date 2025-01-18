@@ -1,0 +1,38 @@
+:vars {
+    --color0: #282828;
+    --color1: #3c3836;
+    --color2: #504945;
+    --color3: #665c54;
+    --color4: #bdae93;
+    --color5: #d5c4a1;
+    --color6: #ebdbb2;
+    --color7: #fbf1c7;
+    --accent: #fe9019;
+
+    --bg: var(--color0);
+    --fg: var(--color7);
+
+    --border-color: var(--color2);
+
+    --ws-active: var(--accent);
+    --ws-inactive: var(--color4);
+    --ws-empty: var(--color2);
+    --ws-hover: var(--color7);
+    --ws-urgent: var(--color7);
+
+    --widgets-container-bg: var(--color1);
+
+    --datetime-fg: var(--accent);
+
+    --menuitem-hover: var(--border-color);
+    --menuitem-disabled: var(--color2);
+
+    --button-normal: var(--widgets-container-bg);
+    --button-hover: var(--color3);
+
+    --volume: var(--accent);
+
+    --notification-normal: var(--bg);
+    --notification-urgent: var(--accent);
+}
+
