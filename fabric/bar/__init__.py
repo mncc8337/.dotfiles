@@ -15,10 +15,11 @@ class Bar(Window):
             name = "bar",
             layer = "top",
             anchor = "top-left center-left bottom-left",
-            margin = "20px -10px 20px 20px",
+            margin = "20px -15px 20px 20px",
             exclusivity = "auto",
             visible = False,
             all_visible = False,
+            v_align = "center",
         )
 
         self.panel = Panel()
@@ -27,13 +28,12 @@ class Bar(Window):
         self.panel_button = Button(label = "ngu")
         self.panel_button.connect("clicked", self.panel_button_callback)
 
-        self.workspaces = Workspaces(
+        self.workspace_buttons = Workspaces(
             name = "workspace-buttons",
             spacing = 4,
             orientation = 'v',
             buttons = self.generate_workspace_buttons(6),
             buttons_factory = self.make_workspace_button,
-            h_align = "center",
         )
 
         self.datetime = DateTime(
@@ -62,20 +62,20 @@ class Bar(Window):
                 orientation = "v",
                 children = [
                     self.panel_button,
+                    self.datetime,
                 ],
             ),
             center_children = Box(
                 name = "bar-middle-box",
                 spacing = 4,
                 orientation = "v",
-                children = self.workspaces,
+                children = self.workspace_buttons,
             ),
             end_children = Box(
                 name = "bar-end-box",
                 spacing = 4,
                 orientation = "v",
                 children = [
-                    self.datetime,
                     self.system_tray,
                     self.volume_widget,
                 ],
@@ -91,7 +91,7 @@ class Bar(Window):
             self.panel.show()
 
     def make_workspace_button(self, ws_id):
-        return WorkspaceButton(id = ws_id, label = None)
+        return WorkspaceButton(id = ws_id, label = None, h_align = "center")
 
     def generate_workspace_buttons(self, n):
         buttons = []
