@@ -3,15 +3,18 @@ from fabric.widgets.label import Label
 from fabric.widgets.wayland import WaylandWindow as Window
 
 class Panel(Window):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super().__init__(
             style_classes = "panel",
-            layer = "top",
-            # anchor = "top-left center-left bottom-left",
-            # margin = "20px -10px 20px 20px",
-            exclusivity = "auto",
+            layer = "overlay",
+            type = "popup",
+            anchor = "top left",
+            exclusivity = "none",
             visible = False,
             all_visible = False,
+            h_align = "center",
+            v_align = "center",
+            **kwargs
         )
 
         self.children = Box(

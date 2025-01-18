@@ -14,7 +14,7 @@ class Bar(Window):
         super().__init__(
             name = "bar",
             layer = "top",
-            anchor = "top-left center-left bottom-left",
+            anchor = "left top center bottom",
             margin = "20px -15px 20px 20px",
             exclusivity = "auto",
             visible = False,
@@ -22,10 +22,10 @@ class Bar(Window):
             v_align = "center",
         )
 
-        self.panel = Panel()
-        self.panel.hide()
+        self.dashboard = Panel(margin = "20px 0px 0px 20px")
+        self.dashboard.hide()
 
-        self.panel_button = Button(label = "ngu")
+        self.panel_button = Button(label = "a")
         self.panel_button.connect("clicked", self.panel_button_callback)
 
         self.workspace_buttons = Workspaces(
@@ -85,10 +85,10 @@ class Bar(Window):
         self.show()
 
     def panel_button_callback(self, _):
-        if self.panel.get_visible():
-            self.panel.hide()
+        if self.dashboard.get_visible():
+            self.dashboard.hide()
         else:
-            self.panel.show()
+            self.dashboard.show()
 
     def make_workspace_button(self, ws_id):
         return WorkspaceButton(id = ws_id, label = None, h_align = "center")

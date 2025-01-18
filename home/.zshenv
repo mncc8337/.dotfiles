@@ -8,5 +8,3 @@ export MANPAGER="nvim +Man!"
 
 # sometime git commit failed so
 export GPG_TTY=$(tty)
-
-export PYTHONDONTWRITEBYTECODE=1
