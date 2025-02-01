@@ -1,12 +1,13 @@
 -- signals
 --[[
     GET
-    audio::update get info
-    audio::avg average volume in both speaker in %
-    audio::mute muted or not
+    audio::update, get info
+    audio::avg, average volume in both speaker in %
+    audio::mute, muted or not
 
     SET
-    audio::change_volume(diff), increase/decrease volume by `diff`, depend on sign of `diff`
+    ausdio::set_volume(val)
+    audio::increase_volume(diff), increase/decrease volume by `diff`, depend on sign of `diff`
     audio::toggle_mute, toggle mute
 ]]--
 
@@ -25,23 +26,25 @@ local function get_info(stdout)
     stdout = stdout:sub(1, -2)
     local lines = gears.string.split(stdout, "\n")
 
-    local left_v = 0
+    local left_v = 0.0
     local left_m = false
-    local right_v = 0
+    local right_v = 0.0
     local right_m = false
 
     for _, line in ipairs(lines) do
         local v, m = line:match("([%d]+)%%.*%[([%l]*)") -- [vol%] [on/off]
         if line:match("([%d]+)%%.*%[([%l]*)") then
             v = tonumber(v)
-            m = (m ~= "on")
+            if v then
+                m = (m ~= "on")
 
-            if line:match("Left") then
-                left_v = v
-                left_m = m
-            elseif line:match("Right") then
-                right_v = v
-                right_m = m
+                if line:match("Left") then
+                    left_v = v
+                    left_m = m
+                elseif line:match("Right") then
+                    right_v = v
+                    right_m = m
+                end
             end
         end
     end
@@ -63,7 +66,12 @@ awesome.connect_signal("audio::update", function()
     awful.spawn.easy_async_with_shell("amixer get " .. alsa_channel, get_info)
 end)
 
-awesome.connect_signal("audio::change_volume", function(diff)
+awesome.connect_signal("audio::set_volume", function(val)
+    awful.spawn("amixer sset " .. alsa_channel .. ' ' .. val .. '%')
+    awesome.emit_signal("audio::update")
+end)
+
+awesome.connect_signal("audio::increase_volume", function(diff)
     local sign = '+'
     if diff < 0 then sign = '-' end
 

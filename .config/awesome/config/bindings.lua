@@ -243,9 +243,9 @@ awful.keyboard.append_global_keybindings({
 
 -- Audio control
 awful.keyboard.append_global_keybindings({
-    awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("audio::change_volume",  2) end,
+    awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("audio::increase_volume",  2) end,
               {description = "increase volume", group = "media"}),
-    awful.key({ }, "XF86AudioLowerVolume", function() awesome.emit_signal("audio::change_volume", -2) end,
+    awful.key({ }, "XF86AudioLowerVolume", function() awesome.emit_signal("audio::increase_volume", -2) end,
               {description = "decrease volume", group = "media"}),
     awful.key({ }, "XF86AudioMute",        function() awesome.emit_signal("audio::toggle_mute") end,
               {description = "toggle volume mute", group = "media"}),

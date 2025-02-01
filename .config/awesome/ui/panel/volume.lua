@@ -25,6 +25,8 @@ local volume = 25
 local mute = false
 
 awesome.connect_signal("audio::avg", function(avg)
+    if volume == avg then return end
+
     volume = avg
     volume_icon.markup = helper.get_volume_icon(avg, mute)
 
@@ -68,7 +70,7 @@ local close_timer = timer {
 
 local mouse_entered = false
 
-awesome.connect_signal("audio::change_volume", function(_)
+awesome.connect_signal("audio::increase_volume", function(_)
     if mouse_entered then return end
     panel.visible = true
     close_timer.timeout = 1.5
@@ -85,3 +87,13 @@ panel:connect_signal("mouse::leave", function()
     close_timer.timeout = 2.5
     close_timer:again()
 end)
+
+local update_volume = helper.rate_limited_call(0.1, function()
+    awesome.emit_signal("audio::set_volume", volume_slider.value)
+end)
+
+volume_slider:connect_signal("property::value", function()
+    if not mouse_entered then return end
+    update_volume.call()
+end)
+

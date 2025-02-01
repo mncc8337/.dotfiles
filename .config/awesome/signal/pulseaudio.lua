@@ -1,12 +1,13 @@
 -- signals
 --[[
     GET
-    audio::update get info
-    audio::avg average volume in both speaker in %
-    audio::mute muted or not
+    audio::update, get info
+    audio::avg, average volume in both speaker in %
+    audio::mute, muted or not
 
     SET
-    audio::change_volume(diff), increase/decrease volume by `diff`, depend on sign of `diff`
+    audio::set_volume(val)
+    audio::increase_volume(diff), increase/decrease volume by `diff`, depend on sign of `diff`
     audio::toggle_mute, toggle mute
 ]]--
 
@@ -52,7 +53,12 @@ awesome.connect_signal("audio::update", function()
     awful.spawn.easy_async_with_shell("pactl get-sink-mute " .. sink, get_mute)
 end)
 
-awesome.connect_signal("audio::change_volume", function(diff)
+awesome.connect_signal("audio::set_volume", function(val)
+    awful.spawn("pactl set-sink-volume " .. sink .. " " .. val .. "%")
+    awesome.emit_signal("audio::update")
+end)
+
+awesome.connect_signal("audio::increase_volume", function(diff)
     local sign = '+'
     if diff < 0 then sign = '-' end
 
