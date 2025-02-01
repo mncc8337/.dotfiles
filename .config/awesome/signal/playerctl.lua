@@ -52,5 +52,3 @@ awesome.connect_signal("playerctl::increase_volume", function(diff, playername)
 
     awesome.emit_signal("playerctl::set_volume", player.volume + diff, player)
 end)
-
-return playerctl

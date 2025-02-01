@@ -2,7 +2,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 
-local playerctl = require("signal.playerctl")
+local playerctl = require("module.bling.signal.playerctl").lib()
 
 local music_widget = wibox.widget {
     widget = wibox.widget.textbox,
@@ -60,12 +60,14 @@ playerctl:connect_signal("metadata", function(_, title, artist, art_path, album,
     local image_file = beautiful.notification_music_fallback_icon or nil
     if #art_path ~= 0 then
         -- check if file size is larger than 0
-        -- if size is 0 then it is garbage
+        -- if the size is 0 then it is garbage
         local potential_img = io.open(art_path)
-        if potential_img:seek("end") > 0 then
-            image_file = art_path
+        if potential_img then
+            if potential_img:seek("end") > 0 then
+                image_file = art_path
+            end
+            potential_img:close()
         end
-        potential_img:close()
     end
 
     naughty.notify {
