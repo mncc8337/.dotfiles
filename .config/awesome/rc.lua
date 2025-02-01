@@ -28,8 +28,16 @@ applauncher = "rofi -show drun"
 promptrunner = "rofi -show run"
 modkey = "Mod4"
 
+-- use pulseaudio to exceed the 100% limit
+-- you can use either pulseaudio or alsa though
+-- but dont use both of them at the same time
+require("signal.pulseaudio"):start()
+require("signal.screenshot")
+
 require("config")
 require("ui")
+
+require("ui.panel")
 
 -- Enable sloppy focus, so that focus follows mouse.
 -- client.connect_signal("mouse::enter", function(c)

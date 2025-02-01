@@ -33,7 +33,6 @@ local function take_screenshot(cmd, callback_func)
     end)
 end
 
-
 local function copy(tmpf, notif)
     local filename = os.date(save_format)
     local savepath = save_dir .. filename

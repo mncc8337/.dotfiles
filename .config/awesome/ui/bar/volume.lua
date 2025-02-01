@@ -1,10 +1,6 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-
--- use pulseaudio to exceed the 100% limit
--- you can use either pulseaudio or alsa though
--- but dont use both of them at the same time
-require("signal.pulseaudio"):start()
+local helper = require("helper")
 
 local volume_widget = wibox.widget {
     widget = wibox.widget.textbox,
@@ -18,34 +14,17 @@ local volume_icon = wibox.widget {
 }
 
 local volume = 25
-
-local function update_icon(vol)
-    if vol == nil then
-        volume_icon.markup = '󰝟'
-        return
-    end
-
-    if vol <= 25 then
-        volume_icon.markup = '󰕿'
-    elseif vol <= 75 then
-        volume_icon.markup = '󰖀'
-    else
-        volume_icon.markup = '󰕾'
-    end
-end
+local mute = false
 
 awesome.connect_signal("audio::avg", function(avg)
     volume_widget.markup = avg .. '%'
     volume = avg
-    update_icon(avg)
+    volume_icon.markup = helper.get_volume_icon(avg, mute)
 end)
 
 awesome.connect_signal("audio::mute", function(muted)
-    if muted then
-        update_icon(nil)
-    else
-        update_icon(volume)
-    end
+    mute = muted
+    volume_icon.markup = helper.get_volume_icon(volume, mute)
 end)
 
 return {

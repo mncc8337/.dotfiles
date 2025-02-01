@@ -126,6 +126,10 @@ theme.build = function()
     theme.taglist_bg_occupied = theme.bg[3]
     theme.taglist_font        = theme.font_type.mono .. " 8"
 
+    theme.slider_handle_width = 0
+    theme.slider_bar_color = theme.bg[2]
+    theme.slider_bar_active_color = theme.accent[2]
+
     -- Variables set for theming notifications:
     -- notification_font
     -- notification_[bg|fg]
@@ -136,7 +140,7 @@ theme.build = function()
     theme.notification_width = dpi(500)
     theme.notification_height = dpi(80)
     theme.notification_icon_size = theme.notification_height - theme.notification_margin * 2
-    theme.notification_border_width = dpi(2)
+    theme.notification_border_width = theme.border_width / 2
     theme.notification_border_color = theme.bg_focus
     theme.notification_music_fallback_icon = icon_path .. "music_fallback.png"
 

@@ -1,4 +1,3 @@
--- Standard awesome library
 local awful = require("awful")
 
 -- {{{ Tag layout

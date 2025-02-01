@@ -22,7 +22,16 @@ end
 local function update_widget(title, artist, player_name)
     local content = title
 
-    if player_name ~= "chromium" and player_name ~= "firefox" and #artist ~= 0 then
+    if player_name == "chromium" or player_name == "firefox" then
+        artist = artist:gsub("%s%-%sTopic", "")
+
+        if title:find("%-") then
+            -- artist name is already in title
+            artist = ""
+        end
+    end
+
+    if #artist ~= 0 then
         content = artist .. " - " .. title
     end
 

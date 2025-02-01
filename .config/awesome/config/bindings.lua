@@ -87,8 +87,16 @@ awful.keyboard.append_global_keybindings({
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function() awful.layout.inc(-1) end,
               {description = "select previous", group = "layout"}),
+    awful.key({ modkey, "Control" }, "n",
+        function()
+          local c = awful.client.restore()
+          -- Focus restored client
+          if c then
+            c:activate { raise = true, context = "key.unminimize" }
+          end
+        end,
+        {description = "restore minimized", group = "client"}),
 })
-
 
 awful.keyboard.append_global_keybindings({
     awful.key {
@@ -195,15 +203,6 @@ client.connect_signal("request::default_keybindings", function()
                   {description = "toggle sticky", group = "client"}),
         awful.key({ modkey,           }, "n",      function(c) c.minimized = true end,
                   {description = "minimize", group = "client"}),
-        awful.key({ modkey, "Control" }, "n",
-            function()
-              local c = awful.client.restore()
-              -- Focus restored client
-              if c then
-                c:activate { raise = true, context = "key.unminimize" }
-              end
-            end,
-            {description = "restore minimized", group = "client"}),
         awful.key({ modkey,           }, "m",
             function(c)
                 c.maximized = not c.maximized
@@ -253,7 +252,6 @@ awful.keyboard.append_global_keybindings({
 })
 
 -- Screenshot
-require("signal.screenshot")
 awful.keyboard.append_global_keybindings({
     awful.key({               }, "Print", function() awesome.emit_signal("screenshot::full", false) end,
               {description = "print full screen",               group = "media"}),
