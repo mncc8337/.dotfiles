@@ -21,7 +21,9 @@ client.connect_signal("request::titlebars", function(c)
         end),
     }
 
-    awful.titlebar(c, { size = 20 }).widget = {
+    local titlebar = awful.titlebar(c, { size = beautiful.titlebar_height })
+
+    titlebar:setup {
         widget = wibox.container.margin,
         bottom = beautiful.common_padding,
         {
@@ -56,11 +58,24 @@ client.connect_signal("request::titlebars", function(c)
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 2,
                 cell_background(awful.titlebar.widget.floatingbutton(c)),
-                -- cell_background(awful.titlebar.widget.maximizedbutton(c)),
+                cell_background(awful.titlebar.widget.maximizedbutton(c)),
                 cell_background(awful.titlebar.widget.stickybutton(c)),
                 cell_background(awful.titlebar.widget.ontopbutton(c)),
                 cell_background(awful.titlebar.widget.closebutton(c))
             }
         }
     }
+
+end)
+
+client.connect_signal("property::maximized", function(c)
+    if c.maximized then
+        awful.titlebar.hide(c)
+        -- the height of the client will not change automaticaly after we hide the titlebar
+        -- so we need to increase height to fill the gap
+        c.height = c.height + beautiful.titlebar_height
+    else
+        awful.titlebar.show(c)
+        c.height = c.height - beautiful.titlebar_height
+    end
 end)

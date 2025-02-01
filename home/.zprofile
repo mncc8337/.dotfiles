@@ -19,6 +19,6 @@ function wayland_start {
 }
 
 if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-    # X_start
-    wayland_start
+    X_start
+    # wayland_start
 fi

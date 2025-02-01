@@ -43,6 +43,8 @@ theme.font_type = {
 theme.common_margin  = dpi(5)
 theme.common_padding = dpi(3)
 
+theme.titlebar_height = dpi(20)
+
 theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"
 theme.titlebar_close_button_focus  = themes_path.."default/titlebar/close_focus.png"
 
@@ -108,7 +110,7 @@ theme.build = function()
     theme.fg_urgent     = theme.bg[1]
     theme.fg_minimize   = theme.fg[2]
 
-    theme.useless_gap            = dpi(10)
+    theme.useless_gap            = dpi(6)
     theme.border_width           = dpi(4)
     theme.border_color_normal    = theme.bg_normal
     theme.border_color_active    = theme.accent[2]

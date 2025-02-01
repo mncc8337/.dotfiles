@@ -1,13 +1,12 @@
 #!/bin/sh
 
 # a simple shell script to record screen using ffmpeg
-# curently only support *.mkv output
 # only works on X
 
 # default vals
 audio_param=""
 framerate=30
-output="$(xdg-user-dir VIDEOS)/$(date +"%Y-%m-%d_%H-%M-%S").mkv"
+output="$(xdg-user-dir VIDEOS)/$(date +"%Y-%m-%d_%H-%M-%S").mp4"
 crf="24"
 
 # default geometry

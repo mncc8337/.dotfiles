@@ -44,5 +44,12 @@ local function reconfig_border(c)
         awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 1")
     end
 end
-client.connect_signal("request::manage", reconfig_border)
 client.connect_signal("property::maximized", reconfig_border)
+
+-- fix weird position of already maximized clients when spawn
+client.connect_signal("request::manage", function(c)
+    if c.maximized then
+        c.maximized = false
+        c.maximized = true
+    end
+end)
