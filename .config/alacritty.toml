@@ -4,6 +4,7 @@ program = "/usr/bin/zsh"
 [window]
 decorations = "None"
 opacity = 1.0
+dynamic_title = false
 
 [window.dimensions]
 columns = 80

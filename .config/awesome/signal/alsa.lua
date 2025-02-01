@@ -1,10 +1,12 @@
 -- signals
 --[[
+    GET
     audio::update get info
     audio::avg average volume in both speaker in %
     audio::mute muted or not
 
-    audio::change_volume (diff), increase/decrease volume by `diff`, depend on sign of `diff`
+    SET
+    audio::change_volume(diff), increase/decrease volume by `diff`, depend on sign of `diff`
     audio::toggle_mute, toggle mute
 ]]--
 

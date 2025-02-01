@@ -1,29 +1,21 @@
 -- signals
 --[[
-    playerctl::metadata
-    playerctl::position
-    playerctl::playing
-    playerctl::volume
-    playerctl::loop_status
-    playerctl::shuffle
-    playerctl::exit
-    playerctl::no_players
+    SET
+    playerctl::next(player)
+    playerctl::prev(player)
+    playerctl::play(player)
+    playerctl::pause(player)
+    playerctl::toggle(player)
+    playerctl::set_position(position player)
+    playerctl::set_volume(position, player)
+    playerctl::set_loop_status(status, player)
+    playerctl::set_shuffle(shuffer, player)
+    playerctl::increase_volume(diff, player)
 
-    playerctl::next
-    playerctl::prev
-    playerctl::play
-    playerctl::pause
-    playerctl::toggle
-
-    playerctl::set_position
-    playerctl::set_volume
-    playerctl::set_loop_status
-    playerctl::set_shuffle
-
-    playerctl::increase_volume
+    for getting signals use the playerctl object directly
 ]]--
 
--- dependency: playerctl, curl
+-- dependency: playerctl
 
 -- using the lib version will cause awesome to stop if run mpDris2 with Notify option set to true
 -- maybe related to https://github.com/BlingCorp/bling/issues/215

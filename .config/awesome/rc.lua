@@ -21,7 +21,7 @@ local theme = require("theme")
 theme.set_colorscheme(colorscheme)
 beautiful.init(theme.build())
 
--- TODO: move this to other place
+-- TODO: move these to other place
 terminal = "alacritty"
 fileman = "nemo"
 applauncher = "rofi -show drun"
