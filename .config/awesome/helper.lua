@@ -17,7 +17,8 @@ end
 local function rate_limited_call(interval, callback)
     local tm = timer {
         timeout = interval,
-        callback = callback
+        callback = callback,
+        single_shot = true,
     }
 
     local function call()

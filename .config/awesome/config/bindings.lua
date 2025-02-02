@@ -249,6 +249,11 @@ awful.keyboard.append_global_keybindings({
               {description = "decrease volume", group = "media"}),
     awful.key({ }, "XF86AudioMute",        function() awesome.emit_signal("audio::toggle_mute") end,
               {description = "toggle volume mute", group = "media"}),
+
+    awful.key({ "Shift" }, "XF86AudioRaiseVolume", function() awesome.emit_signal("playerctl::increase_volume",  2, nil) end,
+              {description = "increase volume", group = "media"}),
+    awful.key({ "Shift" }, "XF86AudioLowerVolume", function() awesome.emit_signal("playerctl::increase_volume", -2, nil) end,
+              {description = "decrease volume", group = "media"}),
 })
 
 -- Screenshot

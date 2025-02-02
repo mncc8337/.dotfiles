@@ -12,14 +12,14 @@ ruled.notification.connect_signal('request::rules', function()
     ruled.notification.append_rule {
         rule       = { },
         properties = {
-            screen           = awful.screen.preferred,
+            screen = awful.screen.preferred,
             implicit_timeout = 5,
         }
     }
 
     -- Set different colors for urgent notifications.
     ruled.notification.append_rule {
-        rule       = { urgency = 'critical' },
+        rule = { urgency = 'critical' },
         properties = { bg = beautiful.bg_urgent, fg = beautiful.bg_normal }
     }
 end)

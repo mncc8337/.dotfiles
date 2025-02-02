@@ -38,7 +38,8 @@ require("signal.playerctl")
 require("config")
 require("ui")
 
-require("ui.panel")
+require("ui.widget.volume")
+require("ui.widget.controlpanel")
 
 -- Enable sloppy focus, so that focus follows mouse.
 -- client.connect_signal("mouse::enter", function(c)
