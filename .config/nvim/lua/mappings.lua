@@ -32,6 +32,7 @@ map({'n'}, "<C-l>", "<cmd>wincmd l<CR>", { desc = "To right window" })
 -- telescope
 local telescope_builtin = require('telescope.builtin')
 map({'n'}, "<C-f><C-f>", telescope_builtin.find_files, { desc = "Find files" })
+map({'n'}, "<C-f><C-g>", telescope_builtin.live_grep, { desc = "Live grep" })
 map({'n'}, "<C-f><C-b>", telescope_builtin.buffers, { desc = "List all buffers" })
 map({'n'}, "<leader>gc", telescope_builtin.git_commits, { desc = "Git checkout commits" })
 map({'n'}, "<leader>gst", telescope_builtin.git_status, { desc = "Git status" })

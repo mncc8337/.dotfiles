@@ -11,6 +11,8 @@ configuration{
     display-run: "  Run ";
     display-window: " 󱂬 Window";
     sidebar-mode: true;
+
+    font: "CaskaydiaCove Nerd Font Propo 14";
 }
 
 @theme "gruvbox"

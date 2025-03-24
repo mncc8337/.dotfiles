@@ -35,7 +35,7 @@ theme.set_colorscheme = function(colorscheme)
 end
 
 theme.font_type = {
-    normal = "Roboto",
+    normal = "IBM Plex Sans",
     mono   = "CaskaydiaCove Nerd Font Mono",
     icon   = "CaskaydiaCove Nerd Font Propo"
 }
@@ -94,7 +94,7 @@ theme.icon_theme = "oomox-gruvbox"
 theme.playerctl_player = { "mpd", "vlc", "%any", "firefox", "chromium" }
 theme.playerctl_update_on_activity = true
 
-theme.wallpaper = wallpaper_path.."living-in-the-slums-cropped.jpg"
+theme.wallpaper = wallpaper_path.."A_View_of_the_Mountain_Pass_Called_the_Notch_of_the_White_Mountans_(Crawford_Notch)-1839-Thomas_Cole.jpg"
 
 -- call this when colorscheme changed
 theme.build = function()
