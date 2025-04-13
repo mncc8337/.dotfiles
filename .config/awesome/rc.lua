@@ -2,6 +2,8 @@ local awful = require("awful")
 require("awful.autofocus")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
+local wibox = require("wibox")
+local color_tint = require("helper").color_tint
 
 -- error handling
 -- check if awesome encountered an error during startup and fell back to
@@ -22,11 +24,30 @@ theme.set_colorscheme(colorscheme)
 beautiful.init(theme.build())
 
 -- TODO: move these to other place
-terminal = "alacritty"
-fileman = "nemo"
-applauncher = "rofi -show drun"
-promptrunner = "rofi -show run"
-modkey = "Mod4"
+TERMINAL = "alacritty"
+FILEMAN = "nemo"
+APPLAUNCHER = "rofi -show drun"
+PROMPTRUNNER = "rofi -show run"
+MODKEY = "Mod4"
+
+-- generate fallback art
+local fallback_art_widget = wibox.widget {
+    widget = wibox.container.background,
+    bg = color_tint(beautiful.fg_normal, beautiful.accent[1], 0.2),
+    fg = color_tint(beautiful.bg_systray, beautiful.accent[1], 0.3),
+    wibox.widget {
+        widget = wibox.container.margin,
+        margins = 50,
+        wibox.widget {
+            widget = wibox.widget.textbox,
+            font = beautiful.font_type.icon .. " normal 128",
+            markup = "󰲸",
+            halign = "center",
+            valign = "center",
+        }
+    }
+}
+FALLBACK_ART_IMG = wibox.widget.draw_to_image_surface(fallback_art_widget, 350, 350, nil, nil)
 
 -- use pulseaudio to exceed the 100% volume limit
 -- you can use either pulseaudio or alsa though

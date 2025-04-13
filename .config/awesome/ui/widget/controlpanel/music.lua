@@ -1,5 +1,6 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local awful = require("awful")
 local helper = require("helper")
 
 local playerctl = require("module.bling.signal.playerctl").lib()
@@ -27,7 +28,7 @@ local music_detail = wibox.widget {
 
 local music_art = wibox.widget {
     widget = wibox.widget.imagebox,
-    image = beautiful.notification_music_fallback_icon,
+    image = FALLBACK_ART_IMG,
     forced_height = helper.dpi(100),
 }
 
@@ -47,14 +48,14 @@ local music_progressbar = wibox.widget {
 
 local music_time_elapsed = wibox.widget {
     widget = wibox.widget.textbox,
-    font = beautiful.font_type.normal .. "bold 8",
+    font = beautiful.font_type.normal .. " bold 8",
     markup = "N/A",
     valign = "top",
 }
 
 local music_time_total = wibox.widget {
     widget = wibox.widget.textbox,
-    font = beautiful.font_type.normal .. "bold 8",
+    font = beautiful.font_type.normal .. " bold 8",
     markup = "N/A",
     valign = "top",
 }
@@ -72,18 +73,49 @@ local music_volume_slider = wibox.widget {
     value = 75,
 }
 
--- and a bunch of buttons
---
--- --------------------------------
+local music_playbutton = wibox.widget {
+    widget = wibox.widget.textbox,
+    font = beautiful.font_type.icon .. " normal 14",
+    markup = "",
+    halign = "center",
+    valign = "center",
+    forced_width = helper.dpi(15),
+}
+
+local music_nextbutton = wibox.widget {
+    widget = wibox.widget.textbox,
+    font = beautiful.font_type.icon .. " normal 14",
+    markup = "󰒭",
+    halign = "center",
+    valign = "center",
+}
+
+local music_prevbutton = wibox.widget {
+    widget = wibox.widget.textbox,
+    font = beautiful.font_type.icon .. " normal 14",
+    markup = "󰒮",
+    halign = "center",
+    valign = "center",
+}
+
+
+local music_buttons = wibox.widget {
+    layout = wibox.layout.fixed.horizontal,
+    spacing = helper.dpi(10),
+    music_prevbutton,
+    music_playbutton,
+    music_nextbutton,
+}
 
 local function turn_off()
     music_title.markup = "N/A"
     music_detail.markup = ""
-    music_art.image = beautiful.notification_music_fallback_icon
+    music_art.image = FALLBACK_ART_IMG
     music_progressbar.value = 0
     music_time_elapsed.markup = "N/A"
     music_time_total.markup = "N/A"
     music_volume_slider.value = 0
+    music_playbutton.markup = ""
 end
 
 playerctl:connect_signal("metadata", function(_, title, artist, art_path, album, new, player_name)
@@ -114,7 +146,8 @@ playerctl:connect_signal("metadata", function(_, title, artist, art_path, album,
     end
 
     if new then
-        local image_file = beautiful.notification_music_fallback_icon or nil
+        music_playbutton.markup = ""
+        local image_file = FALLBACK_ART_IMG or nil
         if #art_path ~= 0 then
             -- check if file size is larger than 0
             -- if the size is 0 then it is garbage
@@ -152,6 +185,12 @@ end)
 
 playerctl:connect_signal("playback_status", function(_, playing)
     music_status.paused = not playing
+
+    if playing then
+        music_playbutton.markup = ""
+    else
+        music_playbutton.markup = ""
+    end
 end)
 
 playerctl:connect_signal("volume", function(_, volume)
@@ -200,6 +239,24 @@ music_volume_slider:connect_signal("property::value", function()
     update_volume.call()
 end)
 
+music_playbutton:buttons(awful.button({ }, 1, function()
+    if music_playbutton.markup == "" then
+        music_playbutton.markup = ""
+    else
+        music_playbutton.markup = ""
+    end
+
+    awesome.emit_signal("playerctl::toggle")
+end))
+
+music_nextbutton:buttons(awful.button({ }, 1, function()
+    awesome.emit_signal("playerctl::next")
+end))
+
+music_prevbutton:buttons(awful.button({ }, 1, function()
+    awesome.emit_signal("playerctl::prev")
+end))
+
 return wibox.widget {
     layout = wibox.layout.align.horizontal,
     {
@@ -227,8 +284,11 @@ return wibox.widget {
             {
                 layout = wibox.layout.align.horizontal,
                 music_time_elapsed,
-                wibox.widget.textbox("buttons go here"),
-                -- h_centered_widget(buttons),
+                wibox.widget {
+                    layout = wibox.layout.align.horizontal,
+                    expand = "outside",
+                    nil, music_buttons, nil,
+                },
                 music_time_total,
             },
         },

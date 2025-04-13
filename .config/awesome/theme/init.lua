@@ -4,7 +4,6 @@ local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path    = gfs.get_themes_dir()
 local wallpaper_path = os.getenv("DOTFILES") .. "/wallpaper/"
-local icon_path      = gfs.get_configuration_dir() .. "theme/icon/"
 
 local theme = {}
 
@@ -35,7 +34,7 @@ theme.set_colorscheme = function(colorscheme)
 end
 
 theme.font_type = {
-    normal = "IBM Plex Sans",
+    normal = "IBM Plex Sans ",
     mono   = "CaskaydiaCove Nerd Font Mono",
     icon   = "CaskaydiaCove Nerd Font Propo"
 }
@@ -144,7 +143,6 @@ theme.build = function()
     theme.notification_icon_size = theme.notification_height - theme.notification_margin * 2
     theme.notification_border_width = theme.border_width / 2
     theme.notification_border_color = theme.border_color_marked
-    theme.notification_music_fallback_icon = icon_path .. "music_fallback.png"
 
     -- Variables set for theming the menu:
     -- menu_[bg|fg]_[normal|focus]
