@@ -1,6 +1,7 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local awful = require("awful")
+local naughty = require("naughty")
 local helper = require("helper")
 
 local playerctl = require("module.bling.signal.playerctl").lib()
@@ -13,6 +14,7 @@ local music_status = {
 }
 local volume_slider_hovering = false
 local current_player = ""
+local prev_notif
 
 local music_title = wibox.widget {
     widget = wibox.widget.textbox,
@@ -145,22 +147,36 @@ playerctl:connect_signal("metadata", function(_, title, artist, art_path, album,
         music_detail.markup = music_detail.markup .. ", <i>" .. album .. "</i>"
     end
 
-    if new then
-        music_playbutton.markup = ""
-        local image_file = FALLBACK_ART_IMG or nil
-        if #art_path ~= 0 then
-            -- check if file size is larger than 0
-            -- if the size is 0 then it is garbage
-            local potential_img = io.open(art_path)
-            if potential_img then
-                if potential_img:seek("end") > 0 then
-                    image_file = art_path
-                end
-                potential_img:close()
+    music_playbutton.markup = ""
+    local image_file = FALLBACK_ART_IMG or nil
+    if #art_path ~= 0 then
+        -- check if file size is larger than 0
+        -- if the size is 0 then it is garbage
+        local potential_img = io.open(art_path)
+        if potential_img then
+            if potential_img:seek("end") > 0 then
+                image_file = art_path
             end
+            potential_img:close()
+        end
+    end
+
+    music_art.image = image_file
+
+    if new then
+        local _album = ""
+        if #album ~= 0 then
+            _album = "\n" .. album
         end
 
-        music_art.image = image_file
+        if prev_notif ~= nil then
+            prev_notif:destroy()
+        end
+        prev_notif = naughty.notify {
+            title = player_name,
+            message = artist .. " - " .. title .. _album,
+            icon = image_file
+        }
     end
 end)
 

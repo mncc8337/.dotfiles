@@ -1,7 +1,6 @@
 local wibox = require("wibox")
 local awful = require("awful")
 local beautiful = require("beautiful")
-local naughty = require("naughty")
 
 local playerctl = require("module.bling.signal.playerctl").lib()
 
@@ -22,8 +21,7 @@ local function turn_off()
     music_icon.markup = "󰝛"
 end
 
-local prev_notif
-playerctl:connect_signal("metadata", function(_, title, artist, art_path, album, new, player_name)
+playerctl:connect_signal("metadata", function(_, title, artist, _, _, _, player_name)
     -- empty title and artist is considered empty
     if #title == 0 and #artist == 0 then
         turn_off()
@@ -42,39 +40,8 @@ playerctl:connect_signal("metadata", function(_, title, artist, art_path, album,
         artist = artist:gsub("%s%-%sTopic", "")
     end
 
-    local content = artist .. " - " .. title
-
     music_icon.markup = "󰝚"
-    music_widget.markup = content
-
-    if new then
-        local _album = ""
-        if #album ~= 0 then
-            _album = "\n" .. album
-        end
-
-        local image_file = FALLBACK_ART_IMG or nil
-        if #art_path ~= 0 then
-            -- check if file size is larger than 0
-            -- if the size is 0 then it is garbage
-            local potential_img = io.open(art_path)
-            if potential_img then
-                if potential_img:seek("end") > 0 then
-                    image_file = art_path
-                end
-                potential_img:close()
-            end
-        end
-
-        if prev_notif ~= nil then
-            prev_notif:destroy()
-        end
-        prev_notif = naughty.notify {
-            title = player_name,
-            message = content .. _album,
-            icon = image_file
-        }
-    end
+    music_widget.markup = artist .. " - " .. title
 end)
 
 playerctl:connect_signal("no_players", turn_off)

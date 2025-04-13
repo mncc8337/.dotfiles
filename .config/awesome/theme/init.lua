@@ -34,7 +34,7 @@ theme.set_colorscheme = function(colorscheme)
 end
 
 theme.font_type = {
-    normal = "IBM Plex Sans ",
+    normal = "IBM Plex Sans",
     mono   = "CaskaydiaCove Nerd Font Mono",
     icon   = "CaskaydiaCove Nerd Font Propo"
 }

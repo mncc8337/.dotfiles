@@ -3,7 +3,6 @@ require("awful.autofocus")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 local wibox = require("wibox")
-local color_tint = require("helper").color_tint
 
 -- error handling
 -- check if awesome encountered an error during startup and fell back to
@@ -33,8 +32,8 @@ MODKEY = "Mod4"
 -- generate fallback art
 local fallback_art_widget = wibox.widget {
     widget = wibox.container.background,
-    bg = color_tint(beautiful.fg_normal, beautiful.accent[1], 0.2),
-    fg = color_tint(beautiful.bg_systray, beautiful.accent[1], 0.3),
+    bg = beautiful.fg_normal,
+    fg = beautiful.bg_systray,
     wibox.widget {
         widget = wibox.container.margin,
         margins = 50,
