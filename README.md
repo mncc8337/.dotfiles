@@ -31,9 +31,9 @@ img not provided bc im lazy
 - i don't use `bash` anymore so `home/.bashrc` maybe outdated compared to `home/.zshrc`
 - these are fonts and cursor theme used by default
     - cascadia-code-nerd
-    - roboto
+    - ibm-plex
     - bibata-cursor-theme  
-    `yay -S ttf-cascadia-code-nerd ttf-roboto bibata-cursor-theme`
+    `yay -S ttf-cascadia-code-nerd ttf-ibm-plex bibata-cursor-theme`
 - the gtk theme is not included because i use [oomox](https://github.com/themix-project/oomox-gtk-theme) to generate it (config will be added later)
 ### awesomewm
 these dependencies are only needed for awesomewm.
