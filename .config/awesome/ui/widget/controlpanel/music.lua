@@ -42,8 +42,6 @@ local music_progressbar = wibox.widget {
         top = 5,
         bottom = 5,
     },
-    color = beautiful.accent[2],
-    background_color = beautiful.bg[2],
     max_value = 100,
     value = 75,
 }
@@ -67,7 +65,7 @@ local music_volume_slider = wibox.widget {
     bar_height = helper.dpi(4),
     forced_width = helper.dpi(1),
     forced_height = helper.dpi(14),
-    bar_active_color = beautiful.accent[2],
+    bar_active_color = beautiful.accent[1],
     bar_color = beautiful.bg[2],
     handle_width = 0,
     maximum = 100,

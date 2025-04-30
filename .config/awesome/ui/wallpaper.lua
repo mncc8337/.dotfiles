@@ -14,7 +14,7 @@ screen.connect_signal("request::wallpaper", function(s)
                 ratio = s.geometry.width/s.geometry.height,
                 left = 0,
                 right = 0,
-                top = 200,
+                top = 0,
                 bottom = 0,
             },
             upscale = false,

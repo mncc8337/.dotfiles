@@ -93,7 +93,7 @@ theme.icon_theme = "oomox-gruvbox"
 theme.playerctl_player = { "mpd", "vlc", "%any", "firefox", "chromium" }
 theme.playerctl_update_on_activity = true
 
-theme.wallpaper = wallpaper_path.."A_View_of_the_Mountain_Pass_Called_the_Notch_of_the_White_Mountans_(Crawford_Notch)-1839-Thomas_Cole.jpg"
+theme.wallpaper = wallpaper_path .. "birbs.png"
 
 -- call this when colorscheme changed
 theme.build = function()
@@ -128,7 +128,10 @@ theme.build = function()
     theme.slider_handle_width = 0
     theme.slider_bar_height = dpi(10)
     theme.slider_bar_color = theme.bg[2]
-    theme.slider_bar_active_color = theme.accent[2]
+    theme.slider_bar_active_color = theme.accent[1]
+
+    theme.progressbar_fg = theme.accent[1]
+    theme.progressbar_bg = theme.bg[2]
 
     -- Variables set for theming notifications:
     -- notification_font

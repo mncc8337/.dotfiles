@@ -14,11 +14,11 @@ local save_dir    = "$HOME/Pictures/"
 local save_format = "%Y-%m-%d_%H-%M-%S.png"
 
 local full_cmd = "maim %s --hidecursor"
-local area_cmd = "maim -s %s --hidecursor"
+local area_cmd = "maim -g `slop` %s --hidecursor"
 
 local function take_screenshot(cmd, callback_func)
     local tmpf = os.tmpname()
-    awful.spawn.easy_async(string.format(cmd, tmpf), function(_, _, _, exitcode)
+    awful.spawn.easy_async_with_shell(string.format(cmd, tmpf), function(_, _, _, exitcode)
         if exitcode == 1 then return end
 
         awful.spawn.with_shell('xclip -selection clip -t image/png -i ' .. tmpf)

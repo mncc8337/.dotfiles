@@ -44,7 +44,7 @@ local color = {
 
 color.tint = function(accent, weight)
     color.accent[1] = accent
-    color.accent[2] = tint("#ffffff", accent, 0.5)
+    color.accent[2] = tint(base.accent[2], accent, 0.5)
 
     for i = 1, 5 do
         color.bg[i] = tint(base.bg[i], accent, weight)
