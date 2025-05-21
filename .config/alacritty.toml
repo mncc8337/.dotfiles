@@ -73,31 +73,31 @@ background = "#d5c4a1"
 # foreground = "#1e1e2e"
 # background = "#a6acd8"
 
-[colors.primary]
-background = "#282828"
-foreground = "#ebdbb2"
+# [colors.primary]
+# background = "#282828"
+# foreground = "#ebdbb2"
 # dim_foreground = "#cdd6f4"
 # bright_foreground = "#cdd6f4"
 
-[colors.normal]
-black = "#282828"
-red = "#fb4934"
-green = "#b8bb26"
-yellow = "#fabd2f"
-blue = "#83a598"
-magenta = "#d3869b"
-cyan = "#8ec07c"
-white = "#ebdbb2"
+# [colors.normal]
+# black = "#282828"
+# red = "#fb4934"
+# green = "#b8bb26"
+# yellow = "#fabd2f"
+# blue = "#83a598"
+# magenta = "#d3869b"
+# cyan = "#8ec07c"
+# white = "#ebdbb2"
 
-[colors.bright]
-black = "#928374"
-red = "#FB4934"
-green = "#B8BB26"
-yellow = "#FABD2F"
-blue = "#83A598"
-magenta = "#D3869B"
-cyan = "#8EC07C"
-white = "#EBDBB2"
+# [colors.bright]
+# black = "#928374"
+# red = "#FB4934"
+# green = "#B8BB26"
+# yellow = "#FABD2F"
+# blue = "#83A598"
+# magenta = "#D3869B"
+# cyan = "#8EC07C"
+# white = "#EBDBB2"
 
 # [colors.dim]
 # black = "#45475a"
@@ -108,6 +108,31 @@ white = "#EBDBB2"
 # magenta = "#f5c2e7"
 # cyan = "#94e2d5"
 # white = "#bac2de"
+
+
+[colors.primary]
+background="#2b1814"
+foreground="#d0c1bc"
+
+[colors.normal]
+black="#3f221e"
+red="#dd716f"
+green="#c7cd72"
+yellow="#ffe181"
+blue="#8fb1cf"
+magenta="#c3a2cb"
+cyan="#98cdd0"
+white="#d9dad8"
+
+[colors.bright]
+black="#532c28"
+red="#ff8b8a"
+green="#f0ff7d"
+yellow="#fff9a0"
+blue="#b5dbff"
+magenta="#f0c3ff"
+cyan="#c3f5ed"
+white="#ffffff"
 
 [selection]
 save_to_clipboard = false

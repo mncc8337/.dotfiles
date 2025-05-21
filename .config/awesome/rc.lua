@@ -15,12 +15,26 @@ naughty.connect_signal("request::display_error", function(message, startup)
     }
 end)
 
+-- set up theme 
 local colorscheme = require("theme.colorscheme.dynamic")
-colorscheme.tint("#dfadff", 0.4)
+colorscheme.tint("#dd716f", 0.4)
 
 local theme = require("theme")
 theme.set_colorscheme(colorscheme)
-beautiful.init(theme.build())
+theme.build()
+
+-- run this after changing accent of dynamic theme
+-- theme.build_gtk_theme()
+
+theme.wallpaper = theme.wallpaper_path .. "inubashiri_momiji_touhou_drawn_by_chii_tsumami_tsumamare.jpg"
+theme.wallpaper_crop = {
+    top = 0,
+    left = 0,
+    bottom = 100,
+    right = 0,
+}
+
+beautiful.init(theme)
 
 -- TODO: move these to other place
 TERMINAL = "alacritty"

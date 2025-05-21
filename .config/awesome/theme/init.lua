@@ -2,10 +2,11 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
-local themes_path    = gfs.get_themes_dir()
-local wallpaper_path = os.getenv("DOTFILES") .. "/wallpaper/"
 
 local theme = {}
+
+theme.themes_path    = gfs.get_themes_dir()
+theme.wallpaper_path = os.getenv("DOTFILES") .. "/wallpaper/"
 
 theme.bg = {
     "#282828",
@@ -44,48 +45,48 @@ theme.common_padding = dpi(3)
 
 theme.titlebar_height = dpi(20)
 
-theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"
-theme.titlebar_close_button_focus  = themes_path.."default/titlebar/close_focus.png"
+theme.titlebar_close_button_normal = theme.themes_path.."default/titlebar/close_normal.png"
+theme.titlebar_close_button_focus  = theme.themes_path.."default/titlebar/close_focus.png"
 
-theme.titlebar_minimize_button_normal = themes_path.."default/titlebar/minimize_normal.png"
-theme.titlebar_minimize_button_focus  = themes_path.."default/titlebar/minimize_focus.png"
+theme.titlebar_minimize_button_normal = theme.themes_path.."default/titlebar/minimize_normal.png"
+theme.titlebar_minimize_button_focus  = theme.themes_path.."default/titlebar/minimize_focus.png"
 
-theme.titlebar_ontop_button_normal_inactive = themes_path.."default/titlebar/ontop_normal_inactive.png"
-theme.titlebar_ontop_button_focus_inactive  = themes_path.."default/titlebar/ontop_focus_inactive.png"
-theme.titlebar_ontop_button_normal_active = themes_path.."default/titlebar/ontop_normal_active.png"
-theme.titlebar_ontop_button_focus_active  = themes_path.."default/titlebar/ontop_focus_active.png"
+theme.titlebar_ontop_button_normal_inactive = theme.themes_path.."default/titlebar/ontop_normal_inactive.png"
+theme.titlebar_ontop_button_focus_inactive  = theme.themes_path.."default/titlebar/ontop_focus_inactive.png"
+theme.titlebar_ontop_button_normal_active = theme.themes_path.."default/titlebar/ontop_normal_active.png"
+theme.titlebar_ontop_button_focus_active  = theme.themes_path.."default/titlebar/ontop_focus_active.png"
 
-theme.titlebar_sticky_button_normal_inactive = themes_path.."default/titlebar/sticky_normal_inactive.png"
-theme.titlebar_sticky_button_focus_inactive  = themes_path.."default/titlebar/sticky_focus_inactive.png"
-theme.titlebar_sticky_button_normal_active = themes_path.."default/titlebar/sticky_normal_active.png"
-theme.titlebar_sticky_button_focus_active  = themes_path.."default/titlebar/sticky_focus_active.png"
+theme.titlebar_sticky_button_normal_inactive = theme.themes_path.."default/titlebar/sticky_normal_inactive.png"
+theme.titlebar_sticky_button_focus_inactive  = theme.themes_path.."default/titlebar/sticky_focus_inactive.png"
+theme.titlebar_sticky_button_normal_active = theme.themes_path.."default/titlebar/sticky_normal_active.png"
+theme.titlebar_sticky_button_focus_active  = theme.themes_path.."default/titlebar/sticky_focus_active.png"
 
-theme.titlebar_floating_button_normal_inactive = themes_path.."default/titlebar/floating_normal_inactive.png"
-theme.titlebar_floating_button_focus_inactive  = themes_path.."default/titlebar/floating_focus_inactive.png"
-theme.titlebar_floating_button_normal_active = themes_path.."default/titlebar/floating_normal_active.png"
-theme.titlebar_floating_button_focus_active  = themes_path.."default/titlebar/floating_focus_active.png"
+theme.titlebar_floating_button_normal_inactive = theme.themes_path.."default/titlebar/floating_normal_inactive.png"
+theme.titlebar_floating_button_focus_inactive  = theme.themes_path.."default/titlebar/floating_focus_inactive.png"
+theme.titlebar_floating_button_normal_active = theme.themes_path.."default/titlebar/floating_normal_active.png"
+theme.titlebar_floating_button_focus_active  = theme.themes_path.."default/titlebar/floating_focus_active.png"
 
-theme.titlebar_maximized_button_normal_inactive = themes_path.."default/titlebar/maximized_normal_inactive.png"
-theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar/maximized_focus_inactive.png"
-theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
-theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
+theme.titlebar_maximized_button_normal_inactive = theme.themes_path.."default/titlebar/maximized_normal_inactive.png"
+theme.titlebar_maximized_button_focus_inactive  = theme.themes_path.."default/titlebar/maximized_focus_inactive.png"
+theme.titlebar_maximized_button_normal_active = theme.themes_path.."default/titlebar/maximized_normal_active.png"
+theme.titlebar_maximized_button_focus_active  = theme.themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
-theme.layout_fairv = themes_path.."default/layouts/fairvw.png"
-theme.layout_floating  = themes_path.."default/layouts/floatingw.png"
-theme.layout_magnifier = themes_path.."default/layouts/magnifierw.png"
-theme.layout_max = themes_path.."default/layouts/maxw.png"
-theme.layout_fullscreen = themes_path.."default/layouts/fullscreenw.png"
-theme.layout_tilebottom = themes_path.."default/layouts/tilebottomw.png"
-theme.layout_tileleft   = themes_path.."default/layouts/tileleftw.png"
-theme.layout_tile = themes_path.."default/layouts/tilew.png"
-theme.layout_tiletop = themes_path.."default/layouts/tiletopw.png"
-theme.layout_spiral  = themes_path.."default/layouts/spiralw.png"
-theme.layout_dwindle = themes_path.."default/layouts/dwindlew.png"
-theme.layout_cornernw = themes_path.."default/layouts/cornernww.png"
-theme.layout_cornerne = themes_path.."default/layouts/cornernew.png"
-theme.layout_cornersw = themes_path.."default/layouts/cornersww.png"
-theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
+theme.layout_fairh = theme.themes_path.."default/layouts/fairhw.png"
+theme.layout_fairv = theme.themes_path.."default/layouts/fairvw.png"
+theme.layout_floating  = theme.themes_path.."default/layouts/floatingw.png"
+theme.layout_magnifier = theme.themes_path.."default/layouts/magnifierw.png"
+theme.layout_max = theme.themes_path.."default/layouts/maxw.png"
+theme.layout_fullscreen = theme.themes_path.."default/layouts/fullscreenw.png"
+theme.layout_tilebottom = theme.themes_path.."default/layouts/tilebottomw.png"
+theme.layout_tileleft   = theme.themes_path.."default/layouts/tileleftw.png"
+theme.layout_tile = theme.themes_path.."default/layouts/tilew.png"
+theme.layout_tiletop = theme.themes_path.."default/layouts/tiletopw.png"
+theme.layout_spiral  = theme.themes_path.."default/layouts/spiralw.png"
+theme.layout_dwindle = theme.themes_path.."default/layouts/dwindlew.png"
+theme.layout_cornernw = theme.themes_path.."default/layouts/cornernww.png"
+theme.layout_cornerne = theme.themes_path.."default/layouts/cornernew.png"
+theme.layout_cornersw = theme.themes_path.."default/layouts/cornersww.png"
+theme.layout_cornerse = theme.themes_path.."default/layouts/cornersew.png"
 
 theme.icon_theme = "oomox-gruvbox"
 
@@ -93,7 +94,13 @@ theme.icon_theme = "oomox-gruvbox"
 theme.playerctl_player = { "mpd", "vlc", "%any", "firefox", "chromium" }
 theme.playerctl_update_on_activity = true
 
-theme.wallpaper = wallpaper_path .. "birbs.png"
+theme.wallpaper = theme.wallpaper_path .. "birbs.png"
+theme.wallpaper_crop = {
+    top = 0,
+    left = 0,
+    bottom = 0,
+    right = 0,
+}
 
 -- call this when colorscheme changed
 theme.build = function()
@@ -150,14 +157,65 @@ theme.build = function()
     -- Variables set for theming the menu:
     -- menu_[bg|fg]_[normal|focus]
     -- menu_[border_color|border_width]
-    theme.menu_submenu_icon = themes_path.."default/submenu.png"
+    theme.menu_submenu_icon = theme.themes_path.."default/submenu.png"
     theme.menu_height = dpi(15)
     theme.menu_width  = dpi(100)
 
     theme.titlebar_bg_focus = theme.border_color_active
     theme.titlebar_fg_focus = theme.fg_normal
+end
 
-    return theme
+theme.build_gtk_theme = function()
+    local naughty = require("naughty")
+
+    naughty.notify {
+        title = "theme setter",
+        message = "building theme ...",
+    }
+
+    local cmd = ("oomox-cli -o dynamic <(echo -e \"\
+            BG=%s\n\
+            FG=%s\n\
+            HDR_BG=%s\n\
+            HDR_FG=%s\n\
+            SEL_BG=%s\n\
+            SEL_FG=%s\n\
+            ACCENT_BG=%s\n\
+            TXT_BG=%s\n\
+            TXT_FG=%s\n\
+            BTN_BG=%s\n\
+            BTN_FG=%s\n\
+            HDR_BTN_BG=%s\n\
+            HDR_BTN_FG=%s\n\
+            WM_BORDER_FOCUS=%s\n\
+            WM_BORDER_UNFOCUS=%s\n\
+            ROUNDNESS=4\n\
+            GRADIENT=0.0\n\
+            SPACING=3\n\
+        \")"):format (
+        theme.bg[1]:sub(2, -1),
+        theme.fg[4]:sub(2, -1),
+        theme.bg[2]:sub(2, -1),
+        theme.fg[4]:sub(2, -1),
+        theme.accent[1]:sub(2, -1),
+        theme.bg[1]:sub(2, -1), -- tuyf
+        theme.accent[1]:sub(2, -1),
+        theme.bg[3]:sub(2, -1),
+        theme.fg[4]:sub(2, -1),
+        theme.bg[2]:sub(2, -1),
+        theme.fg[4]:sub(2, -1),
+        theme.bg[2]:sub(2, -1),
+        theme.fg[4]:sub(2, -1),
+        theme.accent[1]:sub(2, -1),
+        theme.bg[1]:sub(2, -1)
+    )
+
+    require("awful").spawn.easy_async_with_shell(cmd, function()
+        naughty.notify {
+            title = "theme setter",
+            message = "gtk theme updated, reload gtk apps to see changes",
+        }
+    end)
 end
 
 return theme
