@@ -170,7 +170,7 @@ playerctl:connect_signal("metadata", function(_, title, artist, art_path, album,
         if prev_notif ~= nil then
             prev_notif:destroy()
         end
-        prev_notif = naughty.notify {
+        prev_notif = naughty.notification {
             title = player_name,
             message = artist .. " - " .. title .. _album,
             icon = image_file

@@ -168,12 +168,21 @@ end
 theme.build_gtk_theme = function()
     local naughty = require("naughty")
 
-    naughty.notify {
+    -- pls specify this
+    local OOMOX_PAPIRUS_PLUGINS_DIR = "/opt/oomox/plugins/icons_papirus"
+
+    local theme_notify = naughty.notification {
         title = "theme setter",
-        message = "building theme ...",
+        message = "building gtk theme ...",
+        timeout = 0,
+    }
+    local icon_theme_notify = naughty.notification {
+        title = "theme setter",
+        message = "building gtk icon theme ...",
+        timeout = 0,
     }
 
-    local cmd = ("oomox-cli -o dynamic <(echo -e \"\
+    local build_theme_cmd = ("oomox-cli -o dynamic <(echo -e \"\
             BG=%s\n\
             FG=%s\n\
             HDR_BG=%s\n\
@@ -192,7 +201,7 @@ theme.build_gtk_theme = function()
             ROUNDNESS=4\n\
             GRADIENT=0.0\n\
             SPACING=3\n\
-        \")"):format (
+        \")"):format(
         theme.bg[1]:sub(2, -1),
         theme.fg[4]:sub(2, -1),
         theme.bg[2]:sub(2, -1),
@@ -210,10 +219,27 @@ theme.build_gtk_theme = function()
         theme.bg[1]:sub(2, -1)
     )
 
-    require("awful").spawn.easy_async_with_shell(cmd, function()
-        naughty.notify {
+    local build_icon_theme_cmd = ("mkdir -p ~/.icons/dynamic && \
+        %s/change_color.sh -o dynamic -c %s -d ~/.icons/dynamic \
+    "):format(
+        OOMOX_PAPIRUS_PLUGINS_DIR,
+        theme.accent[1]:sub(2, -1)
+    )
+
+    require("awful").spawn.easy_async_with_shell(build_theme_cmd, function()
+        theme_notify:destroy()
+        naughty.notification {
             title = "theme setter",
-            message = "gtk theme updated, reload gtk apps to see changes",
+            message = "gtk theme updated, change to theme \"dynamic\" and reload gtk apps to see changes",
+            timeout = 0,
+        }
+    end)
+    require("awful").spawn.easy_async_with_shell(build_icon_theme_cmd, function()
+        icon_theme_notify:destroy()
+        naughty.notification {
+            title = "theme setter",
+            message = "gtk icon theme updated, change to icon theme \"dynamic\" to see changes",
+            timeout = 0,
         }
     end)
 end

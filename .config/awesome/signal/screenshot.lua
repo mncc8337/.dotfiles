@@ -23,7 +23,7 @@ local function take_screenshot(cmd, callback_func)
 
         awful.spawn.with_shell('xclip -selection clip -t image/png -i ' .. tmpf)
 
-        local notif = naughty.notify {
+        local notif = naughty.notification {
             title = "screenshot",
             message = "Image copied to clipboard",
             icon = tmpf
