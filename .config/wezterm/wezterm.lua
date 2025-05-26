@@ -16,15 +16,6 @@ end
 
 local config = wezterm.config_builder()
 
-wezterm.on("gui-startup", function(cmd)
-    -- allow wezterm start -- something to affect what we spawn
-    -- in our initial window
-    local args = {}
-    if cmd then
-    args = cmd.args
-    end
-end)
-
 config.default_prog = { "/usr/bin/zsh" }
 
 config.initial_cols = 80

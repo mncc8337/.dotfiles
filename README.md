@@ -21,13 +21,14 @@ img not provided bc im lazy
 - install these packages, marked (*) items are optional and replaceable but are used by default:
     - [zsh](https://www.zsh.org/) (shell) (*)
     - [nemo](https://github.com/linuxmint/nemo/) (file explorer) (*)
-    - [alacritty](https://alacritty.org/) (terminal emulator) (*)
+    - [wezterm](https://wezterm.org/) (terminal emulator) (*)
     - [rofi](https://github.com/davatorium/rofi) (app launcher) (*)
     - [playerctl](https://github.com/altdesktop/playerctl) (control mpris2 based media)
+    - [themix-theme-oomox](https://github.com/themix-project/oomox-gtk-theme) and [themix-icons-papirus](https://github.com/themix-project/themix-gui/tree/master/plugins/icons_papirus) for dynamic theming
     - imagemagick for `magick`
     - libnotify for `notify-send`
     - libpulse for pactl (pulseaudio) or wireplumber for wpctl (pipewire)  
-    `yay -S zsh nemo alacritty rofi playerctl imagemagick libnotify libpulse`
+    `yay -S zsh nemo wezterm rofi playerctl themix-theme-oomox-git themix-icons-papirus-git imagemagick libnotify libpulse`
 - i don't use `bash` anymore so `home/.bashrc` maybe outdated compared to `home/.zshrc`
 - these are fonts and cursor theme used by default
     - cascadia-code-nerd

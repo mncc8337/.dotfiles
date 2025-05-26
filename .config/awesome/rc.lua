@@ -16,6 +16,7 @@ naughty.connect_signal("request::display_error", function(message, startup)
 end)
 
 -- set up theme 
+-- local colorscheme =  require("theme.colorscheme.gruvbox")
 local colorscheme = require("theme.colorscheme.dynamic")
 colorscheme.tint("#dd716f", 0.4)
 
