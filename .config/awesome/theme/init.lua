@@ -1,3 +1,5 @@
+local naughty = require("naughty")
+
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
@@ -28,10 +30,30 @@ theme.accent = {
     "#dddddd",
 }
 
+theme.termcolor = {
+    "#282828",
+    "#fb4934",
+    "#b8bb26",
+    "#fabd2f",
+    "#83a598",
+    "#d3869b",
+    "#8ec07c",
+    "#ebdbb2",
+    "#928374",
+    "#fb4934",
+    "#b8bb26",
+    "#fabd2f",
+    "#83a598",
+    "#d3869b",
+    "#8EC07c",
+    "#ebdbb2",
+}
+
 theme.set_colorscheme = function(colorscheme)
     theme.bg = colorscheme.bg
     theme.fg = colorscheme.fg
     theme.accent = colorscheme.accent
+    theme.termcolor = colorscheme.termcolor
 end
 
 theme.font_type = {
@@ -166,8 +188,6 @@ theme.build = function()
 end
 
 theme.build_gtk_theme = function()
-    local naughty = require("naughty")
-
     -- pls specify this
     local OOMOX_PAPIRUS_PLUGINS_DIR = "/opt/oomox/plugins/icons_papirus"
 
@@ -242,6 +262,89 @@ theme.build_gtk_theme = function()
             timeout = 0,
         }
     end)
+end
+
+theme.save_lua_config = function()
+    local file = io.open("/tmp/awesome_theme.lua", "w+")
+    if not file then
+        naughty.notification {
+            title = "theme setter",
+            message = "failed save theme as lua file. cannot open /tmp/awesome_theme.lua",
+            timeout = 0,
+            urgency = "critical",
+        }
+        return
+    end
+
+    file:write(("return {\
+        bg = {\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+        },\
+        fg = {\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+        },\
+        accent = {\
+            \"%s\",\
+            \"%s\",\
+        },\
+        termcolor = {\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+            \"%s\",\
+        },\
+    }"):format(
+        theme.bg[1],
+        theme.bg[2],
+        theme.bg[3],
+        theme.bg[4],
+        theme.bg[5],
+
+        theme.fg[1],
+        theme.fg[2],
+        theme.fg[3],
+        theme.fg[4],
+
+        theme.accent[1],
+        theme.accent[2],
+
+        theme.termcolor[1],
+        theme.termcolor[2],
+        theme.termcolor[3],
+        theme.termcolor[4],
+        theme.termcolor[5],
+        theme.termcolor[6],
+        theme.termcolor[7],
+        theme.termcolor[8],
+        theme.termcolor[9],
+        theme.termcolor[10],
+        theme.termcolor[11],
+        theme.termcolor[12],
+        theme.termcolor[13],
+        theme.termcolor[14],
+        theme.termcolor[15],
+        theme.termcolor[16]
+    ))
+    file:close()
 end
 
 return theme

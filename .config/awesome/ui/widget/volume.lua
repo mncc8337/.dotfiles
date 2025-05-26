@@ -78,7 +78,7 @@ awesome.connect_signal("audio::mute", function(muted)
 
     if mouse_entered then return end
     panel.visible = true
-    close_timer.timeout = 1.5
+    close_timer.timeout = 2.0
     close_timer:again()
 end)
 
@@ -89,12 +89,12 @@ awesome.connect_signal("audio::increase_volume", function(_)
     close_timer:again()
 end)
 
-volume_slider:connect_signal("mouse::enter", function()
+panel.widget:connect_signal("mouse::enter", function()
     mouse_entered = true
     close_timer:stop()
 end)
 
-volume_slider:connect_signal("mouse::leave", function()
+panel.widget:connect_signal("mouse::leave", function()
     mouse_entered = false
     close_timer.timeout = 2.5
     close_timer:again()
@@ -108,5 +108,11 @@ volume_slider:connect_signal("property::value", function()
     if not mouse_entered then return end
     update_volume.call()
 end)
+
+volume_icon:buttons {
+    awful.button({ }, 1, function()
+        awesome.emit_signal("audio::toggle_mute")
+    end)
+}
 
 return panel.widget

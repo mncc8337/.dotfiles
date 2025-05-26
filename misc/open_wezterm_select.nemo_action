@@ -1,0 +1,7 @@
+[Nemo Action]
+Name=Open Wezterm at this directory
+Comment=Open Wezterm at current directory
+Exec=wezterm start --cwd %F
+Icon-Name=utilities-terminal-symbolic
+Selection=single
+Extensions=dir

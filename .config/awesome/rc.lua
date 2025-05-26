@@ -22,6 +22,7 @@ colorscheme.tint("#dd716f", 0.4)
 local theme = require("theme")
 theme.set_colorscheme(colorscheme)
 theme.build()
+theme.save_lua_config()
 
 -- run this after changing accent of dynamic theme
 -- theme.build_gtk_theme()
@@ -37,7 +38,7 @@ theme.wallpaper_crop = {
 beautiful.init(theme)
 
 -- TODO: move these to other place
-TERMINAL = "alacritty"
+TERMINAL = "wezterm"
 FILEMAN = "nemo"
 APPLAUNCHER = "rofi -show drun"
 PROMPTRUNNER = "rofi -show run"

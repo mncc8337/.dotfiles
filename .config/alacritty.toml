@@ -3,7 +3,7 @@ program = "/usr/bin/zsh"
 
 [window]
 decorations = "None"
-opacity = 1.0
+opacity = 0.85
 dynamic_title = false
 
 [window.dimensions]
@@ -19,19 +19,19 @@ size = 12.0
 builtin_box_drawing = false
 
 [font.normal]
-family = "CaskaydiaCove Nerd Font"
+family = "CaskaydiaCove Nerd Font Mono"
 style = "Regular"
 
 [font.bold]
-family = "CaskaydiaCove Nerd Font"
+family = "CaskaydiaCove Nerd Font Mono"
 style = "Bold"
 
 [font.italic]
-family = "CaskaydiaCove Nerd Font"
+family = "CaskaydiaCove Nerd Font Mono"
 style = "Italic"
 
 [font.bold_italic]
-family = "CaskaydiaCove Nerd Font"
+family = "CaskaydiaCove Nerd Font Mono"
 style = "Bold Italic"
 
 [colors]

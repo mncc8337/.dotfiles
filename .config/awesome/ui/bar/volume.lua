@@ -1,5 +1,6 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local awful = require("awful")
 local helper = require("helper")
 
 local volume_widget = wibox.widget {
@@ -30,6 +31,7 @@ end)
 return {
     widget = wibox.container.margin,
     margins = beautiful.common_padding,
+    buttons = { awful.button({ }, 1, function() awesome.emit_signal("controlpanel::toggle") end) },
     {
         layout = wibox.layout.fixed.horizontal,
         spacing = beautiful.common_padding,

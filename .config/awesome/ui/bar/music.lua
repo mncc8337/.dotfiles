@@ -51,10 +51,10 @@ turn_off()
 return {
     widget = wibox.container.margin,
     margins = beautiful.common_padding,
+    buttons = { awful.button({ }, 1, function() awesome.emit_signal("controlpanel::toggle") end) },
     {
         layout = wibox.layout.fixed.horizontal,
         spacing = beautiful.common_padding,
-        buttons = { awful.button({ }, 1, function() awesome.emit_signal("controlpanel::toggle") end) },
         music_icon,
         {
             widget = wibox.container.constraint,
