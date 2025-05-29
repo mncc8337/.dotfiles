@@ -4,11 +4,11 @@ local brightness = helper.color_brightness
 
 local base = {
     bg = {
+        "#1c1c1c",
         "#282828",
         "#383838",
         "#505050",
         "#666666",
-        "#909090",
     },
 
     fg = {

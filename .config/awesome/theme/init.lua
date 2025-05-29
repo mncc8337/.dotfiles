@@ -31,22 +31,22 @@ theme.accent = {
 }
 
 theme.termcolor = {
-    "#282828",
-    "#fb4934",
-    "#b8bb26",
-    "#fabd2f",
-    "#83a598",
-    "#d3869b",
-    "#8ec07c",
-    "#ebdbb2",
-    "#928374",
-    "#fb4934",
-    "#b8bb26",
-    "#fabd2f",
-    "#83a598",
-    "#d3869b",
-    "#8EC07c",
-    "#ebdbb2",
+    "#373b41",
+    "#cc6666",
+    "#b5bd68",
+    "#f0c674",
+    "#81a2be",
+    "#b294bb",
+    "#8abeb7",
+    "#c5c8c6",
+    "#373b41",
+    "#cc6666",
+    "#b5bd68",
+    "#f0c674",
+    "#81a2be",
+    "#b294bb",
+    "#8abeb7",
+    "#c5c8c6",
 }
 
 theme.set_colorscheme = function(colorscheme)
@@ -191,6 +191,8 @@ theme.build_gtk_theme = function()
     -- pls specify this
     local OOMOX_PAPIRUS_PLUGINS_DIR = "/opt/oomox/plugins/icons_papirus"
 
+    local easy_async_with_shell = require("awful").spawn.easy_async_with_shell
+
     local theme_notify = naughty.notification {
         title = "theme setter",
         message = "building gtk theme ...",
@@ -199,6 +201,11 @@ theme.build_gtk_theme = function()
     local icon_theme_notify = naughty.notification {
         title = "theme setter",
         message = "building gtk icon theme ...",
+        timeout = 0,
+    }
+    local ibus_icon_notify = naughty.notification {
+        title = "theme setter",
+        message = "setting ibus icon color ...",
         timeout = 0,
     }
 
@@ -246,7 +253,11 @@ theme.build_gtk_theme = function()
         theme.accent[1]:sub(2, -1)
     )
 
-    require("awful").spawn.easy_async_with_shell(build_theme_cmd, function()
+    local ibus_icon_cmd = (
+        "gsettings set org.freedesktop.ibus.panel xkb-icon-rgba '%s'"
+    ):format(theme.accent[1])
+
+    easy_async_with_shell(build_theme_cmd, function()
         theme_notify:destroy()
         naughty.notification {
             title = "theme setter",
@@ -254,11 +265,21 @@ theme.build_gtk_theme = function()
             timeout = 0,
         }
     end)
-    require("awful").spawn.easy_async_with_shell(build_icon_theme_cmd, function()
+
+    easy_async_with_shell(build_icon_theme_cmd, function()
         icon_theme_notify:destroy()
         naughty.notification {
             title = "theme setter",
             message = "gtk icon theme updated, change to icon theme \"dynamic\" to see changes",
+            timeout = 0,
+        }
+    end)
+
+    easy_async_with_shell(ibus_icon_cmd, function()
+        ibus_icon_notify:destroy()
+        naughty.notification {
+            title = "theme setter",
+            message = "ibus icon color set",
             timeout = 0,
         }
     end)
