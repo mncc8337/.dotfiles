@@ -37,7 +37,7 @@
             "keyColor": "32"
         },
         {
-            "key": "p pkgs",
+            "key": " pkgs",
             "type": "packages",
             "keyColor": "33"
         },
@@ -47,7 +47,7 @@
             "keyColor": "34"
         },
         {
-            "key": "f font",
+            "key": " font",
             "type": "font",
             "keyColor": "35"
         },
@@ -57,12 +57,12 @@
             "keyColor": "36"
         },
         {
-            "key": " board",
+            "key": "󰌢 board",
             "type": "board",
             "keyColor": "31"
         },
         {
-            "key": " monitor",
+            "key": "󰍹 monitor",
             "type": "monitor",
             "keyColor": "32"
         },

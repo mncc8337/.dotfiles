@@ -1,10 +1,3 @@
-# set terminal colorscheme
-function gogh() {
-    source ~/PLAYGROUND/py-env/bin/activate
-    bash -c "$(curl -sLo- https://git.io/vQgMr)"
-    deactivate
-}
-
 # proxy stuff
 # stolen from https://wiki.archlinux.org/title/Proxy_server
 function proxy-on() {
