@@ -1,5 +1,6 @@
 [mgr]
 ratio = [1, 4, 3]
+show_hidden = true
 show_symlink = true
 
 [opener]
@@ -8,6 +9,7 @@ edit = [
 ]
 open = [
     { run = 'xdg-open "$1"', desc = "Open", for = "linux" },
+    { run = 'termux-open "$@"', desc =  "Open", for = "android" },
 ]
 reveal = [
     { run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", for = "linux" },
@@ -18,6 +20,7 @@ extract = [
 ]
 play = [
     { run = 'vlc "$@"', orphan = true, for = "unix" },
+    { run = 'termux-open "$@"', orphan = true, for = "android" },
     { run = '''mediainfo "$1" | less''', block = true, desc = "Show media info", for = "unix" },
 ]
 
