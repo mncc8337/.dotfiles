@@ -1,5 +1,4 @@
 local wezterm = require("wezterm")
-local mux = wezterm.mux
 
 -- load colorscheme from awesomewm generated file
 -- see .config/awesome/theme/init.lua:theme.save_lua_config()
@@ -26,10 +25,14 @@ config.window_padding = {
     top = 10,
     bottom = 10,
 }
-config.window_background_opacity = 0.9
+config.window_background_opacity = 0.7
 
-config.font = wezterm.font("CaskaydiaCove Nerd Font Mono")
-config.font_size = 12
+config.font = wezterm.font {
+    family = "CaskaydiaCove Nerd Font Mono",
+    weight = "Regular",
+    -- style = "Italic",
+}
+config.font_size = 13
 
 config.enable_tab_bar = false
 

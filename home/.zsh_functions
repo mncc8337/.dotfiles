@@ -44,3 +44,11 @@ function proxy-off(){
           HTTP_PROXY HTTPS_PROXY FTP_PROXY RSYNC_PROXY
     echo -e "Proxy environment variable removed."
 }
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
