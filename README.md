@@ -9,16 +9,15 @@ img not provided bc im lazy
 - awesome
 - hyprland
 - rofi (copied somewhere else and i don't remember the source)
-- ncmpcpp
 - alacritty
+- wezterm
 - picom
 - some shell scripts collected from internet
 ## before installing
 > [!CAUTION]
-> the config was made only for my use, thus it is not stable and will be changed constantly. you should only use this config as a reference.
-- install [oh my zsh](https://ohmyz.sh/) if using zsh, `home/.zshrc` relies heavily on it
-- change value of `$DOTFILES` in `home/.zshenv` to `.dotfiles` location (including its name), default to `~/.dotfiles`
-- install these packages, marked (*) items are optional and replaceable but are used by default:
+> the config is made only for my use, thus it is not stable and will be changed constantly. you should only use this config as a reference.
+- install [oh my zsh](https://ohmyz.sh/)
+- install these packages, marked (*) items are optional and are used by default:
     - [zsh](https://www.zsh.org/) (shell) (*)
     - [nemo](https://github.com/linuxmint/nemo/) (file explorer) (*)
     - [wezterm](https://wezterm.org/) (terminal emulator) (*)
@@ -35,7 +34,6 @@ img not provided bc im lazy
     - ibm-plex
     - bibata-cursor-theme  
     `yay -S ttf-cascadia-code-nerd ttf-ibm-plex bibata-cursor-theme`
-- the gtk theme is not included because i use [oomox](https://github.com/themix-project/oomox-gtk-theme) to generate it (config will be added later)
 ### awesomewm
 these dependencies are only needed for awesomewm.
 - [awesome](https://awesomewm.org/)
@@ -52,7 +50,7 @@ these dependencies are only needed for hyprland.
 - [grim](https://sr.ht/~emersion/grim/) and [slurp](https://github.com/emersion/slurp)  
 `yay -S hyprland hyprpaper python-fabric-git wl-clipboard grim slurp`
 ## install
-please **do not use** `./tool/create-symlink` because it is for my use only. to install just copy the stuff you need to appropriate directories.
+please **do not use** `./tool/create-symlink` because it is for my use only.
 ```
 git clone https://github.com/mncc8337/.dotfiles.git --recurse-submodules
 ```
