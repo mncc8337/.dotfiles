@@ -1,14 +1,54 @@
 #!/bin/env python3
 
-# count time until enter
+# count time until pressed a key
 
 import time
+import signal
+import threading
+import sys
+import tty
 
-tm = time.time()
-input()
-cu = time.time() - tm
+start_tm = time.time()
+running = True
 
-h = int(cu / 3600); cu -= h * 3600
-m = int(cu / 60);   cu -= m * 60
-s = int(cu * 10 + 0.5) / 10
-print(f"{h}h {m}m {s}s")
+
+def counting_thread():
+    output = "0h 0m 0s"
+    code_tm = time.time()
+    while running:
+        print(output, end="", flush=True)
+        time.sleep(1.0 - (time.time() - code_tm))
+        code_tm = time.time()
+
+        for _ in output:
+            print("\b", end="")
+
+        cu = time.time() - start_tm
+
+        h = int(cu / 3600)
+        cu -= h * 3600
+        m = int(cu / 60)
+        cu -= m * 60
+        s = int(cu)
+
+        output = f"{h}h {m}m {s}s"
+
+
+th = threading.Thread(target=counting_thread)
+
+
+def sigint_handler(sig, frame):
+    global running
+    print()
+    print(time.time() - start_tm, "seconds")
+    running = False
+    th.join()
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, sigint_handler)
+print("counting, press a key to stop")
+th.start()
+tty.setcbreak(sys.stdin.fileno())
+sys.stdin.read(1)
+sigint_handler(0, 0)

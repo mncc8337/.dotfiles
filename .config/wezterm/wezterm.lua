@@ -25,7 +25,7 @@ config.window_padding = {
     top = 10,
     bottom = 10,
 }
-config.window_background_opacity = 0.7
+config.window_background_opacity = 0.8
 
 config.font = wezterm.font {
     family = "CaskaydiaCove Nerd Font Mono",
