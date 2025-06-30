@@ -25,9 +25,9 @@ awful.keyboard.append_global_keybindings({
 
 -- tags related keybindings
 -- awful.keyboard.append_global_keybindings({
---     awful.key({ MODKEY }, "Left",   awful.tag.viewprev,
+--     awful.key({ MODKEY }, ",",   awful.tag.viewprev,
 --               {description = "view previous", group = "tag"}),
---     awful.key({ MODKEY }, "Right",  awful.tag.viewnext,
+--     awful.key({ MODKEY }, ".",  awful.tag.viewnext,
 --               {description = "view next", group = "tag"}),
 --     awful.key({ MODKEY }, "Escape", awful.tag.history.restore,
 --               {description = "go back", group = "tag"}),
@@ -35,13 +35,13 @@ awful.keyboard.append_global_keybindings({
 
 -- focus helated keybindings
 awful.keyboard.append_global_keybindings({
-    awful.key({ MODKEY,           }, "Right",
+    awful.key({ MODKEY,           }, ".",
         function()
             awful.client.focus.byidx( 1)
         end,
         {description = "focus next by index", group = "client"}
     ),
-    awful.key({ MODKEY,           }, "Left",
+    awful.key({ MODKEY,           }, ",",
         function()
             awful.client.focus.byidx(-1)
         end,
@@ -63,17 +63,17 @@ awful.keyboard.append_global_keybindings({
 
 -- layout related keybindings
 awful.keyboard.append_global_keybindings({
-    awful.key({ MODKEY, "Control" }, "Right", function() awful.client.swap.byidx(1) end,
+    awful.key({ MODKEY, "Control" }, ".", function() awful.client.swap.byidx(1) end,
               {description = "swap with next client by index", group = "client"}),
-    awful.key({ MODKEY, "Control" }, "Left", function() awful.client.swap.byidx(-1) end,
+    awful.key({ MODKEY, "Control" }, ",", function() awful.client.swap.byidx(-1) end,
               {description = "swap with previous client by index", group = "client"}),
 
     awful.key({ MODKEY }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
 
-    awful.key({ MODKEY, "Shift" }, "Right", function() awful.tag.incmwfact( 0.05) end,
+    awful.key({ MODKEY, "Shift" }, ".", function() awful.tag.incmwfact( 0.05) end,
               {description = "increase master width factor", group = "layout"}),
-    awful.key({ MODKEY, "Shift" }, "Left", function() awful.tag.incmwfact(-0.05) end,
+    awful.key({ MODKEY, "Shift" }, ",", function() awful.tag.incmwfact(-0.05) end,
               {description = "decrease master width factor", group = "layout"}),
 
     awful.key({ MODKEY }, "k", function() awful.tag.incnmaster( 1, nil, true) end,
