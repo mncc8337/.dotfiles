@@ -4,7 +4,10 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 -- require("awful.hotkeys_popup.keys")
 
--- General Awesome keys
+MODKEY = "Mod4"
+ALTKEY = "Mod1"
+
+-- general Awesome keys
 awful.keyboard.append_global_keybindings({
     awful.key({ MODKEY,           }, "s", hotkeys_popup.show_help,
               {description = "show help", group = "awesome"}),
@@ -20,7 +23,7 @@ awful.keyboard.append_global_keybindings({
               {description = "run prompt", group = "launcher"}),
 })
 
--- Tags related keybindings
+-- tags related keybindings
 -- awful.keyboard.append_global_keybindings({
 --     awful.key({ MODKEY }, "Left",   awful.tag.viewprev,
 --               {description = "view previous", group = "tag"}),
@@ -30,7 +33,7 @@ awful.keyboard.append_global_keybindings({
 --               {description = "go back", group = "tag"}),
 -- })
 
--- Focus related keybindings
+-- focus helated keybindings
 awful.keyboard.append_global_keybindings({
     awful.key({ MODKEY,           }, "Right",
         function()
@@ -58,7 +61,7 @@ awful.keyboard.append_global_keybindings({
     --           {description = "focus the previous screen", group = "screen"}),
 })
 
--- Layout related keybindings
+-- layout related keybindings
 awful.keyboard.append_global_keybindings({
     awful.key({ MODKEY, "Control" }, "Right", function() awful.client.swap.byidx(1) end,
               {description = "swap with next client by index", group = "client"}),
@@ -224,7 +227,7 @@ client.connect_signal("request::default_keybindings", function()
     })
 end)
 
--- Media control
+-- media control
 awful.keyboard.append_global_keybindings({
     awful.key({ }, "XF86AudioNext", function() awesome.emit_signal("playerctl::next")     end,
               {description = "next song", group = "media"}),
@@ -234,14 +237,21 @@ awful.keyboard.append_global_keybindings({
               {description = "pause/play song", group = "media"}),
     awful.key({ }, "XF86AudioStop", function() awesome.emit_signal("playerctl::pause") end,
               {description = "pause song", group = "media"}),
-
-    awful.key({ "Shift" }, "XF86AudioRaiseVolume", function() awesome.emit_signal("playerctl::increase_volume",  0.02) end,
-              {description = "increase playerctl volume", group = "media"}),
-    awful.key({ "Shift" }, "XF86AudioLowerVolume", function() awesome.emit_signal("playerctl::increase_volume", -0.02) end,
-              {description = "decrease playerctl volume", group = "media"}),
 })
 
--- Audio control
+-- alt media control
+awful.keyboard.append_global_keybindings({
+    awful.key({ ALTKEY }, "0", function() awesome.emit_signal("playerctl::next")     end,
+              {description = "next song", group = "media"}),
+    awful.key({ ALTKEY }, "9", function() awesome.emit_signal("playerctl::prev") end,
+              {description = "previous song", group = "media"}),
+    awful.key({ ALTKEY }, "8", function() awesome.emit_signal("playerctl::toggle") end,
+              {description = "pause/play song", group = "media"}),
+    -- awful.key({ ALTKEY }, "7", function() awesome.emit_signal("playerctl::pause") end,
+    --           {description = "pause song", group = "media"}),
+})
+
+-- audio control
 awful.keyboard.append_global_keybindings({
     awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("audio::increase_volume",  2) end,
               {description = "increase volume", group = "media"}),
@@ -250,25 +260,40 @@ awful.keyboard.append_global_keybindings({
     awful.key({ }, "XF86AudioMute",        function() awesome.emit_signal("audio::toggle_mute") end,
               {description = "toggle volume mute", group = "media"}),
 
-    awful.key({ "Shift" }, "XF86AudioRaiseVolume", function() awesome.emit_signal("playerctl::increase_volume",  2, nil) end,
-              {description = "increase volume", group = "media"}),
-    awful.key({ "Shift" }, "XF86AudioLowerVolume", function() awesome.emit_signal("playerctl::increase_volume", -2, nil) end,
-              {description = "decrease volume", group = "media"}),
+    awful.key({ "Shift" }, "XF86AudioRaiseVolume", function() awesome.emit_signal("playerctl::increase_volume",  0.02) end,
+              {description = "increase playerctl volume", group = "media"}),
+    awful.key({ "Shift" }, "XF86AudioLowerVolume", function() awesome.emit_signal("playerctl::increase_volume", -0.02) end,
+              {description = "decrease playerctl volume", group = "media"}),
 })
 
--- Screenshot
+-- alt audio control
 awful.keyboard.append_global_keybindings({
-    awful.key({               }, "Print", function() awesome.emit_signal("screenshot::full", false) end,
+    awful.key({ ALTKEY }, "=", function() awesome.emit_signal("audio::increase_volume",  2) end,
+              {description = "increase volume", group = "media"}),
+    awful.key({ ALTKEY }, "-", function() awesome.emit_signal("audio::increase_volume", -2) end,
+              {description = "decrease volume", group = "media"}),
+    awful.key({ ALTKEY }, "7",        function() awesome.emit_signal("audio::toggle_mute") end,
+              {description = "toggle volume mute", group = "media"}),
+
+    awful.key({ ALTKEY, "Shift" }, "=", function() awesome.emit_signal("playerctl::increase_volume",  0.02) end,
+              {description = "increase playerctl volume", group = "media"}),
+    awful.key({ ALTKEY, "Shift" }, "-", function() awesome.emit_signal("playerctl::increase_volume", -0.02) end,
+              {description = "decrease playerctl volume", group = "media"}),
+})
+
+-- screenshot
+awful.keyboard.append_global_keybindings({
+    awful.key({                 }, "Print", function() awesome.emit_signal("screenshot::full", false) end,
               {description = "print full screen",               group = "media"}),
-    awful.key({MODKEY         }, "Print", function() awesome.emit_signal("screenshot::full", true)  end,
+    awful.key({ MODKEY          }, "Print", function() awesome.emit_signal("screenshot::full", true)  end,
               {description = "print full screen and save",      group = "media"}),
-    awful.key({        "Shift"}, "Print", function() awesome.emit_signal("screenshot::area", false) end,
+    awful.key({         "Shift" }, "Print", function() awesome.emit_signal("screenshot::area", false) end,
               {description = "print a part of screen",          group = "media"}),
-    awful.key({MODKEY, "Shift"}, "Print", function() awesome.emit_signal("screenshot::area", true)  end,
+    awful.key({ MODKEY, "Shift" }, "Print", function() awesome.emit_signal("screenshot::area", true)  end,
               {description = "print a part of screen and save", group = "media"}),
 })
 
--- App launching
+-- app launching
 awful.keyboard.append_global_keybindings({
     awful.key({ MODKEY }, "e", function() awful.spawn(FILEMAN) end,
               {description = "open file manager", group = "launcher"}),

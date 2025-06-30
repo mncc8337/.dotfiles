@@ -43,7 +43,6 @@ TERMINAL = "wezterm"
 FILEMAN = "nemo"
 APPLAUNCHER = "rofi -show drun"
 PROMPTRUNNER = "rofi -show run"
-MODKEY = "Mod4"
 
 -- generate fallback art
 local fallback_art_widget = wibox.widget {
