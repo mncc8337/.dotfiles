@@ -39,7 +39,7 @@ map({'n'}, "<leader>gst", telescope_builtin.git_status, { desc = "Git status" })
 
 -- bufferline
 map({'n'}, "<Tab>", vim.cmd.BufferLineCycleNext, { desc = "Next buffer" })
-map({'n'}, "<C-Tab>", vim.cmd.BufferLineCyclePrev, { desc = "Prev buffer" })
+map({'n'}, "<S-Tab>", vim.cmd.BufferLineCyclePrev, { desc = "Prev buffer" })
 map({'n'}, "<C-b>", vim.cmd.BufferLinePick, { desc = "Pick buffer" })
 
 map({'n'}, "gd", vim.lsp.buf.definition, { desc = "Go to definition" })

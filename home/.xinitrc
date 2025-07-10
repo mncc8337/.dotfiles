@@ -36,7 +36,5 @@ fi
 
 export XDG_CONFIG_HOME=$HOME/.config
 
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-picom &
-ibus-daemon -r &
+source ~/.autostart
 awesome
