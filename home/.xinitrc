@@ -36,5 +36,5 @@ fi
 
 export XDG_CONFIG_HOME=$HOME/.config
 
-source ~/.autostart
+~/.autostart
 awesome
