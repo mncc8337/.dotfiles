@@ -63,12 +63,14 @@ local fallback_art_widget = wibox.widget {
 }
 FALLBACK_ART_IMG = wibox.widget.draw_to_image_surface(fallback_art_widget, 350, 350, nil, nil)
 
+-- declare signal services
+require("signal.battery")
+require("signal.playerctl")
+require("signal.screenshot")
 -- use pulseaudio to exceed the 100% volume limit
 -- you can use either pulseaudio or alsa though
 -- but dont use both of them at the same time
 require("signal.pulseaudio"):start()
-require("signal.screenshot")
-require("signal.playerctl")
 
 require("config")
 require("ui")

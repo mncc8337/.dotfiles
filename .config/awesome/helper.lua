@@ -18,6 +18,17 @@ helper.get_volume_icon = function(vol, mute)
     end
 end
 
+helper.battery_icon = {
+    na = "󱉞",
+    discharging = { "󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹" },
+    charging = { "󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅" },
+}
+
+helper.get_battery_icon = function(cap, charging)
+    local idx = math.floor((cap + 5) / 10)
+    if charging then return helper.battery_icon.charging[idx] else return helper.battery_icon.discharging[idx] end
+end
+
 helper.rate_limited_call = function(interval, callback)
     local tm = timer {
         timeout = interval,
@@ -36,6 +47,15 @@ helper.rate_limited_call = function(interval, callback)
     return {
         call = call,
     }
+end
+
+helper.table_contains = function(tbl, str)
+    for _, v in ipairs(tbl) do
+        if v == str then
+            return true
+        end
+    end
+    return false
 end
 
 helper.hex_to_rgb = function(hex)

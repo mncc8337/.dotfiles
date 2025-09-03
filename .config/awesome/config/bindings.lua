@@ -170,6 +170,15 @@ awful.keyboard.append_global_keybindings({
     -- }
 })
 
+awful.keyboard.append_global_keybindings({
+    awful.key({ MODKEY, "Control", "Shift" }, ",",   awful.tag.viewprev,
+              {description = "view previous", group = "tag"}),
+    awful.key({ MODKEY, "Control", "Shift" }, ".",  awful.tag.viewnext,
+              {description = "view next", group = "tag"}),
+    -- awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
+    --           {description = "go back", group = "tag"}),
+})
+
 client.connect_signal("request::default_mousebindings", function()
     awful.mouse.append_client_mousebindings({
         awful.button({ }, 1, function(c)

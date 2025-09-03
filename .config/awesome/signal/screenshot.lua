@@ -1,6 +1,6 @@
 -- signals
 --[[
-    SET
+    CALL
     screenshot::full
     screenshot::area
 --]]

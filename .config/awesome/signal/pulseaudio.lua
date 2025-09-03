@@ -1,9 +1,11 @@
 -- signals
 --[[
+    CALL
+    audio::update, force update and get info
+
     GET
-    audio::update, get info
-    audio::avg, average volume in both speaker in %
-    audio::mute, muted or not
+    audio::avg(val), average volume in both speaker in %
+    audio::mute(muted), muted or not
 
     SET
     audio::set_volume(val)
@@ -13,8 +15,8 @@
 
 -- dependency: libpulse
 
-local awful  = require("awful")
-local gears  = require("gears")
+local awful = require("awful")
+local gears = require("gears")
 
 local sink = "@DEFAULT_SINK@"
 local interval = 2
@@ -72,12 +74,10 @@ awesome.connect_signal("audio::toggle_mute", function()
 end)
 
 awesome.emit_signal("audio::update")
-local timer = gears.timer {
+return gears.timer {
     timeout = interval,
-    single_shot = false, autostart = false,
+    single_shot = false, autostart = false, call_now = true,
     callback = function()
         awesome.emit_signal("audio::update")
     end
 }
-
-return timer

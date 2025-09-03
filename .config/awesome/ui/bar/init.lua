@@ -67,6 +67,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                     widget_container(require("ui.bar.music")),
                     widget_container(require("ui.bar.systray")),
                     widget_container(require("ui.bar.volume")),
+                    widget_container(require("ui.bar.battery")),
                     widget_container(require("ui.bar.clock")),
                     make_layoutbox(s),
                 }

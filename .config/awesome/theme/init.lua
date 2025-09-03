@@ -246,8 +246,8 @@ theme.build_gtk_theme = function()
         theme.bg[1]:sub(2, -1)
     )
 
-    local build_icon_theme_cmd = ("mkdir -p ~/.icons/dynamic && \
-        %s/change_color.sh -o dynamic -c %s -d ~/.icons/dynamic \
+    local build_icon_theme_cmd = ("mkdir -p ~/.local/share/icons/dynamic && \
+        %s/change_color.sh -o dynamic -c %s -d ~/.local/share/icons/dynamic \
     "):format(
         OOMOX_PAPIRUS_PLUGINS_DIR,
         theme.accent[1]:sub(2, -1)
