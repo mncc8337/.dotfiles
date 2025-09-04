@@ -36,6 +36,7 @@ local panel = awful.popup {
                 spacing = beautiful.common_padding,
                 musicwidget,
                 require("ui.widget.volume"),
+                require("ui.widget.backlight"),
             },
         },
     },

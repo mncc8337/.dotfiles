@@ -65,6 +65,7 @@ FALLBACK_ART_IMG = wibox.widget.draw_to_image_surface(fallback_art_widget, 350, 
 
 -- declare signal services
 require("signal.battery")
+require("signal.backlight")
 require("signal.playerctl")
 require("signal.screenshot")
 -- use pulseaudio to exceed the 100% volume limit
@@ -76,6 +77,7 @@ require("config")
 require("ui")
 
 require("ui.widget.volume")
+require("ui.widget.backlight")
 require("ui.widget.controlpanel")
 
 -- Enable sloppy focus, so that focus follows mouse.

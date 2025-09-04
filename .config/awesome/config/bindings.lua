@@ -249,16 +249,16 @@ awful.keyboard.append_global_keybindings({
 })
 
 -- alt media control
-awful.keyboard.append_global_keybindings({
-    awful.key({ ALTKEY }, "0", function() awesome.emit_signal("playerctl::next")     end,
-              {description = "next song", group = "media"}),
-    awful.key({ ALTKEY }, "9", function() awesome.emit_signal("playerctl::prev") end,
-              {description = "previous song", group = "media"}),
-    awful.key({ ALTKEY }, "8", function() awesome.emit_signal("playerctl::toggle") end,
-              {description = "pause/play song", group = "media"}),
-    -- awful.key({ ALTKEY }, "7", function() awesome.emit_signal("playerctl::pause") end,
-    --           {description = "pause song", group = "media"}),
-})
+-- awful.keyboard.append_global_keybindings({
+--     awful.key({ ALTKEY }, "0", function() awesome.emit_signal("playerctl::next")     end,
+--               {description = "next song", group = "media"}),
+--     awful.key({ ALTKEY }, "9", function() awesome.emit_signal("playerctl::prev") end,
+--               {description = "previous song", group = "media"}),
+--     awful.key({ ALTKEY }, "8", function() awesome.emit_signal("playerctl::toggle") end,
+--               {description = "pause/play song", group = "media"}),
+--     awful.key({ ALTKEY }, "7", function() awesome.emit_signal("playerctl::pause") end,
+--               {description = "pause song", group = "media"}),
+-- })
 
 -- audio control
 awful.keyboard.append_global_keybindings({
@@ -276,18 +276,26 @@ awful.keyboard.append_global_keybindings({
 })
 
 -- alt audio control
-awful.keyboard.append_global_keybindings({
-    awful.key({ ALTKEY }, "=", function() awesome.emit_signal("audio::increase_volume",  2) end,
-              {description = "increase volume", group = "media"}),
-    awful.key({ ALTKEY }, "-", function() awesome.emit_signal("audio::increase_volume", -2) end,
-              {description = "decrease volume", group = "media"}),
-    awful.key({ ALTKEY }, "7",        function() awesome.emit_signal("audio::toggle_mute") end,
-              {description = "toggle volume mute", group = "media"}),
+-- awful.keyboard.append_global_keybindings({
+--     awful.key({ ALTKEY }, "=", function() awesome.emit_signal("audio::increase_volume",  2) end,
+--               {description = "increase volume", group = "media"}),
+--     awful.key({ ALTKEY }, "-", function() awesome.emit_signal("audio::increase_volume", -2) end,
+--               {description = "decrease volume", group = "media"}),
+--     awful.key({ ALTKEY }, "7",        function() awesome.emit_signal("audio::toggle_mute") end,
+--               {description = "toggle volume mute", group = "media"}),
+--
+--     awful.key({ ALTKEY, "Shift" }, "=", function() awesome.emit_signal("playerctl::increase_volume",  0.02) end,
+--               {description = "increase playerctl volume", group = "media"}),
+--     awful.key({ ALTKEY, "Shift" }, "-", function() awesome.emit_signal("playerctl::increase_volume", -0.02) end,
+--               {description = "decrease playerctl volume", group = "media"}),
+-- })
 
-    awful.key({ ALTKEY, "Shift" }, "=", function() awesome.emit_signal("playerctl::increase_volume",  0.02) end,
-              {description = "increase playerctl volume", group = "media"}),
-    awful.key({ ALTKEY, "Shift" }, "-", function() awesome.emit_signal("playerctl::increase_volume", -0.02) end,
-              {description = "decrease playerctl volume", group = "media"}),
+-- backlight control
+awful.keyboard.append_global_keybindings({
+    awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("backlight::increase_brightness", 5) end,
+        {description = "increase screen brightness", group = "backlight"}),
+    awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("backlight::increase_brightness",  -5) end,
+              {description = "decrease screen brightness", group = "backlight"}),
 })
 
 -- screenshot

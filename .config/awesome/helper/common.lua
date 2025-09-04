@@ -4,31 +4,6 @@ local helper = {}
 
 helper.dpi = require("beautiful.xresources").apply_dpi
 
-helper.get_volume_icon = function(vol, mute)
-    if vol == nil or mute then
-        return '󰝟'
-    end
-
-    if vol <= 25 then
-        return '󰕿'
-    elseif vol <= 75 then
-        return '󰖀'
-    else
-        return '󰕾'
-    end
-end
-
-helper.battery_icon = {
-    na = "󱉞",
-    discharging = { "󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹" },
-    charging = { "󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅" },
-}
-
-helper.get_battery_icon = function(cap, charging)
-    local idx = math.floor((cap + 5) / 10)
-    if charging then return helper.battery_icon.charging[idx] else return helper.battery_icon.discharging[idx] end
-end
-
 helper.rate_limited_call = function(interval, callback)
     local tm = timer {
         timeout = interval,
