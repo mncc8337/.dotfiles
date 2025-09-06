@@ -11,6 +11,7 @@ local beautiful = require("beautiful")
 local helper = require("helper")
 
 local musicwidget = require("ui.widget.controlpanel.music")
+local batterywidget = require("ui.widget.controlpanel.battery")
 
 local panel = awful.popup {
     ontop = true,
@@ -37,6 +38,7 @@ local panel = awful.popup {
                 musicwidget,
                 require("ui.widget.volume"),
                 require("ui.widget.backlight"),
+                batterywidget,
             },
         },
     },

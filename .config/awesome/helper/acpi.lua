@@ -79,7 +79,6 @@ function acpi:get_all_features_data(callback)
                     -- get basic info before calling udpate signal
                     for _, feature in ipairs(self.available_features) do
                         self.features[feature].value = lst[self.features[feature].prop_idx]
-                        -- require("naughty").notify{message=feature .. " " .. features[feature].value}
                     end
 
                     callback(self.features)
@@ -109,6 +108,20 @@ function acpi:get_dynamic_features_data(callback)
         end
 
         callback(self.features)
+    end)
+end
+
+function acpi:get_feature_data(feature, callback)
+    if not helper.table_contains(self.available_features, feature) then
+        return
+    end
+
+    local cmd = "cat" .. self.acpi_dir .. feature
+
+    awful.spawn.easy_async(cmd, function(out)
+        out = out:sub(1, -2)
+        self.features[feature].value = out
+        callback(out)
     end)
 end
 

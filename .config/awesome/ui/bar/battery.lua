@@ -25,7 +25,7 @@ awesome.connect_signal("battery::capacity", function(cap, is_charging)
     end
 end)
 
-awesome.connect_signal("battery::warn", function()
+awesome.connect_signal("battery::alarm", function()
     naughty.notify{
         title = "system",
         message = "battery level is below healthy limit, please recharge",

@@ -11,6 +11,7 @@
     battery::energy(energy), battery current available energy
     battery::time_before_fully_discharged(hours)
     battery::time_before_fully_charged(hours)
+    battery::idle, emits when battery is fully charged and laptop is using power directly to the power supply
     battery::health(health), battery health in percentage
     battery::alarm, emitted when energy level is low
     battery::power(power), current power consumption, might not available
@@ -84,28 +85,37 @@ awesome.connect_signal("battery::update", function()
             local power = tonumber(features.power_now.value)
             awesome.emit_signal("battery::power", power)
 
-            if status == "Discharging" then
-                local time_remaining = energy / power
-                awesome.emit_signal("battery::time_before_fully_discharged", time_remaining)
-            elseif status == "Charging" then
-                local time_remaining = (energy_full - energy) / power
-                awesome.emit_signal("battery::time_before_fully_charged", time_remaining)
+            if power > 0 then
+                if status == "Discharging" then
+                    local time_remaining = energy / power
+                    awesome.emit_signal("battery::time_before_fully_discharged", time_remaining)
+                elseif status == "Charging" then
+                    local time_remaining = (energy_full - energy) / power
+                    awesome.emit_signal("battery::time_before_fully_charged", time_remaining)
+                end
+            else
+                awesome.emit_signal("battery::idle")
             end
         end
+
+        if battery_acpi.features.cycle_count.available then
+            awesome.emit_signal("battery::cycle_count", features.cycle_count.value)
+        else
+            awesome.emit_signal("battery::cycle_count", "na")
+        end
+
     end)
 end)
 
 awesome.connect_signal("battery::get_health", function()
     local health = tonumber(battery_acpi.features.energy_full.value) / tonumber(battery_acpi.features.energy_full_design.value) * 100
-    awesome.emit_signal("battery::health", health)
+    awesome.emit_signal("battery::health", math.floor(health))
 end)
 
 awesome.connect_signal("battery::get_cycle_count", function()
-    if battery_acpi.features.cycle_count.available then
-        awesome.emit_signal("battery::cycle_count", battery_acpi.features.cycle_count.value)
-    else
-        awesome.emit_signal("battery::cycle_count", "na")
-    end
+    battery_acpi:get_feature_data("cycle_count", function(cyc)
+        awesome.emit_signal("battery::cycle_count", cyc)
+    end)
 end)
 
 battery_acpi:check_features()
