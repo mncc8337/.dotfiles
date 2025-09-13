@@ -1,0 +1,8 @@
+# /etc/sudoers.d/platform_profile
+Cmnd_Alias IDEAPAD = /usr/bin/tee /sys/firmware/acpi/platform_profile, \
+                     /usr/bin/tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/conservation_mode, \
+                     /usr/bin/tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/camera_power, \
+                     /usr/bin/tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/fn_lock, \
+                     /usr/bin/tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/usb_charging
+
+%wheel ALL=(ALL) NOPASSWD: IDEAPAD

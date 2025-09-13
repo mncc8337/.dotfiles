@@ -33,7 +33,7 @@ awful.keyboard.append_global_keybindings({
 --               {description = "go back", group = "tag"}),
 -- })
 
--- focus helated keybindings
+-- focus related keybindings
 awful.keyboard.append_global_keybindings({
     awful.key({ MODKEY,           }, ".",
         function()
@@ -295,7 +295,13 @@ awful.keyboard.append_global_keybindings({
     awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("backlight::increase_brightness", 5) end,
         {description = "increase screen brightness", group = "backlight"}),
     awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("backlight::increase_brightness",  -5) end,
-              {description = "decrease screen brightness", group = "backlight"}),
+              {description = "decrease screen brightness", group = "hardware"}),
+})
+
+-- touchpad stuff
+awful.keyboard.append_global_keybindings({
+    awful.key({ }, "XF86TouchpadToggle", function() awesome.emit_signal("touchpad::toggle") end,
+        {description = "toggle touchpad", group = "hardware"}),
 })
 
 -- screenshot

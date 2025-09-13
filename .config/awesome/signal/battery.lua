@@ -120,6 +120,5 @@ end)
 
 battery_acpi:check_features()
 battery_acpi:get_all_features_data(function(_)
-    awesome.emit_signal("battery::update")
     timer:start()
 end)

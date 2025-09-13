@@ -18,7 +18,8 @@ end)
 -- set up theme 
 -- local colorscheme =  require("theme.colorscheme.gruvbox")
 local colorscheme = require("theme.colorscheme.dynamic")
-colorscheme.tint("#dd716f", 0.4)
+-- colorscheme.tint("#dd716f", 0.4)
+colorscheme.tint("#bc5516", 0.4)
 
 local theme = require("theme")
 theme.set_colorscheme(colorscheme)
@@ -28,7 +29,7 @@ theme.save_lua_config()
 -- run this after changing accent of dynamic theme
 -- theme.build_gtk_theme()
 
-theme.wallpaper = theme.wallpaper_path .. "inubashiri_momiji_touhou_drawn_by_chii_tsumami_tsumamare.jpg"
+theme.wallpaper = theme.wallpaper_path .. "A_View_of_the_Mountain_Pass_Called_the_Notch_of_the_White_Mountans_(Crawford_Notch)-1839-Thomas_Cole.jpg"
 theme.wallpaper_crop = {
     top = 0,
     left = 0,
@@ -64,6 +65,7 @@ local fallback_art_widget = wibox.widget {
 FALLBACK_ART_IMG = wibox.widget.draw_to_image_surface(fallback_art_widget, 350, 350, nil, nil)
 
 -- declare signal services
+require("signal.touchpad")
 require("signal.battery")
 require("signal.backlight")
 require("signal.playerctl")
@@ -72,6 +74,14 @@ require("signal.screenshot")
 -- you can use either pulseaudio or alsa though
 -- but dont use both of them at the same time
 require("signal.pulseaudio"):start()
+
+-- some ideapad specific features
+require("signal.ideapad")
+awesome.connect_signal("ideapad::current_profile", function(prof)
+    naughty.notify {
+        message = "current power profile is <b>" .. prof .. "</b>"
+    }
+end)
 
 require("config")
 require("ui")

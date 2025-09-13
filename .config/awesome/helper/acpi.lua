@@ -125,4 +125,19 @@ function acpi:get_feature_data(feature, callback)
     end)
 end
 
+-- requires correct permissions
+function acpi:set_feature_data(feature, data, callback)
+    if not helper.table_contains(self.available_features, feature) then
+        return
+    end
+
+    local cmd = "echo " .. data .. " | sudo tee" .. self.acpi_dir .. feature
+
+    awful.spawn.easy_async_with_shell(cmd, function(out, err, reason, exitcode)
+        out = out:sub(1, -2)
+        self.features[feature].value = out
+        callback(out, err, reason, exitcode)
+    end)
+end
+
 return acpi

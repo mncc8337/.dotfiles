@@ -1,0 +1,5 @@
+Cmnd_Alias IDEAPAD = /usr/bin/tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/conservation_mode, \
+                     /usr/bin/tee /sys/firmware/acpi/platform_profile, \
+                     /usr/bin/tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/usb_charging
+
+%wheel ALL=(ALL) NOPASSWD: IDEAPAD

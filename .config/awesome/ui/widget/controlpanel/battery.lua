@@ -65,7 +65,7 @@ awesome.connect_signal("battery::health", function(h)
 end)
 
 require("gears").timer {
-    timeout = 1,
+    timeout = 5,
     autostart = true, single_shot = true,
     callback = function()
         awesome.emit_signal("battery::get_health")
