@@ -292,9 +292,9 @@ awful.keyboard.append_global_keybindings({
 
 -- backlight control
 awful.keyboard.append_global_keybindings({
-    awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("backlight::increase_brightness", 5) end,
-        {description = "increase screen brightness", group = "backlight"}),
-    awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("backlight::increase_brightness",  -5) end,
+    awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("backlight::increase_brightness", 10) end,
+        {description = "increase screen brightness", group = "hardware"}),
+    awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("backlight::increase_brightness",  -10) end,
               {description = "decrease screen brightness", group = "hardware"}),
 })
 
@@ -302,6 +302,12 @@ awful.keyboard.append_global_keybindings({
 awful.keyboard.append_global_keybindings({
     awful.key({ }, "XF86TouchpadToggle", function() awesome.emit_signal("touchpad::toggle") end,
         {description = "toggle touchpad", group = "hardware"}),
+})
+
+-- remap the stupid copilot key
+awful.keyboard.append_global_keybindings({
+    awful.key({ MODKEY, "Shift" }, "XF86TouchpadOff", function() awesome.emit_signal("controlpanel::toggle") end,
+        {description = "toggle control panel", group = "media"}),
 })
 
 -- screenshot

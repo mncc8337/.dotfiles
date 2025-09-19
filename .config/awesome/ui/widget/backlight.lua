@@ -72,7 +72,7 @@ end)
 awesome.connect_signal("backlight::increase_brightness", function(_)
     if mouse_entered then return end
     panel.visible = true
-    close_timer.timeout = 1.5
+    close_timer.timeout = 2.5
     close_timer:again()
 end)
 
@@ -83,7 +83,7 @@ end)
 
 panel.widget:connect_signal("mouse::leave", function()
     mouse_entered = false
-    close_timer.timeout = 2.5
+    close_timer.timeout = 3.5
     close_timer:again()
 end)
 

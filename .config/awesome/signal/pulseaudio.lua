@@ -22,7 +22,7 @@ local sink = "@DEFAULT_SINK@"
 local interval = 2
 
 local last_avg = nil
-local last_mute = nil
+local last_mute = false
 
 local function get_volume(stdout)
     stdout = stdout:sub(1, -2)
