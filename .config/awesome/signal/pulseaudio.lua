@@ -74,10 +74,7 @@ awesome.connect_signal("audio::toggle_mute", function()
 end)
 
 awesome.emit_signal("audio::update")
-return gears.timer {
-    timeout = interval,
-    single_shot = false, autostart = false, call_now = true,
-    callback = function()
-        awesome.emit_signal("audio::update")
-    end
-}
+gears.timer.start_new(interval, function()
+    awesome.emit_signal("audio::update")
+    return true
+end)

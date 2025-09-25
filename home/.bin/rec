@@ -3,6 +3,8 @@
 # a simple shell script to record screen using ffmpeg
 # only works on X
 
+# dependency: xorg-xdpyinfo
+
 # default vals
 audio_param=""
 framerate=30

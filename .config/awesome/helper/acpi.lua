@@ -46,48 +46,47 @@ end
 
 -- get data of all features, also wait for all features to be checked
 function acpi:get_all_features_data(callback)
-    gears.timer {
-        timeout = 0.5,
-        single_shot = true, autostart = true,
-        callback = function()
-            local all_checked = true
-            for _, data in pairs(self.features) do
-                all_checked = all_checked and data.checked
-            end
-            if not all_checked then
-                return true
-            else
-                local cmd = "cat"
+    -- loop until all checked
+    gears.timer.start_new(0.5, function()
+        local all_checked = true
+        for _, data in pairs(self.features) do
+            all_checked = all_checked and data.checked
+        end
+        if not all_checked then
+            return true
+        end
 
-                -- add available feature into table
-                local prop_idx = 1
-                for feature, data in pairs(self.features) do
-                    if data.available then
-                        table.insert(self.available_features, feature)
-                        if helper.table_contains(self.dynamic_features, feature) then
-                            table.insert(self.available_dynamic_features, feature)
-                        end
-                        cmd = cmd .. self.acpi_dir .. feature
-                        data.prop_idx = prop_idx
-                        prop_idx = prop_idx + 1
-                    end
+        local cmd = "cat"
+
+        -- add available feature into table
+        local prop_idx = 1
+        for feature, data in pairs(self.features) do
+            if data.available then
+                table.insert(self.available_features, feature)
+                if helper.table_contains(self.dynamic_features, feature) then
+                    table.insert(self.available_dynamic_features, feature)
                 end
-
-                awful.spawn.easy_async(cmd, function(out)
-                    local lst = gears.string.split(out, "\n")
-
-                    -- get basic info before calling udpate signal
-                    for _, feature in ipairs(self.available_features) do
-                        self.features[feature].value = lst[self.features[feature].prop_idx]
-                    end
-
-                    callback(self.features)
-                end)
-
-                return false
+                cmd = cmd .. self.acpi_dir .. feature
+                data.prop_idx = prop_idx
+                prop_idx = prop_idx + 1
             end
-        end,
-    }
+        end
+
+        awful.spawn.easy_async(cmd, function(out)
+            local lst = gears.string.split(out, "\n")
+
+            -- get basic info before calling udpate signal
+            for _, feature in ipairs(self.available_features) do
+                self.features[feature].value = lst[self.features[feature].prop_idx]
+            end
+
+            if callback then
+                callback(self.features)
+            end
+        end)
+
+        return false
+    end)
 end
 
 -- get data of only dynamic features, make sure to call get_all_features_data() to ensure that all features are checked
@@ -107,7 +106,9 @@ function acpi:get_dynamic_features_data(callback)
             self.features[feature].value = lst[self.features[feature].prop_idx]
         end
 
-        callback(self.features)
+        if callback then
+            callback(self.features)
+        end
     end)
 end
 
@@ -121,7 +122,9 @@ function acpi:get_feature_data(feature, callback)
     awful.spawn.easy_async(cmd, function(out)
         out = out:sub(1, -2)
         self.features[feature].value = out
-        callback(out)
+        if callback then
+            callback(out)
+        end
     end)
 end
 
@@ -136,7 +139,9 @@ function acpi:set_feature_data(feature, data, callback)
     awful.spawn.easy_async_with_shell(cmd, function(out, err, reason, exitcode)
         out = out:sub(1, -2)
         self.features[feature].value = out
-        callback(out, err, reason, exitcode)
+        if callback then
+            callback(out, err, reason, exitcode)
+        end
     end)
 end
 

@@ -33,7 +33,6 @@ end)
 local smooth_value = rubato.timed {
     duration = 0.2,
     intro = 0.01,
-    override_dt = true,
     easing = rubato.easing.quadratic,
     subscribed = function(percent)
         brightness_percentage = percent
@@ -80,6 +79,6 @@ backlight_acpi:get_all_features_data(function(features)
     else
         brightness_percentage = math.floor(math.log(raw_b - min_brightness, 10) / math.log(max_brightness - min_brightness, 10) * 100)
     end
-    smooth_value.target = brightness_percentage
+    smooth_value.pos = brightness_percentage
     awesome.emit_signal("backlight::brightness", brightness_percentage)
 end)

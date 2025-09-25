@@ -21,6 +21,8 @@ awful.keyboard.append_global_keybindings({
               {description = "show app launcher", group = "launcher"}),
     awful.key({ MODKEY,           }, "r", function() awful.spawn(PROMPTRUNNER) end,
               {description = "run prompt", group = "launcher"}),
+    awful.key({ MODKEY,           }, "l", function() awful.spawn(LOCKER) end,
+              {description = "lock", group = "launcher"}),
 })
 
 -- tags related keybindings

@@ -69,19 +69,16 @@ awful.spawn.easy_async_with_shell("if lsmod | grep -wq ideapad_laptop; then echo
         end)
 
         -- get current profile
-        gears.timer {
-            timeout = 1,
-            single_shot = false, autostart = true, call_now = true,
-            callback = function()
-                awful.spawn.easy_async("cat /sys/firmware/acpi/platform_profile", function(out2)
-                    out2 = out2:sub(1, -2)
-                    if out2 ~= current_profile then
-                        current_profile = out2
-                        awesome.emit_signal("ideapad::current_profile", current_profile)
-                    end
-                end)
-            end
-        }
+        gears.timer.start_new(1, function()
+            awful.spawn.easy_async("cat /sys/firmware/acpi/platform_profile", function(out2)
+                out2 = out2:sub(1, -2)
+                if out2 ~= current_profile then
+                    current_profile = out2
+                    awesome.emit_signal("ideapad::current_profile", current_profile)
+                end
+            end)
+            return true
+        end)
     end
 end)
 

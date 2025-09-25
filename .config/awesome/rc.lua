@@ -19,7 +19,7 @@ end)
 -- local colorscheme =  require("theme.colorscheme.gruvbox")
 local colorscheme = require("theme.colorscheme.dynamic")
 -- colorscheme.tint("#dd716f", 0.4)
-colorscheme.tint("#bc5516", 0.4)
+colorscheme.tint("#cac7ff", 0.9)
 
 local theme = require("theme")
 theme.set_colorscheme(colorscheme)
@@ -29,11 +29,11 @@ theme.save_lua_config()
 -- run this after changing accent of dynamic theme
 -- theme.build_gtk_theme()
 
-theme.wallpaper = theme.wallpaper_path .. "A_View_of_the_Mountain_Pass_Called_the_Notch_of_the_White_Mountans_(Crawford_Notch)-1839-Thomas_Cole.jpg"
+theme.wallpaper = theme.wallpaper_path .. "manifold_garden.png"
 theme.wallpaper_crop = {
     top = 0,
     left = 0,
-    bottom = 100,
+    bottom = 0,
     right = 0,
 }
 
@@ -44,6 +44,45 @@ TERMINAL = "wezterm"
 FILEMAN = "nemo"
 APPLAUNCHER = "rofi -show drun"
 PROMPTRUNNER = "rofi -show run"
+LOCKER = ("i3lock \
+    -B 1.2 \
+    -k -e \
+    --indicator \
+    --greeter-text=\"scren locked heh\" \
+    --greeter-pos=\"100:100\" \
+    --greeter-align 1 \
+    --verif-text=\"hmm\" \
+    --wrong-text=\"nein\" \
+    --noinput-text=\"empty\" \
+    --verif-color %s \
+    --wrong-color %s \
+    --time-color %s \
+    --date-color %s \
+    --keyhl-color %s \
+    --bshl-color %s \
+    --inside-color %s \
+    --ring-color %s \
+    --insidever-color %s \
+    --ringver-color %s \
+    --insidewrong-color %s \
+    --ringwrong-color %s \
+"):format(
+    beautiful.bg[1]:sub(2, -1),
+    beautiful.bg[1]:sub(2, -1),
+    beautiful.bg[1]:sub(2, -1),
+    beautiful.bg[1]:sub(2, -1),
+    beautiful.accent[1]:sub(2, -1),
+    beautiful.termcolor[2]:sub(2, -1),
+    beautiful.fg[4]:sub(2, -1) .. "78",
+    beautiful.accent[2]:sub(2, -1),
+    beautiful.termcolor[5]:sub(2, -1) .. "78",
+    beautiful.termcolor[5]:sub(2, -1),
+    beautiful.termcolor[2]:sub(2, -1) .. "78",
+    beautiful.termcolor[2]:sub(2, -1)
+)
+
+-- xss-lock
+awful.spawn("xss-lock -- " .. LOCKER)
 
 -- generate fallback art
 local fallback_art_widget = wibox.widget {
@@ -73,7 +112,8 @@ require("signal.screenshot")
 -- use pulseaudio to exceed the 100% volume limit
 -- you can use either pulseaudio or alsa though
 -- but dont use both of them at the same time
-require("signal.pulseaudio"):start()
+require("signal.pulseaudio")
+-- require("signal.alsa")
 
 -- some ideapad specific features
 require("signal.ideapad")

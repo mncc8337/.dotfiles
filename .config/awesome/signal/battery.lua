@@ -44,14 +44,6 @@ local battery_acpi = helper.acpi {
     },
 }
 
-local timer = gears.timer {
-    timeout = interval,
-    single_shot = false, autostart = false,
-    callback = function()
-        awesome.emit_signal("battery::update")
-    end
-}
-
 awesome.connect_signal("battery::update", function()
     battery_acpi:get_dynamic_features_data(function(features)
         local capacity
@@ -120,5 +112,9 @@ end)
 
 battery_acpi:check_features()
 battery_acpi:get_all_features_data(function(_)
-    timer:start()
+    awesome.emit_signal("battery::update")
+    gears.timer.start_new(interval, function()
+        awesome.emit_signal("battery::update")
+        return true
+    end)
 end)

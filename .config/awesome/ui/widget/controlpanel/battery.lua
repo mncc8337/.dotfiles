@@ -64,14 +64,10 @@ awesome.connect_signal("battery::health", function(h)
     health_detail.markup = cycle_count .. " cycle, battery health: " .. bat_health .. "%"
 end)
 
-require("gears").timer {
-    timeout = 5,
-    autostart = true, single_shot = true,
-    callback = function()
-        awesome.emit_signal("battery::get_health")
-        awesome.emit_signal("battery::get_cycle_count")
-    end
-}
+require("gears").timer.start_new(1, function()
+    awesome.emit_signal("battery::get_health")
+    awesome.emit_signal("battery::get_cycle_count")
+end)
 
 return wibox.widget {
     layout = wibox.layout.align.vertical,
