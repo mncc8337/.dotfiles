@@ -39,6 +39,7 @@ these dependencies are only needed for awesomewm.
 - [awesome](https://awesomewm.org/)
 - [picom](https://github.com/yshui/picom)
 - [maim](https://github.com/naelstrof/maim)
+- [i3lock-color](https://github.com/Raymo111/i3lock-color)
 - [xclip](https://github.com/astrand/xclip)  
 `yay -S awesome-git picom-git maim xclip`
 ### hyprland
