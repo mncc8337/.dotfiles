@@ -13,28 +13,37 @@ waylander=$?
 
 tmpf=$(mktemp /tmp/scrsht-XXXXX.png)
 
-if [ $waylander -ne 0 ]; then
-    if [ "$1" = 'area' ]; then
-        grim -g "`slurp`" $tmpf
-    else
-        grim $tmpf
-    fi
+# if [ $waylander -ne 0 ]; then
+#     if [ "$1" = 'area' ]; then
+#         grim -g "`slurp`" $tmpf
+#     else
+#         grim $tmpf
+#     fi
+# else
+#     if [ "$1" = 'area' ]; then
+#         maim -s $tmpf --hidecursor
+#     else
+#         maim $tmpf --hidecursor
+#     fi
+# fi
+
+if [ "$1" = 'area' ]; then
+    maim -s $tmpf --hidecursor
 else
-    if [ "$1" = 'area' ]; then
-        maim -s $tmpf --hidecursor
-    else
-        maim $tmpf --hidecursor
-    fi
+    maim $tmpf --hidecursor
 fi
+
 
 success=$?
 
 if [ $success -eq 0 ]; then
-    if [ $waylander -ne 0 ]; then
-        cat $tmpf | wl-copy
-    else
-        cat $tmpf | xclip -selection clipboard -t image/png
-    fi
+    # if [ $waylander -ne 0 ]; then
+    #     cat $tmpf | wl-copy
+    # else
+    #     cat $tmpf | xclip -selection clipboard -t image/png
+    # fi
+
+    cat $tmpf | xclip -selection clipboard -t image/png
 
     savedir=''
     prefix=''

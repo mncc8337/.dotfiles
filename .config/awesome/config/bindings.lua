@@ -4,52 +4,33 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 -- require("awful.hotkeys_popup.keys")
 
-MODKEY = "Mod4"
-ALTKEY = "Mod1"
-
 -- general Awesome keys
 awful.keyboard.append_global_keybindings({
-    awful.key({ MODKEY,           }, "s", hotkeys_popup.show_help,
+    awful.key({ MODKEY }, "s", hotkeys_popup.show_help,
               {description = "show help", group = "awesome"}),
     awful.key({ MODKEY, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ MODKEY, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
-    awful.key({ MODKEY,           }, "Return", function() awful.spawn(TERMINAL) end,
-              {description = "open a terminal", group = "launcher"}),
-    awful.key({ MODKEY,           }, "w", function() awful.spawn(APPLAUNCHER) end,
-              {description = "show app launcher", group = "launcher"}),
-    awful.key({ MODKEY,           }, "r", function() awful.spawn(PROMPTRUNNER) end,
-              {description = "run prompt", group = "launcher"}),
-    awful.key({ MODKEY,           }, "l", function() awful.spawn(LOCKER) end,
-              {description = "lock", group = "launcher"}),
 })
 
 -- tags related keybindings
--- awful.keyboard.append_global_keybindings({
---     awful.key({ MODKEY }, ",",   awful.tag.viewprev,
---               {description = "view previous", group = "tag"}),
---     awful.key({ MODKEY }, ".",  awful.tag.viewnext,
---               {description = "view next", group = "tag"}),
---     awful.key({ MODKEY }, "Escape", awful.tag.history.restore,
---               {description = "go back", group = "tag"}),
--- })
+awful.keyboard.append_global_keybindings({
+    awful.key({ MODKEY, "Control", "Shift" }, ",",   awful.tag.viewprev,
+              {description = "view previous", group = "tag"}),
+    awful.key({ MODKEY, "Control", "Shift" }, ".",  awful.tag.viewnext,
+              {description = "view next", group = "tag"}),
+    -- awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
+    --           {description = "go back", group = "tag"}),
+})
 
 -- focus related keybindings
 awful.keyboard.append_global_keybindings({
-    awful.key({ MODKEY,           }, ".",
-        function()
-            awful.client.focus.byidx( 1)
-        end,
-        {description = "focus next by index", group = "client"}
-    ),
-    awful.key({ MODKEY,           }, ",",
-        function()
-            awful.client.focus.byidx(-1)
-        end,
-        {description = "focus previous by index", group = "client"}
-    ),
-    awful.key({ MODKEY,           }, "Tab",
+    awful.key({ MODKEY }, ".", function() awful.client.focus.byidx(1) end,
+        {description = "focus next by index", group = "client"}),
+    awful.key({ MODKEY }, ",", function() awful.client.focus.byidx(-1) end,
+        {description = "focus previous by index", group = "client"}),
+    awful.key({ MODKEY }, "Tab",
         function()
             awful.client.focus.history.previous()
             if client.focus then
@@ -57,10 +38,10 @@ awful.keyboard.append_global_keybindings({
             end
         end,
         {description = "go back", group = "client"}),
-    -- awful.key({ MODKEY, "Control" }, "j", function() awful.screen.focus_relative( 1) end,
-    --           {description = "focus the next screen", group = "screen"}),
-    -- awful.key({ MODKEY, "Control" }, "k", function() awful.screen.focus_relative(-1) end,
-    --           {description = "focus the previous screen", group = "screen"}),
+    awful.key({ MODKEY, "Control" }, ",", function() awful.screen.focus_relative( 1) end,
+              {description = "focus the next screen", group = "screen"}),
+    awful.key({ MODKEY, "Control" }, ".", function() awful.screen.focus_relative(-1) end,
+              {description = "focus the previous screen", group = "screen"}),
 })
 
 -- layout related keybindings
@@ -172,15 +153,6 @@ awful.keyboard.append_global_keybindings({
     -- }
 })
 
-awful.keyboard.append_global_keybindings({
-    awful.key({ MODKEY, "Control", "Shift" }, ",",   awful.tag.viewprev,
-              {description = "view previous", group = "tag"}),
-    awful.key({ MODKEY, "Control", "Shift" }, ".",  awful.tag.viewnext,
-              {description = "view next", group = "tag"}),
-    -- awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
-    --           {description = "go back", group = "tag"}),
-})
-
 client.connect_signal("request::default_mousebindings", function()
     awful.mouse.append_client_mousebindings({
         awful.button({ }, 1, function(c)
@@ -190,7 +162,7 @@ client.connect_signal("request::default_mousebindings", function()
             c:activate { context = "mouse_click", action = "mouse_move"  }
         end),
         awful.button({ MODKEY }, 3, function(c)
-            c:activate { context = "mouse_click", action = "mouse_resize"}
+            c:activate { context = "mouse_click", action = "mouse_resize" }
         end),
     })
 end)
@@ -209,8 +181,8 @@ client.connect_signal("request::default_keybindings", function()
                   {description = "toggle floating", group = "client"}),
         awful.key({ MODKEY, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
                   {description = "move to master", group = "client"}),
-        -- awful.key({ MODKEY,           }, "o",      function(c) c:move_to_screen() end,
-        --           {description = "move to screen", group = "client"}),
+        awful.key({ MODKEY,           }, "o",      function(c) c:move_to_screen() end,
+                  {description = "move to screen", group = "client"}),
         awful.key({ MODKEY,           }, "t",      function(c) c.ontop = not c.ontop end,
                   {description = "toggle keep on top", group = "client"}),
         awful.key({ MODKEY,           }, "y",      function(c) c.sticky = not c.sticky end,
@@ -326,6 +298,16 @@ awful.keyboard.append_global_keybindings({
 
 -- app launching
 awful.keyboard.append_global_keybindings({
+    awful.key({ MODKEY }, "Return", function() awful.spawn(TERMINAL) end,
+              {description = "open a terminal", group = "launcher"}),
+    awful.key({ MODKEY }, "p", function() awful.spawn(SETUPDISPLAY) end,
+              {description = "setting up displays", group = "launcher"}),
+    awful.key({ MODKEY }, "w", function() awful.spawn(APPLAUNCHER) end,
+              {description = "show app launcher", group = "launcher"}),
+    awful.key({ MODKEY }, "r", function() awful.spawn(PROMPTRUNNER) end,
+              {description = "run prompt", group = "launcher"}),
+    awful.key({ MODKEY }, "l", function() awful.spawn(LOCKER) end,
+              {description = "lock screen", group = "launcher"}),
     awful.key({ MODKEY }, "e", function() awful.spawn(FILEMAN) end,
               {description = "open file manager", group = "launcher"}),
 })

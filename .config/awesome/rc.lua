@@ -39,11 +39,14 @@ theme.wallpaper_crop = {
 
 beautiful.init(theme)
 
--- TODO: move these to other place
+-- global vars
+MODKEY = "Mod4"
+ALTKEY = "Mod1"
 TERMINAL = "wezterm"
 FILEMAN = "nemo"
 APPLAUNCHER = "rofi -show drun"
 PROMPTRUNNER = "rofi -show run"
+SETUPDISPLAY = "arandr"
 LOCKER = ("i3lock \
     -B 1.2 \
     -k -e \

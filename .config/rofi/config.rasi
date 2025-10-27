@@ -2,7 +2,7 @@ configuration{
     modi: "run,drun,window";
     show-icons: true;
     icon-theme: "Papirus";
-    terminal: "alacritty";
+    terminal: "wezterm";
     drun-display-format: "{icon}{name}";
     location: 0;
     disable-history: false;
