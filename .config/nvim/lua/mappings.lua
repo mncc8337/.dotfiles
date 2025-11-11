@@ -28,6 +28,11 @@ map({'n'}, "<C-h>", "<cmd>wincmd h<CR>", { desc = "To left window" })
 map({'n'}, "<C-j>", "<cmd>wincmd j<CR>", { desc = "To down window" })
 map({'n'}, "<C-k>", "<cmd>wincmd k<CR>", { desc = "To up window" })
 map({'n'}, "<C-l>", "<cmd>wincmd l<CR>", { desc = "To right window" })
+-- resize windows using hjkl
+map({'n'}, "<C-A-h>", "<cmd>wincmd <<CR>", { desc = "Descease width of current window" })
+map({'n'}, "<C-A-j>", "<cmd>wincmd -<CR>", { desc = "Decrease height of current window" })
+map({'n'}, "<C-A-k>", "<cmd>wincmd +<CR>", { desc = "Increase height of current window" })
+map({'n'}, "<C-A-l>", "<cmd>wincmd ><CR>", { desc = "Increase width of current window" })
 
 -- telescope
 local telescope_builtin = require('telescope.builtin')

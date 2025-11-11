@@ -1,4 +1,3 @@
-# /etc/environment
 #
 # This file is parsed by pam_env module
 #
@@ -7,6 +6,9 @@
 GTK_IM_MODULE=ibus
 QT_IM_MODULE=ibus
 XMODIFIERS=@im=ibus
-QT4_IM_MODULE=ibus
+QT4=IM_MODULE=ibus
 CLUTTER_IM_MODULE=ibus
 GLFW_IM_MODULE=ibus
+
+#precise scroll on firefox
+MOZ_USE_XINPUT2=1
