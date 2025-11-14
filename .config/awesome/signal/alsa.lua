@@ -1,3 +1,6 @@
+-- WARNING:
+-- DEPRECATED
+
 -- signals
 --[[
     CALL

@@ -4,13 +4,13 @@
     audio::update, force update and get info
 
     GET
-    audio::avg(val), average volume in both speaker in %
-    audio::mute(muted), muted or not
+    audio::sink_avg(val), average sink volume in both speaker in %
+    audio::sink_mute(muted), muted or not
 
     SET
-    audio::set_volume(val)
-    audio::increase_volume(diff), increase/decrease volume by `diff`, depend on sign of `diff`
-    audio::toggle_mute, toggle mute
+    audio::set_sink_volume(val)
+    audio::increase_sink_volume(diff), increase/decrease sink volume by `diff`, depend on sign of `diff`
+    audio::toggle_sink_mute, toggle mute
 ]]--
 
 -- dependency: libpulse
@@ -19,10 +19,11 @@ local awful = require("awful")
 local gears = require("gears")
 
 local sink = "@DEFAULT_SINK@"
+local source = "@DEFAULT_SOURCE"
 local interval = 2
 
-local last_avg = nil
-local last_mute = false
+local last_sink_avg = nil
+local last_sink_mute = false
 
 local function get_volume(stdout)
     stdout = stdout:sub(1, -2)
@@ -33,9 +34,9 @@ local function get_volume(stdout)
 
     local avg = math.floor((left + right) / 2)
 
-    if avg ~= last_avg then
-        awesome.emit_signal("audio::avg", avg)
-        last_avg = avg
+    if avg ~= last_sink_avg then
+        awesome.emit_signal("audio::sink_avg", avg)
+        last_sink_avg = avg
     end
 end
 
@@ -44,9 +45,9 @@ local function get_mute(stdout)
 
     local muted = (stdout == "Mute: yes")
 
-    if muted ~= last_mute then
-        awesome.emit_signal("audio::mute", muted)
-        last_mute = muted
+    if muted ~= last_sink_mute then
+        awesome.emit_signal("audio::sink_mute", muted)
+        last_sink_mute = muted
     end
 end
 
@@ -55,12 +56,12 @@ awesome.connect_signal("audio::update", function()
     awful.spawn.easy_async_with_shell("pactl get-sink-mute " .. sink, get_mute)
 end)
 
-awesome.connect_signal("audio::set_volume", function(val)
+awesome.connect_signal("audio::set_sink_volume", function(val)
     awful.spawn("pactl set-sink-volume " .. sink .. " " .. val .. "%")
     awesome.emit_signal("audio::update")
 end)
 
-awesome.connect_signal("audio::increase_volume", function(diff)
+awesome.connect_signal("audio::increase_sink_volume", function(diff)
     local sign = '+'
     if diff < 0 then sign = '-' end
 
@@ -68,7 +69,7 @@ awesome.connect_signal("audio::increase_volume", function(diff)
     awesome.emit_signal("audio::update")
 end)
 
-awesome.connect_signal("audio::toggle_mute", function()
+awesome.connect_signal("audio::toggle_sink_mute", function()
     awful.spawn("pactl set-sink-mute " .. sink .. " toggle")
     awesome.emit_signal("audio::update")
 end)

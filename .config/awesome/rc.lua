@@ -112,17 +112,21 @@ require("signal.battery")
 require("signal.backlight")
 require("signal.playerctl")
 require("signal.screenshot")
--- use pulseaudio to exceed the 100% volume limit
--- you can use either pulseaudio or alsa though
--- but dont use both of them at the same time
 require("signal.pulseaudio")
--- require("signal.alsa")
 
 -- some ideapad specific features
 require("signal.ideapad")
 awesome.connect_signal("ideapad::current_profile", function(prof)
     naughty.notify {
         message = "current power profile is <b>" .. prof .. "</b>"
+    }
+end)
+
+awesome.connect_signal("battery::alarm", function()
+    naughty.notify{
+        title = "system",
+        message = "battery level is below healthy limit, please recharge",
+        urgency = "critical",
     }
 end)
 

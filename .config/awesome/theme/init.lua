@@ -156,11 +156,11 @@ theme.build = function()
 
     theme.slider_handle_width = 0
     theme.slider_bar_height = dpi(10)
-    theme.slider_bar_color = theme.bg[2]
+    theme.slider_bar_color = theme.bg[3]
     theme.slider_bar_active_color = theme.accent[1]
 
     theme.progressbar_fg = theme.accent[1]
-    theme.progressbar_bg = theme.bg[2]
+    theme.progressbar_bg = theme.bg[3]
 
     -- Variables set for theming notifications:
     -- notification_font

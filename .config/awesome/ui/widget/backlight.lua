@@ -1,4 +1,4 @@
--- automatically show a volume panel when volume properties changed
+-- automatically show a brightness panel when backlight properties changed
 
 local wibox = require("wibox")
 local awful = require("awful")
@@ -95,11 +95,5 @@ brightness_slider:connect_signal("property::value", function()
     if not mouse_entered then return end
     update_brightness.call()
 end)
-
--- brightness_icon:buttons {
---     awful.button({ }, 1, function()
---         awesome.emit_signal("audio::toggle_mute")
---     end)
--- }
 
 return panel.widget

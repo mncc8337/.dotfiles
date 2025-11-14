@@ -17,13 +17,13 @@ local volume_icon = wibox.widget {
 local volume = 25
 local mute = false
 
-awesome.connect_signal("audio::avg", function(avg)
+awesome.connect_signal("audio::sink_avg", function(avg)
     volume_widget.markup = avg .. '%'
     volume = avg
     volume_icon.markup = helper.get_volume_icon(avg, mute)
 end)
 
-awesome.connect_signal("audio::mute", function(muted)
+awesome.connect_signal("audio::sink_mute", function(muted)
     mute = muted
     volume_icon.markup = helper.get_volume_icon(volume, mute)
 end)

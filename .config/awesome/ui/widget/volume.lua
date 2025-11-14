@@ -61,7 +61,7 @@ local close_timer = timer {
 
 local mouse_entered = false
 
-awesome.connect_signal("audio::avg", function(avg)
+awesome.connect_signal("audio::sink_avg", function(avg)
     if volume == avg then return end
 
     volume = avg
@@ -72,7 +72,7 @@ awesome.connect_signal("audio::avg", function(avg)
     volume_slider.value = avg
 end)
 
-awesome.connect_signal("audio::mute", function(muted)
+awesome.connect_signal("audio::sink_mute", function(muted)
     mute = muted
     volume_icon.markup = helper.get_volume_icon(volume, muted)
 
@@ -82,7 +82,7 @@ awesome.connect_signal("audio::mute", function(muted)
     close_timer:again()
 end)
 
-awesome.connect_signal("audio::increase_volume", function(_)
+awesome.connect_signal("audio::increase_sink_volume", function(_)
     if mouse_entered then return end
     panel.visible = true
     close_timer.timeout = 2.5
@@ -101,7 +101,7 @@ panel.widget:connect_signal("mouse::leave", function()
 end)
 
 local update_volume = helper.rate_limited_call(0.1, function()
-    awesome.emit_signal("audio::set_volume", volume_slider.value)
+    awesome.emit_signal("audio::set_sink_volume", volume_slider.value)
 end)
 
 volume_slider:connect_signal("property::value", function()
@@ -111,7 +111,7 @@ end)
 
 volume_icon:buttons {
     awful.button({ }, 1, function()
-        awesome.emit_signal("audio::toggle_mute")
+        awesome.emit_signal("audio::toggle_sink_mute")
     end)
 }
 

@@ -13,6 +13,18 @@ local helper = require("helper")
 local musicwidget = require("ui.widget.controlpanel.music")
 local batterywidget = require("ui.widget.controlpanel.battery")
 
+local function widget_container(widget)
+    return {
+        widget = wibox.container.background,
+        bg = beautiful.bg[2],
+        {
+            widget = wibox.container.margin,
+            margins = beautiful.common_padding,
+            widget
+        }
+    }
+end
+
 local panel = awful.popup {
     ontop = true,
     visible = false,
@@ -35,10 +47,10 @@ local panel = awful.popup {
             {
                 layout = wibox.layout.fixed.vertical,
                 spacing = beautiful.common_padding,
-                musicwidget,
-                require("ui.widget.volume"),
-                require("ui.widget.backlight"),
-                batterywidget,
+                widget_container(musicwidget),
+                widget_container(require("ui.widget.volume")),
+                widget_container(require("ui.widget.backlight")),
+                widget_container(batterywidget),
             },
         },
     },

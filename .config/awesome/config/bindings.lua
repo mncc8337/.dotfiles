@@ -236,11 +236,11 @@ awful.keyboard.append_global_keybindings({
 
 -- audio control
 awful.keyboard.append_global_keybindings({
-    awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("audio::increase_volume",  2) end,
+    awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("audio::increase_sink_volume",  2) end,
               {description = "increase volume", group = "media"}),
-    awful.key({ }, "XF86AudioLowerVolume", function() awesome.emit_signal("audio::increase_volume", -2) end,
+    awful.key({ }, "XF86AudioLowerVolume", function() awesome.emit_signal("audio::increase_sink_volume", -2) end,
               {description = "decrease volume", group = "media"}),
-    awful.key({ }, "XF86AudioMute",        function() awesome.emit_signal("audio::toggle_mute") end,
+    awful.key({ }, "XF86AudioMute",        function() awesome.emit_signal("audio::toggle_sink_mute") end,
               {description = "toggle volume mute", group = "media"}),
 
     awful.key({ "Shift" }, "XF86AudioRaiseVolume", function() awesome.emit_signal("playerctl::increase_volume",  0.02) end,
@@ -251,11 +251,11 @@ awful.keyboard.append_global_keybindings({
 
 -- alt audio control
 -- awful.keyboard.append_global_keybindings({
---     awful.key({ ALTKEY }, "=", function() awesome.emit_signal("audio::increase_volume",  2) end,
+--     awful.key({ ALTKEY }, "=", function() awesome.emit_signal("audio::increase_sink_volume",  2) end,
 --               {description = "increase volume", group = "media"}),
---     awful.key({ ALTKEY }, "-", function() awesome.emit_signal("audio::increase_volume", -2) end,
+--     awful.key({ ALTKEY }, "-", function() awesome.emit_signal("audio::increase_sink_volume", -2) end,
 --               {description = "decrease volume", group = "media"}),
---     awful.key({ ALTKEY }, "7",        function() awesome.emit_signal("audio::toggle_mute") end,
+--     awful.key({ ALTKEY }, "7",        function() awesome.emit_signal("audio::toggle_sink_mute") end,
 --               {description = "toggle volume mute", group = "media"}),
 --
 --     awful.key({ ALTKEY, "Shift" }, "=", function() awesome.emit_signal("playerctl::increase_volume",  0.02) end,

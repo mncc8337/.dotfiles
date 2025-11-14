@@ -32,14 +32,6 @@ local status_text = wibox.widget {
     markup = "status text",
 }
 
-local health_detail = wibox.widget {
-    widget = wibox.widget.textbox,
-    font = beautiful.font_type.normal .. " 10",
-    markup = "health text",
-}
-local cycle_count = 0
-local bat_health = 0
-
 awesome.connect_signal("battery::time_before_fully_discharged", function(hours)
     est_text.markup = time_format(hours) .. "remain before fully discharged"
 end)
@@ -54,25 +46,9 @@ awesome.connect_signal("battery::status", function(stat)
     status_text.markup = "Battery " .. stat
 end)
 
-awesome.connect_signal("battery::cycle_count", function(cyc)
-    cycle_count = cyc
-    health_detail.markup = cycle_count .. " cycle, battery health: " .. bat_health .. "%"
-end)
-
-awesome.connect_signal("battery::health", function(h)
-    bat_health = h
-    health_detail.markup = cycle_count .. " cycle, battery health: " .. bat_health .. "%"
-end)
-
-require("gears").timer.start_new(1, function()
-    awesome.emit_signal("battery::get_health")
-    awesome.emit_signal("battery::get_cycle_count")
-end)
-
 return wibox.widget {
     layout = wibox.layout.align.vertical,
     status_text,
     est_text,
-    health_detail,
 }
 
