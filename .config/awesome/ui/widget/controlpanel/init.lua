@@ -46,10 +46,15 @@ local panel = awful.popup {
             margins = beautiful.common_margin,
             {
                 layout = wibox.layout.fixed.vertical,
-                spacing = beautiful.common_padding,
+                spacing = beautiful.common_margin,
                 widget_container(musicwidget),
-                widget_container(require("ui.widget.volume")),
-                widget_container(require("ui.widget.backlight")),
+                widget_container(wibox.widget {
+                    layout = wibox.layout.fixed.vertical,
+                    spacing = beautiful.common_padding,
+                    require("ui.widget.popup").sink_volume,
+                    require("ui.widget.popup").source_volume,
+                }),
+                widget_container(require("ui.widget.popup").backlight),
                 widget_container(batterywidget),
             },
         },

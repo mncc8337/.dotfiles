@@ -42,7 +42,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     s.wibar = awful.wibar {
         position = "top",
         screen   = s,
-        height   = 30,
+        height   = beautiful.wibar_height,
         widget   = {
             widget = wibox.container.margin,
             margins = beautiful.common_margin,

@@ -65,6 +65,8 @@ theme.font_type = {
 theme.common_margin  = dpi(5)
 theme.common_padding = dpi(3)
 
+theme.wibar_height = dpi(30)
+
 theme.titlebar_height = dpi(20)
 
 theme.titlebar_close_button_normal = theme.themes_path.."default/titlebar/close_normal.png"

@@ -133,8 +133,7 @@ end)
 require("config")
 require("ui")
 
-require("ui.widget.volume")
-require("ui.widget.backlight")
+require("ui.widget.popup")
 require("ui.widget.controlpanel")
 
 -- Enable sloppy focus, so that focus follows mouse.
