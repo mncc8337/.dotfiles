@@ -1,8 +1,5 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local awful = require("awful")
-local naughty = require("naughty")
-local helper = require("helper")
 
 local function time_format(hours)
     local h = math.floor(hours)
@@ -43,7 +40,7 @@ awesome.connect_signal("battery::idle", function()
 end)
 
 awesome.connect_signal("battery::status", function(stat)
-    status_text.markup = "Battery " .. stat
+    status_text.markup = "Battery is " .. stat
 end)
 
 return wibox.widget {
