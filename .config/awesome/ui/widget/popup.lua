@@ -85,6 +85,9 @@ local function popup_maker(
         callback = function()
             panel.visible = false
             popup_stack = popup_stack - 1
+            if popup_stack < 0 then
+                popup_stack = 0
+            end
             -- update position of other popups
             for _, p in ipairs(popups) do
                 if p.visible and p.idx >= panel.idx then
