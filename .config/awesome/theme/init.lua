@@ -205,11 +205,11 @@ theme.build_gtk_theme = function()
         message = "building gtk icon theme ...",
         timeout = 0,
     }
-    local ibus_icon_notify = naughty.notification {
-        title = "theme setter",
-        message = "setting ibus icon color ...",
-        timeout = 0,
-    }
+    -- local ibus_icon_notify = naughty.notification {
+    --     title = "theme setter",
+    --     message = "setting ibus icon color ...",
+    --     timeout = 0,
+    -- }
 
     local build_theme_cmd = ("oomox-cli -o dynamic <(echo -e \"\
             BG=%s\n\
@@ -255,9 +255,9 @@ theme.build_gtk_theme = function()
         theme.accent[1]:sub(2, -1)
     )
 
-    local ibus_icon_cmd = (
-        "gsettings set org.freedesktop.ibus.panel xkb-icon-rgba '%s'"
-    ):format(theme.accent[1])
+    -- local ibus_icon_cmd = (
+    --     "gsettings set org.freedesktop.ibus.panel xkb-icon-rgba '%s'"
+    -- ):format(theme.accent[1])
 
     easy_async_with_shell(build_theme_cmd, function()
         theme_notify:destroy()
@@ -277,14 +277,14 @@ theme.build_gtk_theme = function()
         }
     end)
 
-    easy_async_with_shell(ibus_icon_cmd, function()
-        ibus_icon_notify:destroy()
-        naughty.notification {
-            title = "theme setter",
-            message = "ibus icon color set",
-            timeout = 0,
-        }
-    end)
+    -- easy_async_with_shell(ibus_icon_cmd, function()
+    --     ibus_icon_notify:destroy()
+    --     naughty.notification {
+    --         title = "theme setter",
+    --         message = "ibus icon color set",
+    --         timeout = 0,
+    --     }
+    -- end)
 end
 
 theme.save_lua_config = function()
