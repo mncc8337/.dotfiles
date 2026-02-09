@@ -22,6 +22,7 @@ local gears = require("gears")
 local helper = require("helper")
 
 local interval = 5
+local battery_alarmed = false
 
 local battery_acpi = helper.acpi {
     acpi_dir = "/sys/class/power_supply/BAT0/",
@@ -63,14 +64,18 @@ awesome.connect_signal("battery::update", function()
         awesome.emit_signal("battery::status", status)
         awesome.emit_signal("battery::energy", energy)
 
+        local alarming_condition = capacity <= 10
         if features.alarm.available then
-            if energy <= tonumber(features.alarm.value) then
+            alarming_condition = energy <= tonumber(features.alarm.value)
+        end
+
+        if alarming_condition then
+            if not battery_alarmed then
                 awesome.emit_signal("battery::alarm")
+                battery_alarmed = true
             end
         else
-            if capacity <= 10 then
-                awesome.emit_signal("battery::alarm")
-            end
+            battery_alarmed = false
         end
 
         if features.power_now.available then
