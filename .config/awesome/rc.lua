@@ -47,6 +47,7 @@ FILEMAN = "nemo"
 APPLAUNCHER = "rofi -show drun"
 PROMPTRUNNER = "rofi -show run"
 SETUPDISPLAY = "arandr"
+-- screen locker command
 LOCKER = ("i3lock \
     -B 1.2 \
     -k -e \
@@ -141,20 +142,42 @@ require("ui.widget.controlpanel")
 --     c:activate { context = "mouse_enter", raise = false }
 -- end)
 
--- disable round corner on maximized clients
-local function reconfig_border(c)
+-- maximized clients fixes
+client.connect_signal("property::maximized", function(c)
     if c.maximized then
+        -- hide picom's round corner (also read picom config for full implementation)
         awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 0")
-    else
-        awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 1")
-    end
-end
-client.connect_signal("property::maximized", reconfig_border)
 
--- fix weird position of already maximized clients when spawn
+        -- hide titlebar
+        awful.titlebar.hide(c)
+
+        -- the height of the client will not change automaticaly after we hide the titlebar
+        -- so we need to increase height to fill the gap
+        c.height = c.height + beautiful.titlebar_height
+
+        -- some applications do not do this so we need to enforce it manually
+        c.border_width = 0
+    else
+        -- undo all the thing above
+        awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 1")
+        awful.titlebar.show(c)
+        c.height = c.height - beautiful.titlebar_height
+        c.border_width = beautiful.border_width
+    end
+end)
+
+-- fix weird position of already maximized/fullscreened clients when spawn
+-- just found out that my weird global placement rules causes this (see config/rules.lua)
 client.connect_signal("request::manage", function(c)
     if c.maximized then
         c.maximized = false
         c.maximized = true
+    end
+
+    if c.fullscreen then
+        c.fullscreen = false
+        -- remind that its border exists
+        c.border_width = beautiful.border_width
+        c.fullscreen = true
     end
 end)

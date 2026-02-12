@@ -146,7 +146,6 @@ theme.build = function()
     theme.border_color_active    = theme.accent[2]
     theme.border_color_marked    = theme.bg[5]
     theme.border_color_urgent    = theme.accent[1]
-    theme.border_width_maximized = 0
 
     theme.tasklist_bg_normal   = theme.bg[3]
     theme.tasklist_bg_focus    = theme.bg_focus

@@ -67,15 +67,3 @@ client.connect_signal("request::titlebars", function(c)
     }
 
 end)
-
-client.connect_signal("property::maximized", function(c)
-    if c.maximized then
-        awful.titlebar.hide(c)
-        -- the height of the client will not change automaticaly after we hide the titlebar
-        -- so we need to increase height to fill the gap
-        c.height = c.height + beautiful.titlebar_height
-    else
-        awful.titlebar.show(c)
-        c.height = c.height - beautiful.titlebar_height
-    end
-end)
