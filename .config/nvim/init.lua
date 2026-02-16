@@ -291,7 +291,7 @@ vim.opt.timeoutlen = 1000
 vim.opt.clipboard = "unnamedplus"
 
 vim.opt.termguicolors = true
-vim.cmd.colorscheme("base16-rose-pine")
+vim.cmd.colorscheme("base16-nord-light")
 
 vim.opt.swapfile = false
 vim.opt.backup = false

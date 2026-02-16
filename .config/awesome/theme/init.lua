@@ -1,4 +1,5 @@
 local naughty = require("naughty")
+local gears = require("gears")
 
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
@@ -30,30 +31,36 @@ theme.accent = {
     "#dddddd",
 }
 
-theme.termcolor = {
-    "#373b41",
-    "#cc6666",
-    "#b5bd68",
-    "#f0c674",
-    "#81a2be",
-    "#b294bb",
-    "#8abeb7",
-    "#c5c8c6",
-    "#373b41",
-    "#cc6666",
-    "#b5bd68",
-    "#f0c674",
-    "#81a2be",
-    "#b294bb",
-    "#8abeb7",
-    "#c5c8c6",
+theme.term = {
+    color = {
+        "#373b41",
+        "#cc6666",
+        "#b5bd68",
+        "#f0c674",
+        "#81a2be",
+        "#b294bb",
+        "#8abeb7",
+        "#c5c8c6",
+        "#373b41",
+        "#cc6666",
+        "#b5bd68",
+        "#f0c674",
+        "#81a2be",
+        "#b294bb",
+        "#8abeb7",
+        "#c5c8c6",
+    },
+    bg = "#282828",
+    fg = "#bdbdbd",
+    cursor_bg = "#d5d5d5",
+    cursor_fg = "#282828",
+    cursor_border = "#fbfbfb",
+    selection_bg = "#d5d5d5",
+    selection_fg = "#383838",
 }
 
 theme.set_colorscheme = function(colorscheme)
-    theme.bg = colorscheme.bg
-    theme.fg = colorscheme.fg
-    theme.accent = colorscheme.accent
-    theme.termcolor = colorscheme.termcolor
+    gears.table.crush(theme, colorscheme)
 end
 
 theme.font_type = {
@@ -316,23 +323,32 @@ theme.save_lua_config = function()
             \"%s\",\
             \"%s\",\
         },\
-        termcolor = {\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
+        term = {\
+            color = {\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+                \"%s\",\
+            },\
+            bg = \"%s\",\
+            fg = \"%s\",\
+            cursor_bg = \"%s\",\
+            cursor_fg = \"%s\",\
+            cursor_border = \"%s\",\
+            selection_bg = \"%s\",\
+            selection_fg = \"%s\",\
         },\
     }"):format(
         theme.bg[1],
@@ -349,22 +365,29 @@ theme.save_lua_config = function()
         theme.accent[1],
         theme.accent[2],
 
-        theme.termcolor[1],
-        theme.termcolor[2],
-        theme.termcolor[3],
-        theme.termcolor[4],
-        theme.termcolor[5],
-        theme.termcolor[6],
-        theme.termcolor[7],
-        theme.termcolor[8],
-        theme.termcolor[9],
-        theme.termcolor[10],
-        theme.termcolor[11],
-        theme.termcolor[12],
-        theme.termcolor[13],
-        theme.termcolor[14],
-        theme.termcolor[15],
-        theme.termcolor[16]
+        theme.term.color[1],
+        theme.term.color[2],
+        theme.term.color[3],
+        theme.term.color[4],
+        theme.term.color[5],
+        theme.term.color[6],
+        theme.term.color[7],
+        theme.term.color[8],
+        theme.term.color[9],
+        theme.term.color[10],
+        theme.term.color[11],
+        theme.term.color[12],
+        theme.term.color[13],
+        theme.term.color[14],
+        theme.term.color[15],
+        theme.term.color[16],
+        theme.term.bg,
+        theme.term.fg,
+        theme.term.cursor_bg,
+        theme.term.cursor_fg,
+        theme.term.cursor_border,
+        theme.term.selection_bg,
+        theme.term.selection_fg
     ))
     file:close()
 end

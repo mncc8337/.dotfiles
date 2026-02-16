@@ -16,10 +16,10 @@ naughty.connect_signal("request::display_error", function(message, startup)
 end)
 
 -- set up theme 
--- local colorscheme =  require("theme.colorscheme.gruvbox")
-local colorscheme = require("theme.colorscheme.dynamic")
+local colorscheme =  require("theme.colorscheme.nord-light")
+-- local colorscheme = require("theme.colorscheme.dynamic")
 -- colorscheme.tint("#dd716f", 0.4)
-colorscheme.tint("#cac7ff", 0.9)
+-- colorscheme.tint("#cac7ff", 0.9)
 
 local theme = require("theme")
 theme.set_colorscheme(colorscheme)
@@ -29,7 +29,7 @@ theme.save_lua_config()
 -- run this after changing accent of dynamic theme
 -- theme.build_gtk_theme()
 
-theme.wallpaper = theme.wallpaper_path .. "manifold_garden.png"
+theme.wallpaper = theme.wallpaper_path .. "Paul_Signac_-_The_Port_of_Rotterdam_-_Google_Art_Project.jpg"
 theme.wallpaper_crop = {
     top = 0,
     left = 0,
@@ -76,13 +76,13 @@ LOCKER = ("i3lock \
     beautiful.bg[1]:sub(2, -1),
     beautiful.bg[1]:sub(2, -1),
     beautiful.accent[1]:sub(2, -1),
-    beautiful.termcolor[2]:sub(2, -1),
+    beautiful.term.color[2]:sub(2, -1),
     beautiful.fg[4]:sub(2, -1) .. "78",
     beautiful.accent[2]:sub(2, -1),
-    beautiful.termcolor[5]:sub(2, -1) .. "78",
-    beautiful.termcolor[5]:sub(2, -1),
-    beautiful.termcolor[2]:sub(2, -1) .. "78",
-    beautiful.termcolor[2]:sub(2, -1)
+    beautiful.term.color[5]:sub(2, -1) .. "78",
+    beautiful.term.color[5]:sub(2, -1),
+    beautiful.term.color[2]:sub(2, -1) .. "78",
+    beautiful.term.color[2]:sub(2, -1)
 )
 
 -- xss-lock

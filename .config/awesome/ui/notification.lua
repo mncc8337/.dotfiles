@@ -20,7 +20,7 @@ ruled.notification.connect_signal('request::rules', function()
     -- Set different colors for urgent notifications.
     ruled.notification.append_rule {
         rule = { urgency = 'critical' },
-        properties = { bg = beautiful.termcolor[2], fg = beautiful.fg_normal }
+        properties = { bg = beautiful.term.color[2], fg = beautiful.fg_normal }
     }
 end)
 

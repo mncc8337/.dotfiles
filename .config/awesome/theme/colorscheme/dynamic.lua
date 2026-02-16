@@ -23,23 +23,32 @@ local base = {
         "#dddddd",
     },
 
-    termcolor = {
-        "#373b41",
-        "#cc6666",
-        "#b5bd68",
-        "#f0c674",
-        "#81a2be",
-        "#b294bb",
-        "#8abeb7",
-        "#c5c8c6",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
+    term = {
+        color = {
+            "#373b41",
+            "#cc6666",
+            "#b5bd68",
+            "#f0c674",
+            "#81a2be",
+            "#b294bb",
+            "#8abeb7",
+            "#c5c8c6",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+        },
+        bg = "",
+        fg = "",
+        cursor_bg = "",
+        cursor_fg = "",
+        cursor_border = "",
+        selection_bg = "",
+        selection_fg = "",
     },
 }
 
@@ -62,23 +71,32 @@ local color = {
         "",
     },
 
-    termcolor = {
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
+    term = {
+        color = {
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+        },
+        bg = "",
+        fg = "",
+        cursor_bg = "",
+        cursor_fg = "",
+        cursor_border = "",
+        selection_bg = "",
+        selection_fg = "",
     },
 
 }
@@ -96,19 +114,30 @@ color.tint = function(accent, weight)
     color.accent[2] = tint(base.accent[2], accent, 0.5)
 
     for i = 1, 8 do
-        color.termcolor[i] = tint(base.termcolor[i], accent, 0.2)
-        -- color.termcolor[i] = brightness(base.termcolor[i], 1.1)
+        color.term.color[i] = tint(base.term.color[i], accent, 0.2)
+        -- color.term.color[i] = brightness(base.term.color[i], 1.1)
     end
     for i = 9, 16 do
-        color.termcolor[i] = brightness(base.termcolor[i - 8], 1.1)
+        color.term.color[i] = brightness(base.term.color[i - 8], 1.1)
     end
+
+    color.term.fg = color.fg[1]
+    color.term.bg = color.bg[1]
+
+    color.term.cursor_bg = color.fg[2]
+    color.term.cursor_fg = color.bg[1]
+    color.term.cursor_border = color.fg[4]
+
+    color.term.selection_fg = color.bg[2]
+    color.term.selection_bg = color.fg[2]
+
 end
 
 color.set_base = function(base_color)
     base.bg = base_color.bg
     base.fg = base_color.fg
     base.accent = base_color.accent
-    base.termcolor = base_color.termcolor
+    base.term.color = base_color.term.color
 end
 
 return color

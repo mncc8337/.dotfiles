@@ -7,10 +7,10 @@ local colorscheme = require("awesome_theme")
 local normal_colors = {}
 local bright_colors = {}
 for i = 1, 8 do
-    normal_colors[i] = colorscheme.termcolor[i]
+    normal_colors[i] = colorscheme.term.color[i]
 end
 for i = 1, 8 do
-    bright_colors[i] = colorscheme.termcolor[i + 8]
+    bright_colors[i] = colorscheme.term.color[i + 8]
 end
 
 local config = wezterm.config_builder()
@@ -37,15 +37,15 @@ config.font_size = 13
 config.enable_tab_bar = false
 
 config.colors = {
-    foreground = colorscheme.fg[1],
-    background = colorscheme.bg[1],
+    background = colorscheme.term.bg,
+    foreground = colorscheme.term.fg,
 
-    cursor_bg = colorscheme.fg[2],
-    cursor_fg = colorscheme.bg[1],
-    cursor_border = colorscheme.fg[4],
+    cursor_bg = colorscheme.term.cursor_fg,
+    cursor_fg = colorscheme.term.cursor_bg,
+    cursor_border = colorscheme.term.cursor_border,
 
-    selection_fg = colorscheme.bg[2],
-    selection_bg = colorscheme.fg[2],
+    selection_bg = colorscheme.term.selection_fg,
+    selection_fg = colorscheme.term.selection_bg,
 
     ansi = normal_colors,
     brights = bright_colors,
