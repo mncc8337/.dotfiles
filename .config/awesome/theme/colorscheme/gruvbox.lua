@@ -14,10 +14,8 @@ return {
         "#fbf1c7",
     },
 
-    accent = {
-        "#fe8019",
-        "#f5b078",
-    },
+    accent = "#f5b078",
+    urgent = "#fb4934",
 
     term = {
         color = {

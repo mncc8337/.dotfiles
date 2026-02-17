@@ -4,6 +4,7 @@ local wezterm = require("wezterm")
 -- see .config/awesome/theme/init.lua:theme.save_lua_config()
 package.path = package.path .. ";/tmp/awesome_theme.lua"
 local colorscheme = require("awesome_theme")
+
 local normal_colors = {}
 local bright_colors = {}
 for i = 1, 8 do
@@ -40,12 +41,12 @@ config.colors = {
     background = colorscheme.term.bg,
     foreground = colorscheme.term.fg,
 
-    cursor_bg = colorscheme.term.cursor_fg,
-    cursor_fg = colorscheme.term.cursor_bg,
+    cursor_bg = colorscheme.term.cursor_bg,
+    cursor_fg = colorscheme.term.cursor_fg,
     cursor_border = colorscheme.term.cursor_border,
 
-    selection_bg = colorscheme.term.selection_fg,
-    selection_fg = colorscheme.term.selection_bg,
+    selection_bg = colorscheme.term.selection_bg,
+    selection_fg = colorscheme.term.selection_fg,
 
     ansi = normal_colors,
     brights = bright_colors,

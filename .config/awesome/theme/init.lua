@@ -26,10 +26,8 @@ theme.fg = {
     "#fbfbfb",
 }
 
-theme.accent = {
-    "#ffffff",
-    "#dddddd",
-}
+theme.accent = "#ffffff"
+theme.urgent = "#cc6666"
 
 theme.term = {
     color = {
@@ -138,8 +136,8 @@ theme.build = function()
     theme.font = theme.font_type.normal .. " 8"
 
     theme.bg_normal     = theme.bg[1]
-    theme.bg_focus      = theme.accent[2]
-    theme.bg_urgent     = theme.accent[1]
+    theme.bg_focus      = theme.accent
+    theme.bg_urgent     = theme.urgent
     theme.bg_systray    = theme.bg[2]
 
     theme.fg_normal     = theme.fg[4]
@@ -150,9 +148,9 @@ theme.build = function()
     theme.useless_gap            = dpi(6)
     theme.border_width           = dpi(4)
     theme.border_color_normal    = theme.bg_normal
-    theme.border_color_active    = theme.accent[2]
+    theme.border_color_active    = theme.accent
     theme.border_color_marked    = theme.bg[5]
-    theme.border_color_urgent    = theme.accent[1]
+    theme.border_color_urgent    = theme.accent
 
     theme.tasklist_bg_normal   = theme.bg[3]
     theme.tasklist_bg_focus    = theme.bg_focus
@@ -165,9 +163,9 @@ theme.build = function()
     theme.slider_handle_width = 0
     theme.slider_bar_height = dpi(10)
     theme.slider_bar_color = theme.bg[3]
-    theme.slider_bar_active_color = theme.accent[1]
+    theme.slider_bar_active_color = theme.accent
 
-    theme.progressbar_fg = theme.accent[1]
+    theme.progressbar_fg = theme.accent
     theme.progressbar_bg = theme.bg[3]
 
     -- Variables set for theming notifications:
@@ -241,16 +239,16 @@ theme.build_gtk_theme = function()
         theme.fg[4]:sub(2, -1),
         theme.bg[2]:sub(2, -1),
         theme.fg[4]:sub(2, -1),
-        theme.accent[1]:sub(2, -1),
+        theme.accent:sub(2, -1),
         theme.bg[1]:sub(2, -1), -- tuyf
-        theme.accent[1]:sub(2, -1),
+        theme.accent:sub(2, -1),
         theme.bg[3]:sub(2, -1),
         theme.fg[4]:sub(2, -1),
         theme.bg[2]:sub(2, -1),
         theme.fg[4]:sub(2, -1),
         theme.bg[2]:sub(2, -1),
         theme.fg[4]:sub(2, -1),
-        theme.accent[1]:sub(2, -1),
+        theme.accent:sub(2, -1),
         theme.bg[1]:sub(2, -1)
     )
 
@@ -258,12 +256,12 @@ theme.build_gtk_theme = function()
         %s/change_color.sh -o dynamic -c %s -d ~/.local/share/icons/dynamic \
     "):format(
         OOMOX_PAPIRUS_PLUGINS_DIR,
-        theme.accent[1]:sub(2, -1)
+        theme.accent:sub(2, -1)
     )
 
     -- local ibus_icon_cmd = (
     --     "gsettings set org.freedesktop.ibus.panel xkb-icon-rgba '%s'"
-    -- ):format(theme.accent[1])
+    -- ):format(theme.accent)
 
     easy_async_with_shell(build_theme_cmd, function()
         theme_notify:destroy()
@@ -319,10 +317,8 @@ theme.save_lua_config = function()
             \"%s\",\
             \"%s\",\
         },\
-        accent = {\
-            \"%s\",\
-            \"%s\",\
-        },\
+        accent = \"%s\",\
+        urgent = \"%s\",\
         term = {\
             color = {\
                 \"%s\",\
@@ -362,8 +358,8 @@ theme.save_lua_config = function()
         theme.fg[3],
         theme.fg[4],
 
-        theme.accent[1],
-        theme.accent[2],
+        theme.accent,
+        theme.urgent,
 
         theme.term.color[1],
         theme.term.color[2],

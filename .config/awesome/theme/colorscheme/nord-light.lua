@@ -1,23 +1,21 @@
 return {
     bg = {
-        "#21242b",
-        "#2e3440",
-        "#3b4252",
-        "#60728c",
-        "#95a5bf",
+        "#eceff4",
+        "#e5e9f0",
+        "#d8dee9",
+        "#c2d0e7",
+        "#b8c5db",
     },
 
     fg = {
-        "#aebacf",
-        "#b8c5db",
-        "#c2d0e7",
-        "#e5e9f0",
+        "#2e3440",
+        "#3b4252",
+        "#434c5e",
+        "#4c566a",
     },
 
-    accent = {
-        "#c2d0e7",
-        "#b8c5db",
-    },
+    accent = "#5272af",
+    urgent = "#99324b",
 
     term = {
         color = {
@@ -40,10 +38,10 @@ return {
         },
         bg = "#e5e9f0",
         fg = "#2e3440",
-        cursor_bg = "#c2d0e7",
-        cursor_fg = "#3b4252",
+        cursor_bg = "#3b4252",
+        cursor_fg = "#e5e9f0",
         cursor_border = "#aebacf",
-        selection_bg = "#5272af",
-        selection_fg = "#c2d0e7",
+        selection_bg = "#c2d0e7",
+        selection_fg = "#5272af",
     },
 }

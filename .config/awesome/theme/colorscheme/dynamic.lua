@@ -18,10 +18,8 @@ local base = {
         "#fbfbfb",
     },
 
-    accent = {
-        "#ffffff",
-        "#dddddd",
-    },
+    accent = "#ffffff",
+    urgent = "#cc6666",
 
     term = {
         color = {
@@ -33,22 +31,7 @@ local base = {
             "#b294bb",
             "#8abeb7",
             "#c5c8c6",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
         },
-        bg = "",
-        fg = "",
-        cursor_bg = "",
-        cursor_fg = "",
-        cursor_border = "",
-        selection_bg = "",
-        selection_fg = "",
     },
 }
 
@@ -66,10 +49,9 @@ local color = {
         "",
         "",
     },
-    accent = {
-        "",
-        "",
-    },
+
+    accent = "",
+    urgent = "",
 
     term = {
         color = {
@@ -102,6 +84,8 @@ local color = {
 }
 
 color.tint = function(accent, weight)
+    color.accent = accent
+
     for i = 1, 5 do
         color.bg[i] = tint(base.bg[i], accent, weight)
     end
@@ -110,9 +94,6 @@ color.tint = function(accent, weight)
         color.fg[i] = tint(base.fg[i], accent, weight)
     end
 
-    color.accent[1] = accent
-    color.accent[2] = tint(base.accent[2], accent, 0.5)
-
     for i = 1, 8 do
         color.term.color[i] = tint(base.term.color[i], accent, 0.2)
         -- color.term.color[i] = brightness(base.term.color[i], 1.1)
@@ -120,6 +101,8 @@ color.tint = function(accent, weight)
     for i = 9, 16 do
         color.term.color[i] = brightness(base.term.color[i - 8], 1.1)
     end
+
+    color.urgent = base.term.color[2]
 
     color.term.fg = color.fg[1]
     color.term.bg = color.bg[1]
@@ -130,14 +113,8 @@ color.tint = function(accent, weight)
 
     color.term.selection_fg = color.bg[2]
     color.term.selection_bg = color.fg[2]
-
 end
 
-color.set_base = function(base_color)
-    base.bg = base_color.bg
-    base.fg = base_color.fg
-    base.accent = base_color.accent
-    base.term.color = base_color.term.color
-end
+color.tint("#ffffff", 0.0)
 
 return color
