@@ -128,6 +128,7 @@ awesome.connect_signal("battery::alarm", function()
         title = "system",
         message = "battery level is below healthy limit, please recharge",
         urgency = "critical",
+        timeout = 0,
     }
 end)
 
