@@ -143,13 +143,14 @@ require("ui.widget.controlpanel")
 --     c:activate { context = "mouse_enter", raise = false }
 -- end)
 
--- maximized clients fixes
-client.connect_signal("property::maximized", function(c)
-    if c.maximized then
+-- maximized/fullscreen clients fixes
+local function fix_func(c)
+    if c.maximized or c.fullscreen then
         -- hide picom's round corner (also read picom config for full implementation)
         awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 0")
 
         -- hide titlebar
+        -- some fullscreen clients would also have wrong geometry if titlebar is not hidden
         awful.titlebar.hide(c)
 
         -- the height of the client will not change automaticaly after we hide the titlebar
@@ -165,7 +166,9 @@ client.connect_signal("property::maximized", function(c)
         c.height = c.height - beautiful.titlebar_height
         c.border_width = beautiful.border_width
     end
-end)
+end
+client.connect_signal("property::maximized", fix_func)
+client.connect_signal("property::fullscreen", fix_func)
 
 -- fix weird position of already maximized/fullscreened clients when spawn
 -- just found out that my weird global placement rules causes this (see config/rules.lua)

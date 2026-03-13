@@ -14,17 +14,13 @@ running = True
 
 def counting_thread():
     output = "0h 0m 0s"
-    code_tm = time.time()
+
     while running:
         print(output, end="", flush=True)
-        time.sleep(1.0 - (time.time() - code_tm))
-        code_tm = time.time()
-
-        for _ in output:
-            print("\b", end="")
+        time.sleep(1)
+        print("\b" * len(output), end="")
 
         cu = time.time() - start_tm
-
         h = int(cu / 3600)
         cu -= h * 3600
         m = int(cu / 60)

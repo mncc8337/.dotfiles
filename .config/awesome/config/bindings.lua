@@ -278,28 +278,27 @@ awful.keyboard.append_global_keybindings({
 --               {description = "decrease playerctl volume", group = "media"}),
 -- })
 
--- backlight control
+-- misc
 awful.keyboard.append_global_keybindings({
+    -- hide wibar
+    awful.key({ MODKEY }, "b",
+        function()
+            local wibar = awful.screen.focused().wibar
+            wibar.visible = not wibar.visible
+        end,
+        {description = "increase screen brightness", group = "hardware"}),
+
+    -- backlight control
     awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("backlight::increase_brightness", 10) end,
         {description = "increase screen brightness", group = "hardware"}),
     awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("backlight::increase_brightness",  -10) end,
               {description = "decrease screen brightness", group = "hardware"}),
-})
 
--- touchpad stuff
-awful.keyboard.append_global_keybindings({
+    -- touchpad stuff
     awful.key({ }, "XF86TouchpadToggle", function() awesome.emit_signal("touchpad::toggle") end,
         {description = "toggle touchpad", group = "hardware"}),
-})
 
--- remap the stupid copilot key
-awful.keyboard.append_global_keybindings({
-    awful.key({ MODKEY, "Shift" }, "XF86TouchpadOff", function() awesome.emit_signal("controlpanel::toggle") end,
-        {description = "toggle control panel", group = "media"}),
-})
-
--- screenshot
-awful.keyboard.append_global_keybindings({
+    -- screenshot
     awful.key({                 }, "Print", function() awesome.emit_signal("screenshot::full", false) end,
               {description = "print full screen",               group = "media"}),
     awful.key({ MODKEY          }, "Print", function() awesome.emit_signal("screenshot::full", true)  end,
@@ -308,10 +307,8 @@ awful.keyboard.append_global_keybindings({
               {description = "print a part of screen",          group = "media"}),
     awful.key({ MODKEY, "Shift" }, "Print", function() awesome.emit_signal("screenshot::area", true)  end,
               {description = "print a part of screen and save", group = "media"}),
-})
 
--- app launching
-awful.keyboard.append_global_keybindings({
+    -- app launching
     awful.key({ MODKEY }, "Return", function() awful.spawn(TERMINAL) end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ MODKEY }, "p", function() awful.spawn(SETUPDISPLAY) end,

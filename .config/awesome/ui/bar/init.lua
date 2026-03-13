@@ -48,20 +48,20 @@ screen.connect_signal("request::desktop_decoration", function(s)
             margins = beautiful.common_margin,
             {
                 layout = wibox.layout.align.horizontal,
-                { -- Left widgets
+                { -- left widgets
                     layout = wibox.layout.fixed.horizontal,
                     spacing = beautiful.common_margin,
                     widget_container(control_button),
                     make_taglist(s),
                 },
-                -- Middle widget
+                -- middle widget
                 {
                     layout = wibox.layout.align.horizontal,
                     spacing_widget,
                     make_tasklist(s),
                     spacing_widget
                 },
-                { -- Right widgets
+                { -- right widgets
                     layout = wibox.layout.fixed.horizontal,
                     spacing = beautiful.common_margin,
                     widget_container(require("ui.bar.music")),
