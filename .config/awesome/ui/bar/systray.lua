@@ -34,7 +34,6 @@ expand_button:buttons {
     awful.button({ }, 1, toggle_expand)
 }
 
-
 return {
     layout = wibox.layout.fixed.horizontal,
     spacing = 0,

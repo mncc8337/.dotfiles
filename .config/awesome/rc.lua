@@ -10,16 +10,16 @@ local wibox = require("wibox")
 naughty.connect_signal("request::display_error", function(message, startup)
     naughty.notification {
         urgency = "critical",
-        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
+        title   = "Oops, an error happened" .. (startup and " during startup!" or "!"),
         message = message
     }
 end)
 
--- set up theme 
+-- set up theme
 -- local colorscheme = require("theme.colorscheme.dynamic")
 -- colorscheme.tint("#dd716f", 0.4)
 -- colorscheme.tint("#cac7ff", 0.9)
-local colorscheme =  require("theme.colorscheme.nord-light")
+local colorscheme = require("theme.colorscheme.nord-light")
 
 local theme = require("theme")
 theme.set_colorscheme(colorscheme)
@@ -124,7 +124,7 @@ awesome.connect_signal("ideapad::current_profile", function(prof)
 end)
 
 awesome.connect_signal("battery::alarm", function()
-    naughty.notify{
+    naughty.notify {
         title = "system",
         message = "battery level is below healthy limit, please recharge",
         urgency = "critical",
@@ -159,6 +159,10 @@ local function fix_func(c)
 
         -- some applications do not do this so we need to enforce it manually
         c.border_width = 0
+
+        if c.fullscreen then
+            c.y = 0
+        end
     else
         -- undo all the thing above
         awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 1")

@@ -12,6 +12,8 @@ awful.keyboard.append_global_keybindings({
               {description = "reload awesome", group = "awesome"}),
     awful.key({ MODKEY, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
+    awful.key({ MODKEY }, "i", function() awful.spawn.with_shell(TERMINAL .. " -e nvim ~/.config/awesome/") end,
+              {description = "edit awesome config file", group = "awesome"}),
 })
 
 -- tags related keybindings
@@ -286,7 +288,7 @@ awful.keyboard.append_global_keybindings({
             local wibar = awful.screen.focused().wibar
             wibar.visible = not wibar.visible
         end,
-        {description = "increase screen brightness", group = "hardware"}),
+        {description = "toggle wibar", group = "hardware"}),
 
     -- backlight control
     awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("backlight::increase_brightness", 10) end,
@@ -307,6 +309,11 @@ awful.keyboard.append_global_keybindings({
               {description = "print a part of screen",          group = "media"}),
     awful.key({ MODKEY, "Shift" }, "Print", function() awesome.emit_signal("screenshot::area", true)  end,
               {description = "print a part of screen and save", group = "media"}),
+
+    awful.key({ }, "XF86Tools", function() awesome.emit_signal("controlpanel::toggle") end,
+        {description = "open control panel", group = "media"}),
+    awful.key({ }, "XF86ScreenSaver", function() awesome.emit_signal("backlight::force_turn_off") end,
+        {description = "turn off screen", group = "hardware"}),
 
     -- app launching
     awful.key({ MODKEY }, "Return", function() awful.spawn(TERMINAL) end,

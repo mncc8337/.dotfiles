@@ -56,6 +56,7 @@ ruled.client.connect_signal("request::rules", function()
             -- and the name shown there might not match defined rules here.
             name    = {
                 "Event Tester",  -- xev.
+                "Lotus Settings",
             },
             role    = {
                 "AlarmWindow",    -- Thunderbird's calendar.
