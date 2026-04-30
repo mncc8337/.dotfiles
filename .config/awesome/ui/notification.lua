@@ -33,8 +33,15 @@ naughty.connect_signal("request::display", function(n)
             margins = beautiful.common_padding,
             {
                 layout = wibox.layout.fixed.vertical,
-                naughty.widget.title,
-                naughty.widget.message,
+                {
+                    widget = naughty.widget.title,
+                    halign = "center",
+                },
+                {
+                    widget = naughty.widget.message,
+                    halign = "center",
+                    valign = "center",
+                }
             }
         }
     }
@@ -45,34 +52,33 @@ naughty.connect_signal("request::display", function(n)
         local surf = gears.surface(n.icon)
         local width, height = gears.surface.get_size(surf)
 
+        local scaled_width = beautiful.notification_maximum_icon_width
+        local scaled_height = height / width * scaled_width
+
         local ideal_height = nil
         local ideal_width = nil
 
-        -- the current width is current height is beautiful.notification_icon_size
-        local current_width = width / height * beautiful.notification_icon_size
-        local max_width     = beautiful.notification_width * 3.5/5
-
-        -- if width is too large then set fixed width
-        if current_width > max_width then
-            ideal_width = max_width
-            ideal_height = nil
+        if scaled_height > beautiful.notification_maximum_icon_height then
+            ideal_height = beautiful.notification_maximum_icon_height
+            ideal_width = width / height * ideal_height
         else
-            -- set fixed height
-            ideal_width = nil
-            ideal_height = beautiful.notification_icon_size
+            ideal_width = scaled_width
+            ideal_height = scaled_height
         end
-        -- this strategy will ensure that
-        -- the result widget is filled horizontally
-        -- while the overall layout is not overflow
 
         -- using the normal imagebox because naughty.widget.icon only support square image
         img_box = {
-            widget = wibox.widget.imagebox,
-            image = n.icon,
-            forced_width = ideal_width,
-            forced_height = ideal_height,
-            align = "center",
-            valign = "center"
+            widget = wibox.container.constraint,
+            strategy = "max",
+            width = ideal_width,
+            height = ideal_height,
+            {
+                widget = wibox.widget.imagebox,
+                image = n.icon,
+                resize = true,
+                halign = "center",
+                valign = "center"
+            }
         }
     end
 
@@ -90,11 +96,19 @@ naughty.connect_signal("request::display", function(n)
                 bg = beautiful.bg[2],
                 {
                     widget = wibox.container.margin,
-                    marigns = beautiful.common_padding,
+                    margins = beautiful.common_padding,
                     {
-                        widget = wibox.widget.textbox,
-                        id = "text_role",
-                        align = "center"
+                        widget = wibox.container.constraint,
+                        strategy = "min",
+                        width = beautiful.notification_minimum_action_width,
+                        {
+                            widget = wibox.widget.textbox,
+                            id = "text_role",
+                            halign = "center",
+                            ellipsize = "none",
+                            wrap = "word",
+                            justify = true
+                        }
                     }
                 }
             }
@@ -103,27 +117,34 @@ naughty.connect_signal("request::display", function(n)
 
     local notif = naughty.layout.box {
         notification = n,
-        maximum_width = beautiful.notification_width,
-        maximum_height = beautiful.notification_height,
         widget_template = {
             widget = naughty.container.background,
-            id     = "background_role",
+            id = "background_role",
             {
                 widget  = wibox.container.margin,
                 margins = beautiful.notification_margin,
                 {
                     layout = wibox.layout.fixed.vertical,
                     {
-                        layout = wibox.layout.fixed.horizontal,
-                        spacing = beautiful.notification_margin,
+                        layout = wibox.layout.align.horizontal,
                         img_box,
-                        msg_box
+                        msg_box,
+                        nil,
                     },
                     action_list
                 }
             }
         }
     }
+
+    if #n.actions > 0 then
+        n.timeout = 0
+    end
+
+    local function destroy_notif()
+        if #n.actions > 0 then return end
+        n:destroy()
+    end
 
     -- why replace the built-in events?
     -- awful.title buttons will toggle if they detect mouse release event on them
@@ -134,7 +155,7 @@ naughty.connect_signal("request::display", function(n)
     -- by destroying notification AFTER releasing mouse, titlebar buttons will not receive the mouse release event,
     -- so they will not toggle unexpected
     notif.buttons = {
-        awful.button({}, "1", nil, function() n:destroy() end),
-        awful.button({}, "3", nil, function() n:destroy() end)
+        awful.button({}, "1", nil, destroy_notif),
+        awful.button({}, "3", nil, destroy_notif)
     }
 end)

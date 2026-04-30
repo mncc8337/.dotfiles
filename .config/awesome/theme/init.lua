@@ -67,13 +67,6 @@ theme.font_type = {
     icon   = "CaskaydiaCove Nerd Font Propo"
 }
 
-theme.common_margin  = dpi(5)
-theme.common_padding = dpi(3)
-
-theme.wibar_height = dpi(30)
-
-theme.titlebar_height = dpi(20)
-
 theme.titlebar_close_button_normal = theme.themes_path.."default/titlebar/close_normal.png"
 theme.titlebar_close_button_focus  = theme.themes_path.."default/titlebar/close_focus.png"
 
@@ -135,6 +128,11 @@ theme.wallpaper_crop = {
 theme.build = function()
     theme.font = theme.font_type.normal .. " 8"
 
+    theme.common_margin  = dpi(5)
+    theme.common_padding = dpi(3)
+
+    theme.wibar_height = dpi(30)
+
     theme.bg_normal     = theme.bg[1]
     theme.bg_focus      = theme.accent
     theme.bg_urgent     = theme.urgent
@@ -176,9 +174,9 @@ theme.build = function()
     theme.notification_font = theme.font_type.normal .. " 10"
     theme.notification_margin = theme.common_margin
     theme.notification_spacing = theme.useless_gap
-    theme.notification_width = dpi(500)
-    theme.notification_height = dpi(80)
-    theme.notification_icon_size = theme.notification_height - theme.notification_margin * 2
+    theme.notification_maximum_icon_width = dpi(100)
+    theme.notification_maximum_icon_height = dpi(80)
+    theme.notification_minimum_action_width = dpi(100)
     theme.notification_border_width = theme.border_width / 2
     theme.notification_border_color = theme.border_color_marked
 
@@ -189,6 +187,7 @@ theme.build = function()
     theme.menu_height = dpi(15)
     theme.menu_width  = dpi(100)
 
+    theme.titlebar_height = dpi(20)
     theme.titlebar_bg_focus = theme.border_color_active
     theme.titlebar_fg_focus = theme.fg_normal
 end
