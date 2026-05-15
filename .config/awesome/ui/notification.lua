@@ -142,7 +142,7 @@ naughty.connect_signal("request::display", function(n)
     end
 
     local function destroy_notif()
-        if #n.actions > 0 then return end
+        -- if #n.actions > 0 then return end
         n:destroy()
     end
 

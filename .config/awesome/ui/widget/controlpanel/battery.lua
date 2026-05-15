@@ -39,8 +39,12 @@ awesome.connect_signal("battery::idle", function()
     est_text.markup = "using power directly from the power supply"
 end)
 
-awesome.connect_signal("battery::status", function(stat)
-    status_text.markup = "Battery is " .. stat
+awesome.connect_signal("battery::status", function(stat, power)
+    if power == nil then
+        status_text.markup = "Battery is " .. stat
+    else
+        status_text.markup = "Battery is " .. stat .. " (" .. (power / 1000000) .. "W)"
+    end
 end)
 
 return wibox.widget {

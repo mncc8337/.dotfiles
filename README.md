@@ -26,8 +26,8 @@ img not provided bc im lazy
     - [themix-theme-oomox](https://github.com/themix-project/oomox-gtk-theme) and [themix-icons-papirus](https://github.com/themix-project/themix-gui/tree/master/plugins/icons_papirus) for dynamic theming
     - imagemagick for `magick`
     - libnotify for `notify-send`
-    - libpulse for pactl (pulseaudio) or wireplumber for wpctl (pipewire)  
-    `yay -S zsh nemo wezterm rofi playerctl themix-theme-oomox-git themix-icons-papirus-git imagemagick libnotify libpulse`
+    - libpulse (pulseaudio) or pipewire-pulse (pipewire) for pactl  
+    `yay -S zsh nemo wezterm rofi playerctl themix-theme-oomox-git themix-icons-papirus-git imagemagick libnotify pipewire-pulse`
 - i don't use `bash` anymore so `home/.bashrc` maybe outdated compared to `home/.zshrc`
 - these are fonts and cursor theme used by default
     - cascadia-code-nerd
@@ -37,11 +37,12 @@ img not provided bc im lazy
 ### awesomewm
 these dependencies are only needed for awesomewm.
 - [awesome](https://awesomewm.org/)
+- xorg-xinput for `xinput`
 - [picom](https://github.com/yshui/picom)
 - [maim](https://github.com/naelstrof/maim)
 - [i3lock-color](https://github.com/Raymo111/i3lock-color)
 - [xclip](https://github.com/astrand/xclip)  
-`yay -S awesome-git picom-git maim xclip`
+`yay -S awesome-git picom-git maim xclip xorg-xinput`
 ### hyprland
 these dependencies are only needed for hyprland.
 - [hyprland](https://hyprland.org/)

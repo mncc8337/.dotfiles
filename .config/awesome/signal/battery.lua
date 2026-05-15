@@ -7,7 +7,7 @@
 
     GET
     battery::capacity(capacity, is_charging), battery percentage
-    battery::status(status), battery status, can be Charging, Discharging, Full, Not charging or Unknown
+    battery::status(status, power), battery status, can be Charging, Discharging, Full, Not charging or Unknown
     battery::energy(energy), battery current available energy
     battery::time_before_fully_discharged(hours)
     battery::time_before_fully_charged(hours)
@@ -61,7 +61,6 @@ awesome.connect_signal("battery::update", function()
         if status == "Charging" then is_charging = true else is_charging = false end
 
         awesome.emit_signal("battery::capacity", capacity, is_charging)
-        awesome.emit_signal("battery::status", status)
         awesome.emit_signal("battery::energy", energy)
 
         local alarming_condition = capacity <= 10
@@ -93,14 +92,11 @@ awesome.connect_signal("battery::update", function()
             else
                 awesome.emit_signal("battery::idle")
             end
-        end
 
-        if battery_acpi.features.cycle_count.available then
-            awesome.emit_signal("battery::cycle_count", features.cycle_count.value)
+            awesome.emit_signal("battery::status", status, power)
         else
-            awesome.emit_signal("battery::cycle_count", "na")
+            awesome.emit_signal("battery::status", status, nil)
         end
-
     end)
 end)
 

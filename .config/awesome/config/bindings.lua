@@ -16,16 +16,6 @@ awful.keyboard.append_global_keybindings({
               {description = "edit awesome config file", group = "awesome"}),
 })
 
--- tags related keybindings
-awful.keyboard.append_global_keybindings({
-    awful.key({ MODKEY, "Control", "Shift" }, ",",   awful.tag.viewprev,
-              {description = "view previous", group = "tag"}),
-    awful.key({ MODKEY, "Control", "Shift" }, ".",  awful.tag.viewnext,
-              {description = "view next", group = "tag"}),
-    -- awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
-    --           {description = "go back", group = "tag"}),
-})
-
 -- focus related keybindings
 awful.keyboard.append_global_keybindings({
     awful.key({ MODKEY }, ".", function() awful.client.focus.byidx(1) end,
@@ -40,9 +30,9 @@ awful.keyboard.append_global_keybindings({
             end
         end,
         {description = "go back", group = "client"}),
-    awful.key({ MODKEY, "Control" }, ",", function() awful.screen.focus_relative( 1) end,
+    awful.key({ MODKEY, "Control", "Shift" }, ",", function() awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
-    awful.key({ MODKEY, "Control" }, ".", function() awful.screen.focus_relative(-1) end,
+    awful.key({ MODKEY, "Control", "Shift" }, ".", function() awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
 })
 
@@ -288,7 +278,7 @@ awful.keyboard.append_global_keybindings({
             local wibar = awful.screen.focused().wibar
             wibar.visible = not wibar.visible
         end,
-        {description = "toggle wibar", group = "hardware"}),
+        {description = "toggle wibar", group = "awesome"}),
 
     -- backlight control
     awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("backlight::increase_brightness", 10) end,

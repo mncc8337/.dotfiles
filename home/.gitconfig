@@ -6,7 +6,7 @@
 	helper = store
 [core]
 	editor = nvim
-	fileMode = true
+	fileMode = false
 [color]
 	ui = auto
 [commit]
