@@ -72,7 +72,7 @@ awesome.connect_signal("audio::update", function()
 end)
 
 awesome.connect_signal("audio::set_volume", function(val)
-    awful.spawn("amixer sset " .. alsa_channel .. ' ' .. val .. '%')
+    awful.spawn("amixer sset " .. alsa_channel .. ' ' .. val .. '%', false)
     awesome.emit_signal("audio::update")
 end)
 
@@ -80,12 +80,12 @@ awesome.connect_signal("audio::increase_volume", function(diff)
     local sign = '+'
     if diff < 0 then sign = '-' end
 
-    awful.spawn("amixer sset " .. alsa_channel .. ' ' .. math.abs(diff) .. '%' .. sign)
+    awful.spawn("amixer sset " .. alsa_channel .. ' ' .. math.abs(diff) .. '%' .. sign, false)
     awesome.emit_signal("audio::update")
 end)
 
 awesome.connect_signal("audio::toggle_mute", function()
-    awful.spawn("amixer sset " .. alsa_channel .. " toggle")
+    awful.spawn("amixer sset " .. alsa_channel .. " toggle", false, false)
     awesome.emit_signal("audio::update")
 end)
 

@@ -37,20 +37,22 @@ local function copy(tmpf, notif)
     local filename = os.date(save_format)
     local savepath = save_dir .. filename
 
-    awful.spawn.with_shell("cp " .. tmpf .. ' ' .. savepath)
+    awful.spawn.with_shell("mv " .. tmpf .. ' ' .. savepath)
 
     naughty.replace_text(notif, notif.title, notif.message .. " and saved to " .. savepath)
 end
 
-local function dummy(_, _) end
+local function dump_tmp(tmpf, _)
+    os.remove(tmpf)
+end
 
 awesome.connect_signal("screenshot::full", function(save)
-    local callback = dummy
+    local callback = dump_tmp
     if save then callback = copy end
     take_screenshot(full_cmd, callback)
 end)
 awesome.connect_signal("screenshot::area", function(save)
-    local callback = dummy
+    local callback = dump_tmp
     if save then callback = copy end
     take_screenshot(area_cmd, callback)
 end)

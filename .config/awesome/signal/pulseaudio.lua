@@ -87,7 +87,7 @@ awesome.connect_signal("audio::update", function()
 end)
 
 awesome.connect_signal("audio::set_sink_volume", function(val)
-    awful.spawn("pactl set-sink-volume " .. sink .. " " .. val .. "%")
+    awful.spawn("pactl set-sink-volume " .. sink .. " " .. val .. "%", false)
     awesome.emit_signal("audio::update")
 end)
 
@@ -95,17 +95,17 @@ awesome.connect_signal("audio::increase_sink_volume", function(diff)
     local sign = '+'
     if diff < 0 then sign = '-' end
 
-    awful.spawn("pactl set-sink-volume " .. sink .. " " .. sign .. math.abs(diff) .. "%")
+    awful.spawn("pactl set-sink-volume " .. sink .. " " .. sign .. math.abs(diff) .. "%", false)
     awesome.emit_signal("audio::update")
 end)
 
 awesome.connect_signal("audio::toggle_sink_mute", function()
-    awful.spawn("pactl set-sink-mute " .. sink .. " toggle")
+    awful.spawn("pactl set-sink-mute " .. sink .. " toggle", false)
     awesome.emit_signal("audio::update")
 end)
 
 awesome.connect_signal("audio::set_source_volume", function(val)
-    awful.spawn("pactl set-source-volume " .. source .. " " .. val .. "%")
+    awful.spawn("pactl set-source-volume " .. source .. " " .. val .. "%", false)
     awesome.emit_signal("audio::update")
 end)
 
@@ -113,12 +113,12 @@ awesome.connect_signal("audio::increase_source_volume", function(diff)
     local sign = '+'
     if diff < 0 then sign = '-' end
 
-    awful.spawn("pactl set-source-volume " .. source .. " " .. sign .. math.abs(diff) .. "%")
+    awful.spawn("pactl set-source-volume " .. source .. " " .. sign .. math.abs(diff) .. "%", false)
     awesome.emit_signal("audio::update")
 end)
 
 awesome.connect_signal("audio::toggle_source_mute", function()
-    awful.spawn("pactl set-source-mute " .. source .. " toggle")
+    awful.spawn("pactl set-source-mute " .. source .. " toggle", false)
     awesome.emit_signal("audio::update")
 end)
 

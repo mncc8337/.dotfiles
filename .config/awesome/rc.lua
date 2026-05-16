@@ -86,7 +86,7 @@ LOCKER = ("i3lock \
 )
 
 -- xss-lock
-awful.spawn("xss-lock -- " .. LOCKER)
+awful.spawn.single_instance("xss-lock -- " .. LOCKER)
 
 -- generate fallback art
 local fallback_art_widget = wibox.widget {
@@ -147,7 +147,7 @@ require("ui.widget.controlpanel")
 local function fix_func(c)
     if c.maximized or c.fullscreen then
         -- hide picom's round corner (also read picom config for full implementation)
-        awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 0")
+        awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 0", false)
 
         -- hide titlebar
         -- some fullscreen clients would also have wrong geometry if titlebar is not hidden
@@ -165,7 +165,7 @@ local function fix_func(c)
         end
     else
         -- undo all the thing above
-        awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 1")
+        awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 1", false)
         awful.titlebar.show(c)
         c.height = c.height - beautiful.titlebar_height
         c.border_width = beautiful.border_width
