@@ -24,7 +24,7 @@ local colorscheme = require("theme.colorscheme.nord-light")
 local theme = require("theme")
 theme.set_colorscheme(colorscheme)
 theme.build()
-theme.save_lua_config()
+theme.save_json_config()
 
 -- run this after changing theme
 -- theme.build_gtk_theme()

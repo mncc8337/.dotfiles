@@ -290,62 +290,64 @@ theme.build_gtk_theme = function()
     -- end)
 end
 
-theme.save_lua_config = function()
-    local file = io.open("/tmp/awesome_theme.lua", "w+")
+theme.save_json_config = function()
+    local file = io.open("/tmp/awesome_theme.json", "w+")
     if not file then
         naughty.notification {
             title = "theme setter",
-            message = "failed save theme as lua file. cannot open /tmp/awesome_theme.lua",
+            message = "failed to save theme as json file. cannot open /tmp/awesome_theme.json",
             timeout = 0,
             urgency = "critical",
         }
         return
     end
 
-    file:write(("return {\
-        bg = {\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-        },\
-        fg = {\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-            \"%s\",\
-        },\
-        accent = \"%s\",\
-        urgent = \"%s\",\
-        term = {\
-            color = {\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-                \"%s\",\
-            },\
-            bg = \"%s\",\
-            fg = \"%s\",\
-            cursor_bg = \"%s\",\
-            cursor_fg = \"%s\",\
-            cursor_border = \"%s\",\
-            selection_bg = \"%s\",\
-            selection_fg = \"%s\",\
-        },\
-    }"):format(
+    local json_template = [[{
+        "bg": [
+            "%s",
+            "%s",
+            "%s",
+            "%s",
+            "%s"
+        ],
+        "fg": [
+            "%s",
+            "%s",
+            "%s",
+            "%s"
+        ],
+        "accent": "%s",
+        "urgent": "%s",
+        "term": {
+            "color": [
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s",
+                "%s"
+            ],
+            "bg": "%s",
+            "fg": "%s",
+            "cursor_bg": "%s",
+            "cursor_fg": "%s",
+            "cursor_border": "%s",
+            "selection_bg": "%s",
+            "selection_fg": "%s"
+        }
+    }]]
+
+    file:write(json_template:format(
         theme.bg[1],
         theme.bg[2],
         theme.bg[3],

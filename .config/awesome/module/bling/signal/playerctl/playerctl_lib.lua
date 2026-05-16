@@ -32,13 +32,13 @@
 -- no_players
 --      (No parameters)
 
-local awful = require("awful")
 local gobject = require("gears.object")
 local gtable = require("gears.table")
 local gtimer = require("gears.timer")
 local gstring = require("gears.string")
 local beautiful = require("beautiful")
-local helpers = require(tostring(...):match(".*bling") .. ".helpers")
+local glib = require("lgi").GLib
+local helpers = require(tostring(...):match(".*bling") .. ".helpers.filesystem")
 local setmetatable = setmetatable
 local ipairs = ipairs
 local pairs = pairs
@@ -189,11 +189,31 @@ local function emit_metadata_signal(self, title, artist, artUrl, album, new, pla
         artUrl = artUrl:gsub("open.spotify.com", "i.scdn.co")
     end
 
+    local unique_str = artist .. album
+    if #album == 0 then
+        unique_str = artist .. title
+    end
+    local hashed = glib.compute_checksum_for_string(glib.ChecksumType.MD5, unique_str, -1)
+    local cached_art_path = "/tmp/awm_" .. hashed
+
+    -- check if we have already cached the art
+    local cached = io.open(cached_art_path, "r")
+    local is_valid_cache = false
+    if cached then
+        is_valid_cache = cached:seek("end") > 0
+        cached:close()
+    end
+
+    if is_valid_cache then
+        self:emit_signal("metadata", title, artist, cached_art_path, album, new, player_name)
+        capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, cached_art_path, player_name)
+        return
+    end
+
     if artUrl ~= "" then
-        local art_path = os.tmpname()
-        helpers.filesystem.save_image_async_curl(artUrl, art_path, function()
-            self:emit_signal("metadata", title, artist, art_path, album, new, player_name)
-            capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, art_path, player_name)
+        helpers.filesystem.save_image_async_curl(artUrl, cached_art_path, function()
+            self:emit_signal("metadata", title, artist, cached_art_path, album, new, player_name)
+            capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, cached_art_path, player_name)
         end)
     else
         capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, "", player_name)
@@ -357,27 +377,27 @@ end
 -- Create new player and connect it to callbacks
 local function init_player(self, name)
     if name_is_selected(self, name) then
-        local player = self._private.lgi_Playerctl.Player.new_from_name(name)
-        self._private.manager:manage_player(player)
-        player.on_metadata = function(player, metadata)
+        local _player = self._private.lgi_Playerctl.Player.new_from_name(name)
+        self._private.manager:manage_player(_player)
+        _player.on_metadata = function(player, metadata)
             metadata_cb(self, player, metadata)
         end
-        player.on_playback_status = function(player, playback_status)
+        _player.on_playback_status = function(player, playback_status)
             playback_status_cb(self, player, playback_status)
         end
-        player.on_seeked = function(player, position)
+        _player.on_seeked = function(player, position)
             seeked_cb(self, player, position)
         end
-        player.on_volume = function(player, volume)
+        _player.on_volume = function(player, volume)
             volume_cb(self, player, volume)
         end
-        player.on_loop_status = function(player, loop_status)
+        _player.on_loop_status = function(player, loop_status)
             loop_status_cb(self, player, loop_status)
         end
-        player.on_shuffle = function(player, shuffle_status)
+        _player.on_shuffle = function(player, shuffle_status)
             shuffle_cb(self, player, shuffle_status)
         end
-        player.on_exit = function(player, shuffle_status)
+        _player.on_exit = function(player)
             exit_cb(self, player)
         end
 

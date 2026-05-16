@@ -144,7 +144,8 @@ playerctl:connect_signal("metadata", function(_, title, artist, art_path, album,
     end
 
     music_playbutton.markup = ""
-    local image_file = FALLBACK_ART_IMG or nil
+
+    local image_file = FALLBACK_ART_IMG
     if #art_path ~= 0 then
         -- check if file size is larger than 0
         -- if the size is 0 then it is garbage
@@ -156,7 +157,6 @@ playerctl:connect_signal("metadata", function(_, title, artist, art_path, album,
             potential_img:close()
         end
     end
-
     music_art.image = image_file
 
     if new then

@@ -27,7 +27,8 @@ local gtable = require("gears.table")
 local gtimer = require("gears.timer")
 local gstring = require("gears.string")
 local beautiful = require("beautiful")
-local helpers = require(tostring(...):match(".*bling") .. ".helpers")
+local glib = require("lgi").GLib
+local helpers = require(tostring(...):match(".*bling") .. ".helpers.filesystem")
 local setmetatable = setmetatable
 local tonumber = tonumber
 local ipairs = ipairs
@@ -111,7 +112,7 @@ function playerctl:cycle_loop_status(player)
 
     if player ~= nil then
         awful.spawn.easy_async_with_shell("playerctl --player=" .. player .. " loop", function(stdout)
-            set_loop_status(stdout)
+            set_loop_status(stdout:sub(1, -2))
         end)
     else
         set_loop_status(self._private.loop_status)
@@ -139,8 +140,8 @@ end
 function playerctl:cycle_shuffle(player)
     if player ~= nil then
         awful.spawn.easy_async_with_shell("playerctl --player=" .. player .. " shuffle", function(stdout)
-            local shuffle = stdout == "on" and true or false
-            self:set_shuffle(not self._private.shuffle)
+            local shuffle = stdout:match("[Oo]n") ~= nil
+            self:set_shuffle(shuffle)
         end)
     else
         self:set_shuffle(not self._private.shuffle)
@@ -177,21 +178,41 @@ local function emit_player_metadata(self)
                 self._private.metadata_timer:stop()
             end
 
+            local unique_str = artist .. album
+            if #album == 0 then
+                unique_str = artist .. title
+            end
+            local hashed = glib.compute_checksum_for_string(glib.ChecksumType.MD5, unique_str, -1)
+            local cached_art_path = "/tmp/awm_" .. hashed
+
+            -- check if we have already cached the art
+            local cached = io.open(cached_art_path, "r")
+            local is_valid_cache = false
+            if cached then
+                is_valid_cache = cached:seek("end") > 0
+                cached:close()
+            end
+
             self._private.metadata_timer = gtimer {
                 timeout = self.debounce_delay,
                 autostart = true,
                 single_shot = true,
                 callback = function()
                     if title and title ~= "" then
-                        if art_url ~= "" then
-                            local art_path = os.tmpname()
-                            helpers.filesystem.save_image_async_curl(art_url, art_path, function()
-                                self:emit_signal("metadata", title, artist, art_path, album, player_name)
-                                capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, art_path)
-                            end)
+                        if is_valid_cache then
+                            self:emit_signal("metadata", title, artist, cached_art_path, album, player_name)
+                            capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, cached_art_path)
                         else
-                            self:emit_signal("metadata", title, artist, "", album, player_name)
-                            capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, "")
+                            if art_url ~= "" then
+                                local art_path = os.tmpname()
+                                helpers.filesystem.save_image_async_curl(art_url, art_path, function()
+                                    self:emit_signal("metadata", title, artist, art_path, album, player_name)
+                                    capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, art_path)
+                                end)
+                            else
+                                self:emit_signal("metadata", title, artist, "", album, player_name)
+                                capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, "")
+                            end
                         end
                     else
                         self:emit_signal("no_players")

@@ -1,9 +1,68 @@
 local wezterm = require("wezterm")
 
--- load colorscheme from awesomewm generated file
--- see .config/awesome/theme/init.lua:theme.save_lua_config()
-package.path = package.path .. ";/tmp/awesome_theme.lua"
-local colorscheme = require("awesome_theme")
+local fallback_theme = {
+    bg = {
+        "#1c1c1c",
+        "#282828",
+        "#383838",
+        "#505050",
+        "#666666",
+    },
+    fg = {
+        "#bdbdbd",
+        "#d5d5d5",
+        "#ebebeb",
+        "#fbfbfb",
+    },
+    accent = "#ffffff",
+    urgent = "#cc6666",
+    term = {
+        color = {
+            "#373b41",
+            "#cc6666",
+            "#b5bd68",
+            "#f0c674",
+            "#81a2be",
+            "#b294bb",
+            "#8abeb7",
+            "#c5c8c6",
+            "#373b41",
+            "#cc6666",
+            "#b5bd68",
+            "#f0c674",
+            "#81a2be",
+            "#b294bb",
+            "#8abeb7",
+            "#c5c8c6",
+        },
+        bg = "#1c1c1c",
+        fg = "#c5c8c6",
+        cursor_bg = "#d5d5d5",
+        cursor_fg = "#1c1c1c",
+        cursor_border = "#d5d5d5",
+        selection_bg = "#383838",
+        selection_fg = "#ffffff",
+    }
+}
+
+local function load_awesome_theme()
+    local file = io.open("/tmp/awesome_theme.json", "r")
+    if file then
+        local contents = file:read("*a")
+        file:close()
+
+        local success, decoded = pcall(wezterm.json_parse, contents)
+        if success then
+            return decoded
+        else
+            wezterm.log_error("Failed to parse theme JSON: " .. tostring(decoded))
+        end
+    end
+
+    return fallback_theme
+end
+
+local colorscheme = load_awesome_theme()
 
 local normal_colors = {}
 local bright_colors = {}

@@ -1,4 +1,5 @@
 local Gio = require("lgi").Gio
+local GioUnix = require("lgi").GioUnix
 local awful = require("awful")
 local gobject = require("gears.object")
 local gtable = require("gears.table")
@@ -609,9 +610,9 @@ local function generate_apps(self)
                         end
                     end
 
-                    local desktop_app_info = Gio.DesktopAppInfo.new(app_info.get_id(app))
-                    local terminal = Gio.DesktopAppInfo.get_string(desktop_app_info, "Terminal") == "true" and true or false
-                    local generic_name = Gio.DesktopAppInfo.get_string(desktop_app_info, "GenericName") or nil
+                    local desktop_app_info = GioUnix.DesktopAppInfo.new(app_info.get_id(app))
+                    local terminal = GioUnix.DesktopAppInfo.get_string(desktop_app_info, "Terminal") == "true" and true or false
+                    local generic_name = GioUnix.DesktopAppInfo.get_string(desktop_app_info, "GenericName") or nil
 
                     table.insert(self._private.all_entries, {
                         name = name,
