@@ -28,7 +28,7 @@ local gtimer = require("gears.timer")
 local gstring = require("gears.string")
 local beautiful = require("beautiful")
 local glib = require("lgi").GLib
-local helpers = require(tostring(...):match(".*bling") .. ".helpers.filesystem")
+local filesystem = require(tostring(...):match(".*bling") .. ".helpers.filesystem")
 local setmetatable = setmetatable
 local tonumber = tonumber
 local ipairs = ipairs
@@ -205,7 +205,7 @@ local function emit_player_metadata(self)
                         else
                             if art_url ~= "" then
                                 local art_path = os.tmpname()
-                                helpers.filesystem.save_image_async_curl(art_url, art_path, function()
+                                filesystem.save_image_async_curl(art_url, art_path, function()
                                     self:emit_signal("metadata", title, artist, art_path, album, player_name)
                                     capi.awesome.emit_signal("bling::playerctl::title_artist_album", title, artist, art_path)
                                 end)

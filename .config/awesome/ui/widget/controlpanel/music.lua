@@ -165,7 +165,7 @@ playerctl:connect_signal("metadata", function(_, title, artist, art_path, album,
             _album = "\n" .. album
         end
 
-        if prev_notif ~= nil then
+        if prev_notif ~= nil and not prev_notif.is_expired then
             prev_notif:destroy()
         end
         prev_notif = naughty.notification {

@@ -86,7 +86,7 @@ LOCKER = ("i3lock \
 )
 
 -- xss-lock
-awful.spawn.single_instance("xss-lock -- " .. LOCKER)
+awful.spawn("xss-lock -- " .. LOCKER)
 
 -- generate fallback art
 local fallback_art_widget = wibox.widget {
