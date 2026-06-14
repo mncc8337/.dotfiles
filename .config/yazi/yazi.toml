@@ -5,7 +5,8 @@ show_symlink = true
 
 [opener]
 edit = [
-    { run = '$EDITOR "$@"', desc = "nvim", block = true, for = "unix" },
+    { run = '$EDITOR "$@"', desc = "editor", block = true, for = "unix" },
+    { run = '$EDITOR "$@"', desc = "editor", block = true, for = "android" },
 ]
 open = [
     { run = 'xdg-open "$1"', desc = "Open", for = "linux" },
@@ -14,20 +15,23 @@ open = [
 reveal = [
     { run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", for = "linux" },
     { run = '''exiftool "$1" | less''', block = true, desc = "Show EXIF", for = "unix" },
+    { run = '''exiftool "$1" | less''', block = true, desc = "Show EXIF", for = "android" },
 ]
 extract = [
     { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
+    { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "android" },
 ]
 play = [
     { run = 'vlc "$@"', orphan = true, for = "unix" },
     { run = 'termux-open "$@"', orphan = true, for = "android" },
     { run = '''mediainfo "$1" | less''', block = true, desc = "Show media info", for = "unix" },
+    { run = '''mediainfo "$1" | less''', block = true, desc = "Show media info", for = "android" },
 ]
 
 [open]
 rules = [
     # Folder
-    { name = "*/", use = ["edit", "open", "reveal"] },
+    { url = "*/", use = ["edit", "open", "reveal"] },
     # Text
     { mime = "text/*", use = ["edit", "reveal"] },
     # Image
@@ -42,5 +46,5 @@ rules = [
     # Empty file
     { mime = "inode/empty", use = ["edit", "reveal"] },
     # Fallback
-    { name = "*", use = ["open", "reveal"] },
+    { url = "*", use = ["open", "reveal"] },
 ]
