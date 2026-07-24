@@ -40,6 +40,7 @@ alias py="python3"
 alias mv="mv -v"
 alias cp="cp -v"
 alias rm="rm -v"
+alias news="yay -Pw"
 
 source ~/.zsh_functions
 

@@ -47,6 +47,7 @@ FILEMAN = "nemo"
 APPLAUNCHER = "rofi -show drun"
 PROMPTRUNNER = "rofi -show run"
 SETUPDISPLAY = "arandr"
+
 -- screen locker command
 LOCKER = ("i3lock \
     -B 1.2 \
@@ -84,9 +85,18 @@ LOCKER = ("i3lock \
     beautiful.term.color[2]:sub(2, -1) .. "78",
     beautiful.term.color[2]:sub(2, -1)
 )
-
--- xss-lock
-awful.spawn("xss-lock -- " .. LOCKER)
+awful.spawn.with_shell(([[
+export PRIMARY_DISPLAY="$(xrandr | awk '/ primary/{print $1}')";
+xidlehook \
+  --not-when-fullscreen \
+  --not-when-audio \
+  --timer 60 \
+    'xrandr --output "$PRIMARY_DISPLAY" --brightness .1' \
+    'xrandr --output "$PRIMARY_DISPLAY" --brightness 1' \
+  --timer 540 \
+    'xrandr --output "$PRIMARY_DISPLAY" --brightness 1; %s' \
+    ''
+]]):format(LOCKER))
 
 -- generate fallback art
 local fallback_art_widget = wibox.widget {

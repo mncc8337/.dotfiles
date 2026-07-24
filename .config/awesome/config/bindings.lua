@@ -314,7 +314,7 @@ awful.keyboard.append_global_keybindings({
               {description = "show app launcher", group = "launcher"}),
     awful.key({ MODKEY }, "r", function() awful.spawn(PROMPTRUNNER) end,
               {description = "run prompt", group = "launcher"}),
-    awful.key({ MODKEY }, "l", function() awful.spawn(LOCKER) end,
+    awful.key({ MODKEY, "Control", "Shift" }, "l", function() awful.spawn(LOCKER) end,
               {description = "lock screen", group = "launcher"}),
     awful.key({ MODKEY }, "e", function() awful.spawn(FILEMAN) end,
               {description = "open file manager", group = "launcher"}),

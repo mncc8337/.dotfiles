@@ -133,22 +133,25 @@ theme.build = function()
 
     theme.wibar_height = dpi(30)
 
-    theme.bg_normal     = theme.bg[1]
-    theme.bg_focus      = theme.accent
-    theme.bg_urgent     = theme.urgent
-    theme.bg_systray    = theme.bg[2]
+    theme.bg_normal  = theme.bg[1]
+    theme.bg_focus   = theme.accent
+    theme.bg_urgent  = theme.urgent
+    theme.bg_systray = theme.bg[2]
 
-    theme.fg_normal     = theme.fg[4]
-    theme.fg_focus      = theme.bg[2]
-    theme.fg_urgent     = theme.bg[1]
-    theme.fg_minimize   = theme.fg[2]
+    theme.fg_normal   = theme.fg[4]
+    theme.fg_focus    = theme.bg[2]
+    theme.fg_urgent   = theme.bg[1]
+    theme.fg_minimize = theme.fg[2]
 
-    theme.useless_gap            = dpi(6)
-    theme.border_width           = dpi(4)
-    theme.border_color_normal    = theme.bg_normal
-    theme.border_color_active    = theme.accent
-    theme.border_color_marked    = theme.bg[5]
-    theme.border_color_urgent    = theme.accent
+    -- either 0 or 6, or i will kill ya
+    theme.useless_gap = dpi(6)
+    -- theme.useless_gap = dpi(0)
+
+    theme.border_width        = dpi(4)
+    theme.border_color_normal = theme.bg_normal
+    theme.border_color_active = theme.accent
+    theme.border_color_marked = theme.bg[5]
+    theme.border_color_urgent = theme.accent
 
     theme.tasklist_bg_normal   = theme.bg[3]
     theme.tasklist_bg_focus    = theme.bg_focus

@@ -52,3 +52,14 @@ function y() {
 	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
 }
+
+alias speedtest="curl -sL https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -"
+
+function diskusage() {
+    LOCATION=/
+    LIST_SIZE=20
+
+    [ ! -z "$1" ] && LOCATION=$1
+    [ ! -z "$2" ] && LIST_SIZE=$2
+    sudo du -ahx "$LOCATION" | sort -rh | head -n $LIST_SIZE
+}

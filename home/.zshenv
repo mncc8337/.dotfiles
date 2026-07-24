@@ -10,3 +10,6 @@ export MANPAGER="nvim +Man!"
 
 # sometime git commit failed so
 export GPG_TTY=$(tty)
+
+export LESS="-SR --mouse -#10"
+export SYSTEMD_LESS="FRXMKS --mouse -#10"
