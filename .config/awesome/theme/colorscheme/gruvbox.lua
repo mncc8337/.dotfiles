@@ -44,4 +44,5 @@ return {
         selection_bg = "#d5c4a1",
         selection_fg = "#3c3836",
     },
+    darktheme = true,
 }

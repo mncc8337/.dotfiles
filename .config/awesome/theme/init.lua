@@ -67,50 +67,62 @@ theme.font_type = {
     icon   = "CaskaydiaCove Nerd Font Propo"
 }
 
-theme.titlebar_close_button_normal = theme.themes_path.."default/titlebar/close_normal.png"
-theme.titlebar_close_button_focus  = theme.themes_path.."default/titlebar/close_focus.png"
+local function get_icons(_theme)
+    local normal = "normal"
+    local focus = "focus"
+    if not _theme.darktheme then
+        normal = "focus"
+        focus = "normal"
+    end
 
-theme.titlebar_minimize_button_normal = theme.themes_path.."default/titlebar/minimize_normal.png"
-theme.titlebar_minimize_button_focus  = theme.themes_path.."default/titlebar/minimize_focus.png"
+    _theme.titlebar_close_button_normal = _theme.themes_path.."default/titlebar/close_" .. normal .. ".png"
+    _theme.titlebar_close_button_focus  = _theme.themes_path.."default/titlebar/close_" .. focus .. ".png"
 
-theme.titlebar_ontop_button_normal_inactive = theme.themes_path.."default/titlebar/ontop_normal_inactive.png"
-theme.titlebar_ontop_button_focus_inactive  = theme.themes_path.."default/titlebar/ontop_focus_inactive.png"
-theme.titlebar_ontop_button_normal_active = theme.themes_path.."default/titlebar/ontop_normal_active.png"
-theme.titlebar_ontop_button_focus_active  = theme.themes_path.."default/titlebar/ontop_focus_active.png"
+    _theme.titlebar_minimize_button_normal = _theme.themes_path.."default/titlebar/minimize_" .. normal .. ".png"
+    _theme.titlebar_minimize_button_focus  = _theme.themes_path.."default/titlebar/minimize_" .. focus .. ".png"
 
-theme.titlebar_sticky_button_normal_inactive = theme.themes_path.."default/titlebar/sticky_normal_inactive.png"
-theme.titlebar_sticky_button_focus_inactive  = theme.themes_path.."default/titlebar/sticky_focus_inactive.png"
-theme.titlebar_sticky_button_normal_active = theme.themes_path.."default/titlebar/sticky_normal_active.png"
-theme.titlebar_sticky_button_focus_active  = theme.themes_path.."default/titlebar/sticky_focus_active.png"
+    _theme.titlebar_ontop_button_normal_inactive = _theme.themes_path.."default/titlebar/ontop_" .. normal .. "_inactive.png"
+    _theme.titlebar_ontop_button_focus_inactive  = _theme.themes_path.."default/titlebar/ontop_" .. focus .. "_inactive.png"
+    _theme.titlebar_ontop_button_normal_active = _theme.themes_path.."default/titlebar/ontop_" .. normal .. "_active.png"
+    _theme.titlebar_ontop_button_focus_active  = _theme.themes_path.."default/titlebar/ontop_" .. focus .. "_active.png"
 
-theme.titlebar_floating_button_normal_inactive = theme.themes_path.."default/titlebar/floating_normal_inactive.png"
-theme.titlebar_floating_button_focus_inactive  = theme.themes_path.."default/titlebar/floating_focus_inactive.png"
-theme.titlebar_floating_button_normal_active = theme.themes_path.."default/titlebar/floating_normal_active.png"
-theme.titlebar_floating_button_focus_active  = theme.themes_path.."default/titlebar/floating_focus_active.png"
+    _theme.titlebar_sticky_button_normal_inactive = _theme.themes_path.."default/titlebar/sticky_" .. normal .. "_inactive.png"
+    _theme.titlebar_sticky_button_focus_inactive  = _theme.themes_path.."default/titlebar/sticky_" .. focus .. "_inactive.png"
+    _theme.titlebar_sticky_button_normal_active = _theme.themes_path.."default/titlebar/sticky_" .. normal .. "_active.png"
+    _theme.titlebar_sticky_button_focus_active  = _theme.themes_path.."default/titlebar/sticky_" .. focus .. "_active.png"
 
-theme.titlebar_maximized_button_normal_inactive = theme.themes_path.."default/titlebar/maximized_normal_inactive.png"
-theme.titlebar_maximized_button_focus_inactive  = theme.themes_path.."default/titlebar/maximized_focus_inactive.png"
-theme.titlebar_maximized_button_normal_active = theme.themes_path.."default/titlebar/maximized_normal_active.png"
-theme.titlebar_maximized_button_focus_active  = theme.themes_path.."default/titlebar/maximized_focus_active.png"
+    _theme.titlebar_floating_button_normal_inactive = _theme.themes_path.."default/titlebar/floating_" .. normal .. "_inactive.png"
+    _theme.titlebar_floating_button_focus_inactive  = _theme.themes_path.."default/titlebar/floating_" .. focus .. "_inactive.png"
+    _theme.titlebar_floating_button_normal_active = _theme.themes_path.."default/titlebar/floating_" .. normal .. "_active.png"
+    _theme.titlebar_floating_button_focus_active  = _theme.themes_path.."default/titlebar/floating_" .. focus .. "_active.png"
 
-theme.layout_fairh = theme.themes_path.."default/layouts/fairhw.png"
-theme.layout_fairv = theme.themes_path.."default/layouts/fairvw.png"
-theme.layout_floating  = theme.themes_path.."default/layouts/floatingw.png"
-theme.layout_magnifier = theme.themes_path.."default/layouts/magnifierw.png"
-theme.layout_max = theme.themes_path.."default/layouts/maxw.png"
-theme.layout_fullscreen = theme.themes_path.."default/layouts/fullscreenw.png"
-theme.layout_tilebottom = theme.themes_path.."default/layouts/tilebottomw.png"
-theme.layout_tileleft   = theme.themes_path.."default/layouts/tileleftw.png"
-theme.layout_tile = theme.themes_path.."default/layouts/tilew.png"
-theme.layout_tiletop = theme.themes_path.."default/layouts/tiletopw.png"
-theme.layout_spiral  = theme.themes_path.."default/layouts/spiralw.png"
-theme.layout_dwindle = theme.themes_path.."default/layouts/dwindlew.png"
-theme.layout_cornernw = theme.themes_path.."default/layouts/cornernww.png"
-theme.layout_cornerne = theme.themes_path.."default/layouts/cornernew.png"
-theme.layout_cornersw = theme.themes_path.."default/layouts/cornersww.png"
-theme.layout_cornerse = theme.themes_path.."default/layouts/cornersew.png"
+    _theme.titlebar_maximized_button_normal_inactive = _theme.themes_path.."default/titlebar/maximized_" .. normal .. "_inactive.png"
+    _theme.titlebar_maximized_button_focus_inactive  = _theme.themes_path.."default/titlebar/maximized_" .. focus .. "_inactive.png"
+    _theme.titlebar_maximized_button_normal_active = _theme.themes_path.."default/titlebar/maximized_" .. normal .. "_active.png"
+    _theme.titlebar_maximized_button_focus_active  = _theme.themes_path.."default/titlebar/maximized_" .. focus .. "_active.png"
 
-theme.icon_theme = "oomox-gruvbox"
+    local prefix = "w.png"
+    if not theme.darktheme then prefix = ".png" end
+
+    _theme.layout_fairh = _theme.themes_path.."default/layouts/fairh" .. prefix
+    _theme.layout_fairv = _theme.themes_path.."default/layouts/fairv" .. prefix
+    _theme.layout_floating  = _theme.themes_path.."default/layouts/floating" .. prefix
+    _theme.layout_magnifier = _theme.themes_path.."default/layouts/magnifier" .. prefix
+    _theme.layout_max = _theme.themes_path.."default/layouts/max" .. prefix
+    _theme.layout_fullscreen = _theme.themes_path.."default/layouts/fullscreen" .. prefix
+    _theme.layout_tilebottom = _theme.themes_path.."default/layouts/tilebottom" .. prefix
+    _theme.layout_tileleft   = _theme.themes_path.."default/layouts/tileleft" .. prefix
+    _theme.layout_tile = _theme.themes_path.."default/layouts/tile" .. prefix
+    _theme.layout_tiletop = _theme.themes_path.."default/layouts/tiletop" .. prefix
+    _theme.layout_spiral  = _theme.themes_path.."default/layouts/spiral" .. prefix
+    _theme.layout_dwindle = _theme.themes_path.."default/layouts/dwindle" .. prefix
+    _theme.layout_cornernw = _theme.themes_path.."default/layouts/cornernw" .. prefix
+    _theme.layout_cornerne = _theme.themes_path.."default/layouts/cornerne" .. prefix
+    _theme.layout_cornersw = _theme.themes_path.."default/layouts/cornersw" .. prefix
+    _theme.layout_cornerse = _theme.themes_path.."default/layouts/cornerse" .. prefix
+end
+
+theme.icon_theme = "dynamic"
 
 -- bling stuff
 theme.playerctl_player = { "mpd", "vlc", "%any", "firefox", "chromium" }
@@ -126,6 +138,8 @@ theme.wallpaper_crop = {
 
 -- call this when colorscheme changed
 theme.build = function()
+    get_icons(theme)
+
     theme.font = theme.font_type.normal .. " 8"
 
     theme.common_margin  = dpi(5)

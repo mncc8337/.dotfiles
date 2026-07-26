@@ -80,7 +80,7 @@ local color = {
         selection_bg = "",
         selection_fg = "",
     },
-
+    darktheme = true,
 }
 
 color.tint = function(accent, weight)
