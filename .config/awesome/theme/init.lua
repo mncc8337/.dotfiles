@@ -196,9 +196,6 @@ theme.build = function()
 end
 
 theme.build_gtk_theme = function()
-    -- pls specify this
-    local OOMOX_PAPIRUS_PLUGINS_DIR = "/opt/oomox/plugins/icons_papirus"
-
     local easy_async_with_shell = require("awful").spawn.easy_async_with_shell
 
     local theme_notify = naughty.notification {
@@ -217,26 +214,28 @@ theme.build_gtk_theme = function()
     --     timeout = 0,
     -- }
 
-    local build_theme_cmd = ("oomox-cli -o dynamic <(echo -e \"\
-            BG=%s\n\
-            FG=%s\n\
-            HDR_BG=%s\n\
-            HDR_FG=%s\n\
-            SEL_BG=%s\n\
-            SEL_FG=%s\n\
-            ACCENT_BG=%s\n\
-            TXT_BG=%s\n\
-            TXT_FG=%s\n\
-            BTN_BG=%s\n\
-            BTN_FG=%s\n\
-            HDR_BTN_BG=%s\n\
-            HDR_BTN_FG=%s\n\
-            WM_BORDER_FOCUS=%s\n\
-            WM_BORDER_UNFOCUS=%s\n\
-            ROUNDNESS=4\n\
-            GRADIENT=0.0\n\
-            SPACING=3\n\
-        \")"):format(
+    local build_theme_cmd = ([[
+        oomox-cli -o dynamic <(echo -e "
+            BG=%s
+            FG=%s
+            HDR_BG=%s
+            HDR_FG=%s
+            SEL_BG=%s
+            SEL_FG=%s
+            ACCENT_BG=%s
+            TXT_BG=%s
+            TXT_FG=%s
+            BTN_BG=%s
+            BTN_FG=%s
+            HDR_BTN_BG=%s
+            HDR_BTN_FG=%s
+            WM_BORDER_FOCUS=%s
+            WM_BORDER_UNFOCUS=%s
+            ROUNDNESS=4
+            GRADIENT=0.0
+            SPACING=3
+        ")
+    ]]):format(
         theme.bg[1]:sub(2, -1),
         theme.fg[4]:sub(2, -1),
         theme.bg[2]:sub(2, -1),
@@ -252,14 +251,18 @@ theme.build_gtk_theme = function()
         theme.fg[4]:sub(2, -1),
         theme.accent:sub(2, -1),
         theme.bg[1]:sub(2, -1)
-    )
+    ):gsub("\n%s*", " ")
 
-    local build_icon_theme_cmd = ("mkdir -p ~/.local/share/icons/dynamic && \
-        %s/change_color.sh -o dynamic -c %s -d ~/.local/share/icons/dynamic \
-    "):format(
-        OOMOX_PAPIRUS_PLUGINS_DIR,
+    local build_icon_theme_cmd = ([[
+        mkdir -p ~/.local/share/icons/dynamic &&
+        ICONS_SYMBOLIC_PANEL="%s" ICONS_SYMBOLIC_ACTION="%s" %s/gen-icon-theme.sh -o dynamic -c %s -d ~/.local/share/icons/dynamic &&
+        gtk-update-icon-cache -f -t ~/.local/share/icons/dynamic
+    ]]):format(
+        theme.fg[4]:sub(2, -1),
+        theme.fg[4]:sub(2, -1),
+        os.getenv("DOTFILES") .. "/home/.bin",
         theme.accent:sub(2, -1)
-    )
+    ):gsub("\n%s*", " ")
 
     -- local ibus_icon_cmd = (
     --     "gsettings set org.freedesktop.ibus.panel xkb-icon-rgba '%s'"

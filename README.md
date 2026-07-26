@@ -23,11 +23,11 @@ img not provided bc im lazy
     - [wezterm](https://wezterm.org/) (terminal emulator) (*)
     - [rofi](https://github.com/davatorium/rofi) (app launcher) (*)
     - [playerctl](https://github.com/altdesktop/playerctl) (control mpris2 based media)
-    - [themix-theme-oomox](https://github.com/themix-project/oomox-gtk-theme) and [themix-icons-papirus](https://github.com/themix-project/themix-gui/tree/master/plugins/icons_papirus) for dynamic theming
+    - [themix-theme-oomox](https://github.com/themix-project/oomox-gtk-theme) for dynamic theming
     - imagemagick for `magick`
     - libnotify for `notify-send`
     - libpulse (pulseaudio) or pipewire-pulse (pipewire) for pactl  
-    `yay -S zsh nemo wezterm rofi playerctl themix-theme-oomox-git themix-icons-papirus-git imagemagick libnotify pipewire-pulse`
+    `yay -S zsh nemo wezterm rofi playerctl themix-theme-oomox-git imagemagick libnotify pipewire-pulse`
 - i don't use `bash` anymore so `home/.bashrc` maybe outdated compared to `home/.zshrc`
 - these are fonts and cursor theme used by default
     - cascadia-code-nerd

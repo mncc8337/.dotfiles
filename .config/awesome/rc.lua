@@ -49,29 +49,30 @@ PROMPTRUNNER = "rofi -show run"
 SETUPDISPLAY = "arandr"
 
 -- screen locker command
-LOCKER = ("i3lock \
-    -B 1.2 \
-    -k -e \
-    --indicator \
-    --greeter-text=\"scren locked heh\" \
-    --greeter-pos=\"100:100\" \
-    --greeter-align 1 \
-    --verif-text=\"hmm\" \
-    --wrong-text=\"nein\" \
-    --noinput-text=\"empty\" \
-    --verif-color %s \
-    --wrong-color %s \
-    --time-color %s \
-    --date-color %s \
-    --keyhl-color %s \
-    --bshl-color %s \
-    --inside-color %s \
-    --ring-color %s \
-    --insidever-color %s \
-    --ringver-color %s \
-    --insidewrong-color %s \
-    --ringwrong-color %s \
-"):format(
+LOCKER = ([[
+    i3lock
+        -B 1.2
+        -k -e
+        --indicator
+        --greeter-text="scren locked heh"
+        --greeter-pos="100:100"
+        --greeter-align 1
+        --verif-text="hmm"
+        --wrong-text="nein"
+        --noinput-text="empty"
+        --verif-color %s
+        --wrong-color %s
+        --time-color %s
+        --date-color %s
+        --keyhl-color %s
+        --bshl-color %s
+        --inside-color %s
+        --ring-color %s
+        --insidever-color %s
+        --ringver-color %s
+        --insidewrong-color %s
+        --ringwrong-color %s
+]]):format(
     beautiful.bg[1]:sub(2, -1),
     beautiful.bg[1]:sub(2, -1),
     beautiful.bg[1]:sub(2, -1),
@@ -84,19 +85,21 @@ LOCKER = ("i3lock \
     beautiful.term.color[5]:sub(2, -1),
     beautiful.term.color[2]:sub(2, -1) .. "78",
     beautiful.term.color[2]:sub(2, -1)
-)
+):gsub("\n%s*", " ")
+
 awful.spawn.with_shell(([[
-export PRIMARY_DISPLAY="$(xrandr | awk '/ primary/{print $1}')";
-xidlehook \
-  --not-when-fullscreen \
-  --not-when-audio \
-  --timer 60 \
-    'xrandr --output "$PRIMARY_DISPLAY" --brightness .1' \
-    'xrandr --output "$PRIMARY_DISPLAY" --brightness 1' \
-  --timer 540 \
-    'xrandr --output "$PRIMARY_DISPLAY" --brightness 1; %s' \
-    ''
-]]):format(LOCKER))
+    killall xidlehook;
+    export PRIMARY_DISPLAY="$(xrandr | awk '/ primary/{print $1}')";
+    xidlehook
+      --not-when-fullscreen
+      --not-when-audio
+      --timer 300
+        'xrandr --output "$PRIMARY_DISPLAY" --brightness .1'
+        'xrandr --output "$PRIMARY_DISPLAY" --brightness 1'
+      --timer 300
+        'xrandr --output "$PRIMARY_DISPLAY" --brightness 1; %s'
+        ''
+]]):format(LOCKER):gsub("\n%s*", " "))
 
 -- generate fallback art
 local fallback_art_widget = wibox.widget {
