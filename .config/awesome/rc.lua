@@ -180,21 +180,30 @@ end)
 -- because doing manual positioning is pita
 
 local function geometry_fix_func(c, type)
+    local wibar = awful.screen.focused().wibar
+
+    -- c.fullscreen and c.maximized should be mutual exclusive
     if c.fullscreen and c.maximized then
-        -- c.fullscreen and c.maximized should be mutual exclusive
-        -- and fullscreening is prioritised
-        -- prevent fullscreened clients to be maximized
-        c.maximized = false
+        if wibar.visible then
+            -- if wibar is visible then fullscreen will have higher priority than maximize
+            -- and the client should revert to maximize state after un-fullscreening
+            c.maximized = false
 
-        if type == "fullscreen" then
-            -- geometry fixes for fullscreening from maximized state
-            c.y = 0
-            c.height = c.height + beautiful.wibar_height
+            if type == "fullscreen" then
+                -- geometry fixes for fullscreening from maximized state
+                c.y = 0
+                c.height = c.height + beautiful.wibar_height
 
-            -- save state
-            c.previously_maximized = true
+                -- save state
+                c.previously_maximized = true
+            end
+        else
+            -- if wibar is not visible then fullscreen is the same as maximize
+            -- so if only one is activated previously
+            -- then activating either of them after that should deactivate both
+            c.fullscreen = false
+            c.maximized = false
         end
-
         return
     end
 
