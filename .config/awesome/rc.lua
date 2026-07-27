@@ -260,10 +260,6 @@ client.connect_signal("request::manage", function(c)
     if c.maximized then
         c.maximized = false
         c.maximized = true
-    else
-        -- dirty trick to fix wrong position for some clients (im looking at you vesktop)
-        c.maximized = true
-        c.maximized = false
     end
     if c.fullscreen then
         c.fullscreen = false
