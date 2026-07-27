@@ -156,9 +156,51 @@ require("ui.widget.controlpanel")
 --     c:activate { context = "mouse_enter", raise = false }
 -- end)
 
+-- store/restore geometry of floating clients
+client.connect_signal("property::floating", function(c)
+    -- this signal is fired before the actual geometry change
+    if not c.floating then
+        -- save last floating geometry
+        c.stored_floating_geometry = {
+            x = c.x,
+            y = c.y,
+            width = c.width,
+            height = c.height,
+        }
+    elseif c.stored_floating_geometry then
+        c.x = c.stored_floating_geometry.x
+        c.y = c.stored_floating_geometry.y
+        c.width = c.stored_floating_geometry.width
+        c.height = c.stored_floating_geometry.height
+    end
+end)
+
 -- maximized/fullscreen clients fixes
-local function fix_func(c)
-    if c.maximized or c.fullscreen then
+-- idk if the default config has these issue
+-- because doing manual positioning is pita
+
+local function geometry_fix_func(c, type)
+    if c.fullscreen and c.maximized then
+        -- c.fullscreen and c.maximized should be mutual exclusive
+        -- and fullscreening is prioritised
+        -- prevent fullscreened clients to be maximized
+        c.maximized = false
+
+        if type == "fullscreen" then
+            -- geometry fixes for fullscreening from maximized state
+            c.y = 0
+            c.height = c.height + beautiful.wibar_height
+
+            -- save state
+            c.previously_maximized = true
+        end
+
+        return
+    end
+
+    -- now we are just dealing with either fullscreened or maximized, not both
+
+    if (c.maximized or c.fullscreen) and not c.titlebar_fixed_applied then
         -- hide picom's round corner (also read picom config for full implementation)
         awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 0", false)
 
@@ -168,7 +210,9 @@ local function fix_func(c)
 
         -- the height of the client will not change automaticaly after we hide the titlebar
         -- so we need to increase height to fill the gap
+        -- this is not a problem for fullscreening a maximized client (idk why)
         c.height = c.height + beautiful.titlebar_height
+        c.titlebar_fixed_applied = true
 
         -- some applications do not do this so we need to enforce it manually
         c.border_width = 0
@@ -176,29 +220,63 @@ local function fix_func(c)
         if c.fullscreen then
             c.y = 0
         end
-    else
-        -- undo all the thing above
-        awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 1", false)
-        awful.titlebar.show(c)
-        c.height = c.height - beautiful.titlebar_height
-        c.border_width = beautiful.border_width
+    elseif not c.maximized and not c.fullscreen then
+        if c.previously_maximized then
+            -- restore previous state
+            c.maximized = true
+            c.previously_maximized = false
+        elseif c.titlebar_fixed_applied then
+            -- undo all the thing above
+            awful.spawn("xprop -id " .. c.window .. " -f _PICOM_RCORNER 32c -set _PICOM_RCORNER 1", false)
+            awful.titlebar.show(c)
+            c.height = c.height - beautiful.titlebar_height
+            c.titlebar_fixed_applied = false
+            c.border_width = beautiful.border_width
+
+            if c.floating and c.stored_floating_geometry then
+                c.x = c.stored_floating_geometry.x
+                c.y = c.stored_floating_geometry.y
+                c.width = c.stored_floating_geometry.width
+                c.height = c.stored_floating_geometry.height
+            end
+        end
     end
 end
-client.connect_signal("property::maximized", fix_func)
-client.connect_signal("property::fullscreen", fix_func)
+client.connect_signal("property::maximized", function(c) geometry_fix_func(c, "maximize") end)
+client.connect_signal("property::fullscreen", function(c) geometry_fix_func(c, "fullscreen") end)
 
--- fix weird position of already maximized/fullscreened clients when spawn
--- just found out that my weird global placement rules causes this (see config/rules.lua)
 client.connect_signal("request::manage", function(c)
+    -- fix weird position of already maximized/fullscreened clients when spawn
+    -- just found out that my weird global placement rules causes this (see config/rules.lua)
     if c.maximized then
         c.maximized = false
         c.maximized = true
+    else
+        -- dirty trick to fix wrong position for some clients (im looking at you vesktop)
+        c.maximized = true
+        c.maximized = false
     end
-
     if c.fullscreen then
         c.fullscreen = false
         -- remind that its border exists
         c.border_width = beautiful.border_width
         c.fullscreen = true
+    end
+
+    -- save geometry of existed floating clients
+    if c.floating then
+        local previous_maximized = c.maximized
+        local previous_fullscreen = c.fullscreen
+
+        -- turn off maximize/fullscreen to get the real geometry
+        if c.maximized then c.maximized = false end
+        if c.fullscreen then c.fullscreen = false end
+
+        -- toggle floating to trigger the property::floating signal
+        c.floating = false
+        c.floating = true
+
+        c.maximized = previous_maximized
+        c.fullscreen = previous_fullscreen
     end
 end)
