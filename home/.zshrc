@@ -27,11 +27,28 @@ ENABLE_CORRECTION=true
 
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-plugins=(fzf zoxide zsh-autosuggestions zsh-syntax-highlighting git)
+plugins=(fzf zoxide zsh-syntax-highlighting git vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+# vi-mode settings
+MODE_INDICATOR="%F{red}[N]%f"
+INSERT_MODE_INDICATOR="%F{green}[I]%f"
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+VI_MODE_SET_CURSOR=true
+VI_MODE_CURSOR_NORMAL=2
+VI_MODE_CURSOR_VISUAL=2
+VI_MODE_CURSOR_INSERT=6
+VI_MODE_CURSOR_OPPEND=0
+autoload -U select-quoted
+zle -N select-quoted
+for m in visual viopp; do
+    for c in {a,i}{\',\",\`}; do
+        bindkey -M $m $c select-quoted
+    done
+done
 
 # fix zsh-syntax-highlighter black out comments and variable calling `$var`
 # ZSH_HIGHLIGHT_STYLES[comment]='fg=cyan,bold'

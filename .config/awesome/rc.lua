@@ -167,7 +167,7 @@ client.connect_signal("property::floating", function(c)
             width = c.width,
             height = c.height,
         }
-    elseif c.stored_floating_geometry then
+    elseif c.stored_floating_geometry and not c.maximized and not c.fullscreen then
         c.x = c.stored_floating_geometry.x
         c.y = c.stored_floating_geometry.y
         c.width = c.stored_floating_geometry.width
@@ -241,13 +241,6 @@ local function geometry_fix_func(c, type)
             c.height = c.height - beautiful.titlebar_height
             c.titlebar_fixed_applied = false
             c.border_width = beautiful.border_width
-
-            if c.floating and c.stored_floating_geometry then
-                c.x = c.stored_floating_geometry.x
-                c.y = c.stored_floating_geometry.y
-                c.width = c.stored_floating_geometry.width
-                c.height = c.stored_floating_geometry.height
-            end
         end
     end
 end
