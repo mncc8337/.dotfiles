@@ -1,0 +1,4 @@
+ACTION=="add", SUBSYSTEM=="platform", DRIVER=="ideapad_laptop", RUN+="/bin/chgrp wheel /sys/firmware/acpi/platform_profile", RUN+="/bin/chmod 664 /sys/firmware/acpi/platform_profile"
+ACTION=="add", SUBSYSTEM=="platform", KERNEL=="VPC2004:00", RUN+="/bin/chgrp wheel /sys/bus/platform/drivers/ideapad_acpi/%k/usb_charging", RUN+="/bin/chmod 664 /sys/bus/platform/drivers/ideapad_acpi/%k/usb_charging"
+ACTION=="add", SUBSYSTEM=="platform", KERNEL=="VPC2004:00", RUN+="/bin/chgrp wheel /sys/bus/platform/drivers/ideapad_acpi/%k/fn_lock", RUN+="/bin/chmod 664 /sys/bus/platform/drivers/ideapad_acpi/%k/fn_lock"
+ACTION=="add", SUBSYSTEM=="platform", KERNEL=="VPC2004:00", RUN+="/bin/chgrp wheel /sys/bus/platform/drivers/ideapad_acpi/%k/camera_power", RUN+="/bin/chmod 664 /sys/bus/platform/drivers/ideapad_acpi/%k/camera_power"

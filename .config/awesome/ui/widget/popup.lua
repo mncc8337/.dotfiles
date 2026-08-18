@@ -40,7 +40,7 @@ local function popup_maker(
 
     local popup_slider = wibox.widget {
         widget = wibox.widget.slider,
-        maximum = 100,
+        maximum = 150,
         minimum = 0,
         value = 75,
         forced_height = helper.dpi(5),

@@ -63,3 +63,37 @@ function diskusage() {
     [ ! -z "$2" ] && LIST_SIZE=$2
     sudo du -ahx "$LOCATION" | sort -rh | head -n $LIST_SIZE
 }
+
+function ntfy-done() {
+    [ -z "$1" ] && echo "a command must be provided" && return 1
+
+    local start_time=$(date +%s)
+    local cmd="$@"
+
+    echo "running: [ $cmd ]..."
+    eval "$cmd"
+    local exit_code=$?
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    local msg="command: '$cmd'\ntime elapsed: ${duration}s\nexit code: $exit_code"
+    local tags="white_check_mark"
+    local title="command exited without any errors"
+    local priority=3
+
+    if [ $exit_code -ne 0 ]; then
+        tags="x,facepalm"
+        title="command failed"
+        priority=4
+    fi
+
+    curl -s -o /dev/null \
+         -H "Title: $title" \
+         -H "Tags: $tags" \
+         -H "Priority: $priority" \
+         -d "$(echo -e "$msg")" \
+         https://box-chim.taile748a2.ts.net:81/cmd-spam
+
+    return $exit_code
+}

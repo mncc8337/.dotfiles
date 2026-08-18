@@ -300,7 +300,7 @@ awful.keyboard.append_global_keybindings({
     awful.key({ MODKEY, "Shift" }, "Print", function() awesome.emit_signal("screenshot::area", true)  end,
               {description = "print a part of screen and save", group = "media"}),
 
-    awful.key({ }, "XF86Tools", function() awesome.emit_signal("controlpanel::toggle") end,
+    awful.key({ }, "XF86Favorites", function() awesome.emit_signal("controlpanel::toggle") end,
         {description = "open control panel", group = "media"}),
     awful.key({ }, "XF86ScreenSaver", function() awesome.emit_signal("backlight::force_turn_off") end,
         {description = "turn off screen", group = "hardware"}),

@@ -1,7 +1,6 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local awful = require("awful")
-local naughty = require("naughty")
 local helper = require("helper")
 
 local battery_widget = wibox.widget {

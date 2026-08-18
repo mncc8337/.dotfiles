@@ -1,4 +1,5 @@
 local wibox = require("wibox")
+local awful = require("awful")
 local beautiful = require("beautiful")
 
 local function time_format(hours)
@@ -17,16 +18,23 @@ local function time_format(hours)
     return formatted
 end
 
+local charge_type_to_button_map = {}
+
 local est_text = wibox.widget {
     widget = wibox.widget.textbox,
     font = beautiful.font_type.normal .. " italic 10",
-    markup = "time text",
+    markup = "no estimated charge/discharge time",
 }
 
 local status_text = wibox.widget {
     widget = wibox.widget.textbox,
     font = beautiful.font_type.normal .. " 12",
-    markup = "status text",
+    markup = "Unknown battery state",
+}
+
+local button_container = wibox.widget {
+    layout = wibox.layout.flex.horizontal,
+    spacing = beautiful.common_margin,
 }
 
 awesome.connect_signal("battery::time_before_fully_discharged", function(hours)
@@ -47,9 +55,62 @@ awesome.connect_signal("battery::status", function(stat, power)
     end
 end)
 
-return wibox.widget {
-    layout = wibox.layout.align.vertical,
-    status_text,
-    est_text,
-}
+awesome.connect_signal("battery::charge_types", function(all_charge_types, current_charge_type)
+    for _, charge_type in ipairs(all_charge_types) do
+        local bg = charge_type == current_charge_type and beautiful.fg[4] or beautiful.bg[5]
+        if not charge_type_to_button_map[charge_type] then
+            local button = wibox.widget {
+                widget = wibox.container.background,
+                bg = bg,
+                fg = beautiful.bg[1],
+                wibox.widget {
+                    widget = wibox.container.margin,
+                    margins = {
+                        top = 0, bottom = 0,
+                        left = beautiful.common_padding,
+                        right = beautiful.common_padding,
+                    },
+                    wibox.widget {
+                        widget = wibox.widget.textbox,
+                        font = beautiful.font_type.normal .. " 10",
+                        markup = charge_type,
+                        halign = "center",
+                    }
+                },
+            }
+            charge_type_to_button_map[charge_type] = button
+            button:add_button(awful.button( { }, 1, function()
+                awesome.emit_signal("battery::set_current_charge_type", charge_type)
+            end
+            ))
+            button_container:add(button)
+        else
+            charge_type_to_button_map[charge_type].bg = bg
+        end
+    end
+end)
 
+return wibox.widget {
+    widget = wibox.container.margin,
+    margins = beautiful.common_padding,
+    wibox.widget {
+        layout = wibox.layout.align.vertical,
+        status_text,
+        est_text,
+        wibox.widget {
+            layout = wibox.layout.fixed.vertical,
+            wibox.widget {
+                widget = wibox.container.margin,
+                margins = {
+                    bottom = beautiful.common_padding,
+                },
+                wibox.widget {
+                    widget = wibox.widget.textbox,
+                    font = beautiful.font_type.normal .. " 8",
+                    markup = "charge type",
+                },
+            },
+            button_container,
+        },
+    },
+}

@@ -134,7 +134,7 @@ function acpi:set_feature_data(feature, data, callback)
         return
     end
 
-    local cmd = "echo " .. data .. " | sudo tee" .. self.acpi_dir .. feature
+    local cmd = "echo " .. data .. " > " .. self.acpi_dir .. feature
 
     awful.spawn.easy_async_with_shell(cmd, function(out, err, reason, exitcode)
         out = out:sub(1, -2)

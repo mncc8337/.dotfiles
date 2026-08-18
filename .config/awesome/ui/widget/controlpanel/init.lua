@@ -7,23 +7,48 @@
 
 local wibox = require("wibox")
 local awful = require("awful")
+local gears = require("gears")
 local beautiful = require("beautiful")
 local helper = require("helper")
 
 local musicwidget = require("ui.widget.controlpanel.music")
 local batterywidget = require("ui.widget.controlpanel.battery")
 
-local function widget_container(widget)
-    return {
+local function group(widgets)
+    return wibox.widget {
         widget = wibox.container.background,
         bg = beautiful.bg[2],
-        {
-            widget = wibox.container.margin,
-            margins = beautiful.common_padding,
-            widget
-        }
+        gears.table.join (
+            {
+                widget = wibox.container.margin,
+                margins = beautiful.common_padding,
+            },
+            widgets
+        )
     }
 end
+
+local function vertical_group(widgets)
+    return gears.table.join(
+        {
+            layout = wibox.layout.fixed.vertical,
+            spacing = beautiful.common_margin,
+        },
+        widgets
+    )
+end
+
+-- local function horizontal_group(ratios, widgets)
+--     local w = wibox.widget {
+--         layout = wibox.layout.ratio.horizontal,
+--         spacing = beautiful.common_margin,
+--     }
+--     for i, rat in ipairs(ratios) do
+--         w:insert(i, widgets[i])
+--         w:set_ratio(i, rat)
+--     end
+--     return w
+-- end
 
 local panel = awful.popup {
     ontop = true,
@@ -44,18 +69,16 @@ local panel = awful.popup {
         {
             widget = wibox.container.margin,
             margins = beautiful.common_margin,
-            {
-                layout = wibox.layout.fixed.vertical,
-                spacing = beautiful.common_margin,
-                widget_container(musicwidget),
-                widget_container(wibox.widget {
-                    layout = wibox.layout.fixed.vertical,
+            vertical_group {
+                group(musicwidget),
+                group {
+                    layout = wibox.layout.align.vertical,
                     spacing = beautiful.common_padding,
                     require("ui.widget.popup").sink_volume,
                     require("ui.widget.popup").source_volume,
-                }),
-                widget_container(require("ui.widget.popup").backlight),
-                widget_container(batterywidget),
+                },
+                group(require("ui.widget.popup").backlight),
+                group(batterywidget),
             },
         },
     },

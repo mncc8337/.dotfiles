@@ -5,7 +5,7 @@
     GET
     ideapad::profiles(profs), all available power profiles
     ideapad::current_profile(prof)
-    ideapad::conservation_mode(active)
+    ideapad::conservation_mode(active), deprecated. see battery::set_charge_type instead
 
     SET
     ideapad::set_profile(prof)
@@ -13,7 +13,7 @@
 ]]--
 
 -- some useful signals for lenovo ideapad
--- requires `./misc/sudoers.d/ideapad` in `/etc/sudoers.d/`
+-- requires `./misc/udev/90-ideapad.rules` in `/etc/udev/rules.d/`
 
 local awful = require("awful")
 local helper = require("helper")
@@ -26,7 +26,7 @@ local current_profile = nil
 local ideapad_acpi = helper.acpi {
     acpi_dir = "/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/",
     all_features = {
-        "conservation_mode",
+        -- "conservation_mode",
         -- "camera_power",
         "fn_lock",
         "usb_charging",
@@ -38,22 +38,22 @@ awesome.connect_signal("ideapad::set_profile", function(prof)
         return
     end
 
-    awful.spawn.with_shell("echo " .. prof .. " | sudo tee /sys/firmware/acpi/platform_profile")
+    awful.spawn.with_shell("echo " .. prof .. " > /sys/firmware/acpi/platform_profile")
     current_profile = prof
 end)
 
-awesome.connect_signal("ideapad::set_conservation_mode", function(active)
-    local str = nil
-    if active then
-        str = "1"
-    else
-        str = "0"
-    end
-
-    ideapad_acpi:set_feature_data("conservation_mode", str, function(out, err, _, code)
-        require("naughty").notify{message=out .. " " .. err .. " " .. code}
-    end)
-end)
+-- awesome.connect_signal("ideapad::set_conservation_mode", function(active)
+--     local str = nil
+--     if active then
+--         str = "1"
+--     else
+--         str = "0"
+--     end
+--
+--     ideapad_acpi:set_feature_data("conservation_mode", str, function(out, err, _, code)
+--         require("naughty").notify{message=out .. " " .. err .. " " .. code}
+--     end)
+-- end)
 
 -- check if the module is available
 awful.spawn.easy_async_with_shell("if lsmod | grep -wq ideapad_laptop; then echo 1; else 0; fi", function(out)

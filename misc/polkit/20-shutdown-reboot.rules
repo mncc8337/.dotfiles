@@ -1,5 +1,4 @@
 // Rule to allow inactive users in wheel group to reboot or shutdown
-//
 polkit.addRule(function(action, subject) {
     if ((action.id == "org.freedesktop.consolekit.system.stop" ||
          action.id == "org.freedesktop.consolekit.system.restart") &&

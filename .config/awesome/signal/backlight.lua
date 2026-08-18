@@ -12,30 +12,19 @@
     backlight::increase_brightness(diff), increase/decrease brightness
 ]]--
 
--- need to copy udev rule (./misc/udev/90-backlight.rules) to set brightness as user other than root
+-- need to copy udev rule (./misc/udev/90-backlight.rules) to /etc/udev/rules.d/ to set brightness as user other than root
 
 local awful = require("awful")
 local helper = require("helper")
 
-local backlight_dir = "/sys/class/backlight/intel_backlight/"
 local min_brightness = 0.0 -- [0, 100]
 local steep_factor = 10 -- (0, +inf)
 
 local max_raw = 0
 local brightness_percentage = 0
 
-local apply_brightness = helper.rate_limited_call(0.01, function()
-    if brightness_percentage < min_brightness then
-        brightness_percentage = min_brightness
-    end
-
-    local raw_b = math.floor(((steep_factor + 1.0) ^ (brightness_percentage / 100.0) - 1.0) / steep_factor * max_raw)
-    awful.spawn.with_shell("echo " .. raw_b .. " > " .. backlight_dir .. "brightness")
-    awesome.emit_signal("backlight::brightness", brightness_percentage)
-end)
-
 local backlight_acpi = helper.acpi {
-    acpi_dir = backlight_dir,
+    acpi_dir = "/sys/class/backlight/intel_backlight/",
     all_features = {
         "brightness",
         "max_brightness",
@@ -43,6 +32,16 @@ local backlight_acpi = helper.acpi {
     },
     dynamic_features = {},
 }
+
+local apply_brightness = helper.rate_limited_call(0.01, function()
+    if brightness_percentage < min_brightness then
+        brightness_percentage = min_brightness
+    end
+
+    local raw_b = math.floor(((steep_factor + 1.0) ^ (brightness_percentage / 100.0) - 1.0) / steep_factor * max_raw)
+    backlight_acpi:set_feature_data("brightness", raw_b)
+    awesome.emit_signal("backlight::brightness", brightness_percentage)
+end)
 
 awesome.connect_signal("backlight::force_turn_off", function()
     awful.spawn("xset dpms force off")
