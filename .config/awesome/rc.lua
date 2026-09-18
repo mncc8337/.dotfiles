@@ -19,7 +19,8 @@ end)
 -- local colorscheme = require("theme.colorscheme.dynamic")
 -- colorscheme.tint("#dd716f", 0.4)
 -- colorscheme.tint("#cac7ff", 0.9)
-local colorscheme = require("theme.colorscheme.nord-light")
+-- colorscheme.tint("#d1edff", 0.9)
+local colorscheme = require("theme.colorscheme.gruvbox")
 
 local theme = require("theme")
 theme.set_colorscheme(colorscheme)
@@ -29,7 +30,7 @@ theme.save_json_config()
 -- run this after changing theme
 -- theme.build_gtk_theme()
 
-theme.wallpaper = theme.wallpaper_path .. "Paul_Signac_-_The_Port_of_Rotterdam_-_Google_Art_Project.jpg"
+theme.wallpaper = theme.wallpaper_path .. "IMG_0795.JPG"
 theme.wallpaper_crop = {
     top = 0,
     left = 0,
@@ -86,6 +87,8 @@ LOCKER = ([[
     beautiful.term.color[2]:sub(2, -1) .. "78",
     beautiful.term.color[2]:sub(2, -1)
 ):gsub("\n%s*", " ")
+
+print(LOCKER)
 
 awful.spawn.with_shell(([[
     killall xidlehook;
@@ -248,18 +251,19 @@ client.connect_signal("property::maximized", function(c) geometry_fix_func(c, "m
 client.connect_signal("property::fullscreen", function(c) geometry_fix_func(c, "fullscreen") end)
 
 client.connect_signal("request::manage", function(c)
-    -- fix weird position of already maximized/fullscreened clients when spawn
-    -- just found out that my weird global placement rules causes this (see config/rules.lua)
-    if c.maximized then
-        c.maximized = false
-        c.maximized = true
-    end
-    if c.fullscreen then
-        c.fullscreen = false
-        -- remind that its border exists
-        c.border_width = beautiful.border_width
-        c.fullscreen = true
-    end
+    -- -- fix weird position of already maximized/fullscreened clients when spawn
+    -- -- just found out that my weird global placement rules causes this (see config/rules.lua)
+    -- if c.maximized then
+    --     c.maximized = false
+    --     c.maximized = true
+    -- end
+    -- if c.fullscreen then
+    --     c.fullscreen = false
+    --     -- remind that its border exists
+    --     c.border_width = beautiful.border_width
+    --     c.fullscreen = true
+    -- end
+    -- ^ does not happended anymore, just keep it here incase it happended again
 
     -- save geometry of existed floating clients
     if c.floating then

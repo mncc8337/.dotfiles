@@ -5,6 +5,9 @@ local ruled_count = 0.0
 local client_in_a_row = 10
 local client_offset = 20
 local function offset_centered(c)
+    -- skip placed clients
+    if c.x ~= 0 and c.y ~= 0 then return end
+
     -- this function always run 2 times for each client, not sure why. so i only add 0.5
     ruled_count = ruled_count + 0.5
     -- google maths

@@ -48,7 +48,7 @@ require("lazy").setup({
         priority = 1000,
         config = function()
             require("base16-colorscheme").setup()
-            vim.cmd.colorscheme("base16-nord-light")
+            vim.cmd.colorscheme("base16-gruvbox-dark-medium")
         end,
     },
 

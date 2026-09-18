@@ -22,6 +22,8 @@ local function find_new_position(panel)
 end
 
 local function popup_maker(
+    min_value,
+    max_value,
     default_icon,
     value_update_signal,
     value_update_function,
@@ -40,8 +42,8 @@ local function popup_maker(
 
     local popup_slider = wibox.widget {
         widget = wibox.widget.slider,
-        maximum = 150,
-        minimum = 0,
+        maximum = max_value,
+        minimum = min_value,
         value = 75,
         forced_height = helper.dpi(5),
     }
@@ -151,6 +153,8 @@ local function popup_maker(
 end
 
 local backlight_popup = popup_maker(
+    0,
+    100,
     helper.light_icon.na,
     "backlight::brightness",
     function(p_icon, p_slider, percent)
@@ -167,6 +171,8 @@ local backlight_popup = popup_maker(
 local sink_mute = nil
 local sink_volume = nil
 local sink_volume_popup = popup_maker(
+    0,
+    150,
     '󰕾',
     "audio::sink_avg",
     function(p_icon, p_slider, volume)
@@ -185,6 +191,8 @@ local sink_volume_popup = popup_maker(
 )
 
 local source_volume_popup = popup_maker(
+    0,
+    100,
     "󰍬",
     "audio::source_avg",
     function(_, p_slider, volume)
