@@ -6,18 +6,20 @@ local helper = require("helper")
 local battery_widget = wibox.widget {
     widget = wibox.widget.textbox,
     font = beautiful.font_type.normal .. " 10",
+    halign = "center",
     markup = "N/A"
 }
 local battery_icon = wibox.widget {
     widget = wibox.widget.textbox,
     font = beautiful.font_type.icon .. " 12",
+    halign = "center",
     markup = helper.battery_icon.na,
 }
 
 awesome.connect_signal("battery::capacity", function(cap, is_charging)
     battery_icon.markup = helper.get_battery_icon(cap, is_charging)
     if cap > -1 then
-    battery_widget.markup = cap .. "%"
+    battery_widget.markup = cap
     else
         battery_widget.markup = "N/A"
         battery_icon.markup = helper.battery_icon.na
@@ -29,7 +31,7 @@ return {
     margins = beautiful.common_padding,
     buttons = { awful.button({ }, 1, function() awesome.emit_signal("controlpanel::toggle") end) },
     {
-        layout = wibox.layout.fixed.horizontal,
+        layout = wibox.layout.fixed.vertical,
         spacing = beautiful.common_padding,
         battery_icon, battery_widget
     }

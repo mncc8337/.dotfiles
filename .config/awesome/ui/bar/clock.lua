@@ -3,8 +3,9 @@ local beautiful = require("beautiful")
 
 local clock = {
     widget = wibox.widget.textclock,
-    format = "%a, %b %d | <b>%R</b>",
-    font = beautiful.font_type.normal .. " 10"
+    format = "<b>%H\n%M</b>",
+    font = beautiful.font_type.normal .. " 10",
+    halign = "center",
 }
 
 return {

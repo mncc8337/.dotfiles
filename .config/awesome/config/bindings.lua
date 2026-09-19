@@ -273,12 +273,12 @@ awful.keyboard.append_global_keybindings({
 -- misc
 awful.keyboard.append_global_keybindings({
     -- hide wibar
-    awful.key({ MODKEY }, "b",
-        function()
-            local wibar = awful.screen.focused().wibar
-            wibar.visible = not wibar.visible
-        end,
-        {description = "toggle wibar", group = "awesome"}),
+    -- awful.key({ MODKEY }, "b",
+    --     function()
+    --         local wibar = awful.screen.focused().wibar
+    --         wibar.visible = not wibar.visible
+    --     end,
+    --     {description = "toggle wibar", group = "awesome"}),
 
     -- backlight control
     awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("backlight::increase_brightness", 10) end,

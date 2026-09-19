@@ -3,6 +3,7 @@ local awful = require("awful")
 local beautiful = require("beautiful")
 
 return function(s)
+    local button_size = beautiful.wibar_width - beautiful.wibar_padding * 2
     return awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
@@ -22,9 +23,19 @@ return function(s)
             awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
             awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
         },
+        layout   = {
+            -- spacing_widget = {
+            --     color = "#dddddd",
+            --     shape = gears.shape.powerline,
+            --     widget = wibox.widget.separator,
+            -- },
+            layout  = wibox.layout.fixed.vertical,
+        },
         widget_template = {
             widget = wibox.container.background,
             id = "background_role",
+            forced_width = button_size,
+            forced_height = button_size,
             {
                 widget = wibox.container.margin,
                 margins = beautiful.common_margin,

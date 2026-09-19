@@ -7,15 +7,16 @@ local expanded = true
 local expand_button = wibox.widget {
     widget = wibox.widget.textbox,
     font = beautiful.font_type.icon .. " bold 8",
-    markup = "",
+    markup = "",
     valign = "center",
     halign = "center",
-    forced_width = beautiful.wibar_height - 2 * beautiful.wibar_padding,
-    forced_height = beautiful.wibar_height - 2 * beautiful.wibar_padding,
+    forced_width = beautiful.wibar_width - 2 * beautiful.wibar_padding,
+    forced_height = beautiful.wibar_width - 2 * beautiful.wibar_padding,
 }
 
 local systray = wibox.widget {
     widget = wibox.widget.systray,
+    horizontal = false,
 }
 
 local function toggle_expand()
@@ -24,9 +25,9 @@ local function toggle_expand()
     systray.visible = expanded
 
     if expanded then
-        expand_button.markup = ""
+        expand_button.markup = ""
     else
-        expand_button.markup = ""
+        expand_button.markup = ""
     end
 end
 
@@ -35,7 +36,7 @@ expand_button:buttons {
 }
 
 return {
-    layout = wibox.layout.fixed.horizontal,
+    layout = wibox.layout.fixed.vertical,
     spacing = 0,
     expand_button, systray,
 }

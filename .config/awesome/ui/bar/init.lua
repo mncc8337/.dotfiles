@@ -23,36 +23,52 @@ local function widget_container(widget)
 end
 
 screen.connect_signal("request::desktop_decoration", function(s)
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
+
+    s.padding = {
+        top = beautiful.wallpaper_gap,
+        bottom = beautiful.wallpaper_gap,
+        left = 0,
+        right = beautiful.wallpaper_gap,
+    }
 
     s.wibar = awful.wibar {
-        position = "top",
+        position = "left",
         screen = s,
-        height = beautiful.wibar_height,
+        -- height = beautiful.wibar_height,
+        width = beautiful.wibar_width,
         widget = {
             widget = wibox.container.margin,
-            margins = beautiful.wibar_padding,
+            margins = {
+                top = beautiful.wallpaper_gap,
+                bottom = beautiful.wallpaper_gap,
+                left = beautiful.wibar_padding,
+                right = beautiful.wibar_padding,
+            },
             {
-                layout = wibox.layout.align.horizontal,
+                layout = wibox.layout.align.vertical,
                 -- left widgets
                 {
-                    layout = wibox.layout.fixed.horizontal,
+                    layout = wibox.layout.fixed.vertical,
                     spacing = beautiful.common_margin,
                     make_layoutbox(s),
                     make_taglist(s),
                 },
                 -- middle widget
                 {
-                    layout = wibox.layout.align.horizontal,
-                    spacing_widget,
-                    make_tasklist(s),
-                    spacing_widget
+                    widget = wibox.container.rotate,
+                    direction = "west",
+                    {
+                        layout = wibox.layout.align.horizontal,
+                        spacing_widget,
+                        make_tasklist(s),
+                        spacing_widget,
+                    }
                 },
                 -- right widgets
                 {
-                    layout = wibox.layout.fixed.horizontal,
+                    layout = wibox.layout.fixed.vertical,
                     spacing = beautiful.common_margin,
-                    widget_container(require("ui.bar.music")),
                     widget_container(require("ui.bar.systray")),
                     widget_container(require("ui.bar.volume")),
                     widget_container(require("ui.bar.battery")),

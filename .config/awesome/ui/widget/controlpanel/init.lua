@@ -57,9 +57,14 @@ local panel = awful.popup {
     border_width = beautiful.border_width / 2,
     border_color = beautiful.border_color_marked,
     placement = function(d)
-        awful.placement.top_right(d, {
+        awful.placement.bottom_left(d, {
             honor_workarea = true,
-            margins = beautiful.useless_gap,
+            margins = {
+                top = beautiful.wallpaper_gap,
+                bottom = beautiful.wallpaper_gap + beautiful.useless_gap * 2,
+                left = beautiful.useless_gap * 2,
+                right = beautiful.wallpaper_gap,
+            },
         })
     end,
     widget = {

@@ -6,11 +6,13 @@ local helper = require("helper")
 local volume_widget = wibox.widget {
     widget = wibox.widget.textbox,
     font = beautiful.font_type.normal .. " 10",
+    halign = "center",
     markup = "N/A"
 }
 local volume_icon = wibox.widget {
     widget = wibox.widget.textbox,
     font = beautiful.font_type.icon .. " 12",
+    halign = "center",
     markup = '󰕾'
 }
 
@@ -18,7 +20,7 @@ local volume = 25
 local mute = false
 
 awesome.connect_signal("audio::sink_avg", function(avg)
-    volume_widget.markup = avg .. '%'
+    volume_widget.markup = avg
     volume = avg
     volume_icon.markup = helper.get_volume_icon(avg, mute)
 end)
@@ -33,7 +35,7 @@ return {
     margins = beautiful.common_padding,
     buttons = { awful.button({ }, 1, function() awesome.emit_signal("controlpanel::toggle") end) },
     {
-        layout = wibox.layout.fixed.horizontal,
+        layout = wibox.layout.fixed.vertical,
         spacing = beautiful.common_padding,
         volume_icon, volume_widget
     }
