@@ -1,7 +1,7 @@
 # dotfiles
 my .files for arch (btw)
 ### awm
-![ps](access/2024-12-27_00-44-47.png)
+![ps](assets/2024-12-27_00-44-47.png)
 ### hyprland
 img not provided bc im lazy
 ## included config
