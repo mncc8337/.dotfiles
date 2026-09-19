@@ -27,7 +27,7 @@ ENABLE_CORRECTION=true
 
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-plugins=(fzf zoxide zsh-syntax-highlighting git)
+plugins=(fzf zoxide git zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
