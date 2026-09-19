@@ -8,13 +8,13 @@ return function(s)
         filter  = awful.widget.taglist.filter.all,
         buttons = {
             awful.button({ }, 1, function(t) t:view_only() end),
-            awful.button({ modkey }, 1, function(t)
+            awful.button({ MODKEY }, 1, function(t)
                 if client.focus then
                     client.focus:move_to_tag(t)
                 end
             end),
             awful.button({ }, 3, awful.tag.viewtoggle),
-            awful.button({ modkey }, 3, function(t)
+            awful.button({ MODKEY }, 3, function(t)
                 if client.focus then
                     client.focus:toggle_tag(t)
                 end
@@ -24,13 +24,14 @@ return function(s)
         },
         widget_template = {
             widget = wibox.container.background,
-            id     = "background_role",
+            id = "background_role",
             {
-                widget  = wibox.container.margin,
+                widget = wibox.container.margin,
                 margins = beautiful.common_margin,
                 {
-                    id     = "text_role",
+                    id = "text_role",
                     widget = wibox.widget.textbox,
+                    halign = "center",
                 }
             }
         }

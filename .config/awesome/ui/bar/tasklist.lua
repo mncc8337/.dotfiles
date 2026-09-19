@@ -4,8 +4,8 @@ local beautiful = require("beautiful")
 
 return function(s)
     return awful.widget.tasklist {
-        screen  = s,
-        filter  = awful.widget.tasklist.filter.currenttags,
+        screen = s,
+        filter = awful.widget.tasklist.filter.currenttags,
         buttons = {
             awful.button({ }, 1, function(c)
                 c:activate { context = "tasklist", action = "toggle_minimization" }
@@ -19,20 +19,20 @@ return function(s)
             spacing = beautiful.common_margin
         },
         widget_template = {
-            id     = "background_role",
+            id = "background_role",
             widget = wibox.container.background,
             {
-                widget  = wibox.container.margin,
+                widget = wibox.container.margin,
                 margins = beautiful.common_padding,
                 {
                     layout = wibox.layout.fixed.horizontal,
                     spacing = beautiful.common_padding,
                     {
-                        id     = "icon_role",
+                        id = "icon_role",
                         widget = wibox.widget.imagebox,
                     },
                     {
-                        id     = "text_role",
+                        id = "text_role",
                         widget = wibox.widget.textbox
                     }
                 }

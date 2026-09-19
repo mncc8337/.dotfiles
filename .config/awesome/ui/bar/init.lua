@@ -11,7 +11,7 @@ local spacing_widget = {
     strategy = "exact",
     width = beautiful.common_margin,
     height = beautiful.common_marign,
-    nil
+    nil,
 }
 
 local function widget_container(widget)
@@ -27,11 +27,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
     s.wibar = awful.wibar {
         position = "top",
-        screen   = s,
-        height   = beautiful.wibar_height,
-        widget   = {
+        screen = s,
+        height = beautiful.wibar_height,
+        widget = {
             widget = wibox.container.margin,
-            margins = beautiful.common_margin,
+            margins = beautiful.wibar_padding,
             {
                 layout = wibox.layout.align.horizontal,
                 -- left widgets

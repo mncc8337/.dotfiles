@@ -88,8 +88,6 @@ LOCKER = ([[
     beautiful.term.color[2]:sub(2, -1)
 ):gsub("\n%s*", " ")
 
-print(LOCKER)
-
 awful.spawn.with_shell(([[
     killall xidlehook;
     export PRIMARY_DISPLAY="$(xrandr | awk '/ primary/{print $1}')";

@@ -57,16 +57,6 @@ theme.term = {
     selection_fg = "#383838",
 }
 
-theme.set_colorscheme = function(colorscheme)
-    gears.table.crush(theme, colorscheme)
-end
-
-theme.font_type = {
-    normal = "IBM Plex Sans",
-    mono   = "CaskaydiaCove Nerd Font Mono",
-    icon   = "CaskaydiaCove Nerd Font Propo"
-}
-
 local function get_icons(_theme)
     local normal = "normal"
     local focus = "focus"
@@ -122,30 +112,44 @@ local function get_icons(_theme)
     _theme.layout_cornerse = _theme.themes_path.."default/layouts/cornerse" .. prefix
 end
 
-theme.icon_theme = "dynamic"
-
--- bling stuff
-theme.playerctl_player = { "mpd", "vlc", "%any", "firefox", "chromium" }
-theme.playerctl_update_on_activity = true
-
-theme.wallpaper = theme.wallpaper_path .. "birbs.png"
-theme.wallpaper_crop = {
-    top = 0,
-    left = 0,
-    bottom = 0,
-    right = 0,
-}
-
--- call this when colorscheme changed
 theme.build = function()
-    get_icons(theme)
+    theme.font_type = {
+        normal = "IBM Plex Sans",
+        mono   = "CaskaydiaCove Nerd Font Mono",
+        icon   = "CaskaydiaCove Nerd Font Propo"
+    }
 
-    theme.font = theme.font_type.normal .. " 8"
+    theme.icon_theme = "dynamic"
 
     theme.common_margin  = dpi(5)
     theme.common_padding = dpi(3)
 
+    -- either 0 or 6, or i will kill ya
+    theme.useless_gap = dpi(6)
+    -- theme.useless_gap = dpi(0)
+
+    -- horizontal bar
     theme.wibar_height = dpi(30)
+    -- vertical bar
+    theme.wibar_width = dpi(40)
+
+    theme.wibar_padding = theme.common_margin
+
+    -- bling stuff
+    theme.playerctl_player = { "mpd", "vlc", "%any", "firefox", "chromium" }
+    theme.playerctl_update_on_activity = true
+
+    theme.wallpaper = theme.wallpaper_path .. "birbs.png"
+    theme.wallpaper_crop = {
+        top = 0,
+        left = 0,
+        bottom = 0,
+        right = 0,
+    }
+    theme.wallpaper_corner_radius = 8
+    theme.wallpaper_gap = 15
+
+    theme.font = theme.font_type.normal .. " 8"
 
     theme.bg_normal  = theme.bg[1]
     theme.bg_focus   = theme.accent
@@ -156,10 +160,6 @@ theme.build = function()
     theme.fg_focus    = theme.bg[2]
     theme.fg_urgent   = theme.bg[1]
     theme.fg_minimize = theme.fg[2]
-
-    -- either 0 or 6, or i will kill ya
-    theme.useless_gap = dpi(6)
-    -- theme.useless_gap = dpi(0)
 
     theme.border_width        = dpi(4)
     theme.border_color_normal = theme.bg_normal
@@ -207,6 +207,12 @@ theme.build = function()
     theme.titlebar_height = dpi(20)
     theme.titlebar_bg_focus = theme.border_color_active
     theme.titlebar_fg_focus = theme.fg_normal
+
+    get_icons(theme)
+end
+
+theme.set_colorscheme = function(colorscheme)
+    gears.table.crush(theme, colorscheme)
 end
 
 theme.build_gtk_theme = function()

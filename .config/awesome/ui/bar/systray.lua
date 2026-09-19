@@ -1,7 +1,6 @@
 local wibox = require("wibox")
 local awful = require("awful")
 local beautiful = require("beautiful")
-local dpi = require("helper").dpi
 
 local expanded = true
 
@@ -11,7 +10,8 @@ local expand_button = wibox.widget {
     markup = "",
     valign = "center",
     halign = "center",
-    forced_width = dpi(17),
+    forced_width = beautiful.wibar_height - 2 * beautiful.wibar_padding,
+    forced_height = beautiful.wibar_height - 2 * beautiful.wibar_padding,
 }
 
 local systray = wibox.widget {
