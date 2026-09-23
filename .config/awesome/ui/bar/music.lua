@@ -53,14 +53,18 @@ return {
     margins = beautiful.common_padding,
     buttons = { awful.button({ }, 1, function() awesome.emit_signal("controlpanel::toggle") end) },
     {
-        layout = wibox.layout.fixed.horizontal,
+        layout = wibox.layout.fixed.vertical,
         spacing = beautiful.common_padding,
         music_icon,
         {
-            widget = wibox.container.constraint,
-            width = 200,
-            strategy = "max",
-            music_widget,
+            widget = wibox.container.rotate,
+            direction = "west",
+            {
+                widget = wibox.container.constraint,
+                width = 150,
+                strategy = "max",
+                music_widget,
+            }
         },
     },
 }

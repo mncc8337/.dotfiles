@@ -23,7 +23,7 @@ local function widget_container(widget)
 end
 
 screen.connect_signal("request::desktop_decoration", function(s)
-    awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5" }, s, awful.layout.layouts[1])
 
     s.wibar = awful.wibar {
         position = "left",
@@ -46,6 +46,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                     spacing = beautiful.common_margin,
                     make_layoutbox(s),
                     make_taglist(s),
+                    widget_container(require("ui.bar.systray")),
                 },
                 -- middle widget
                 {
@@ -62,7 +63,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 {
                     layout = wibox.layout.fixed.vertical,
                     spacing = beautiful.common_margin,
-                    widget_container(require("ui.bar.systray")),
+                    widget_container(require("ui.bar.music")),
                     widget_container(require("ui.bar.volume")),
                     widget_container(require("ui.bar.battery")),
                     widget_container(require("ui.bar.clock")),
