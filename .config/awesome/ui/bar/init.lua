@@ -25,13 +25,6 @@ end
 screen.connect_signal("request::desktop_decoration", function(s)
     awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
 
-    s.padding = {
-        top = beautiful.wallpaper_gap,
-        bottom = beautiful.wallpaper_gap,
-        left = 0,
-        right = beautiful.wallpaper_gap,
-    }
-
     s.wibar = awful.wibar {
         position = "left",
         screen = s,
@@ -40,8 +33,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
         widget = {
             widget = wibox.container.margin,
             margins = {
-                top = beautiful.wallpaper_gap,
-                bottom = beautiful.wallpaper_gap,
+                top = beautiful.wibar_padding,
+                bottom = beautiful.wibar_padding,
                 left = beautiful.wibar_padding,
                 right = beautiful.wibar_padding,
             },

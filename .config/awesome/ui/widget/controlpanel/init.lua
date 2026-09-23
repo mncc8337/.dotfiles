@@ -60,10 +60,10 @@ local panel = awful.popup {
         awful.placement.bottom_left(d, {
             honor_workarea = true,
             margins = {
-                top = beautiful.wallpaper_gap,
-                bottom = beautiful.wallpaper_gap + beautiful.useless_gap * 2,
-                left = beautiful.useless_gap * 2,
-                right = beautiful.wallpaper_gap,
+                top = 0,
+                bottom = beautiful.common_margin,
+                left = beautiful.common_margin,
+                right = 0,
             },
         })
     end,

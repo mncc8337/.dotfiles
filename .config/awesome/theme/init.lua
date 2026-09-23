@@ -131,9 +131,9 @@ theme.build = function()
     -- horizontal bar
     theme.wibar_height = dpi(30)
     -- vertical bar
-    theme.wibar_width = dpi(40)
+    theme.wibar_width = dpi(32)
 
-    theme.wibar_padding = dpi(9)
+    theme.wibar_padding = dpi(5)
 
     -- bling stuff
     theme.playerctl_player = { "mpd", "vlc", "%any", "firefox", "chromium" }
@@ -146,8 +146,6 @@ theme.build = function()
         bottom = 0,
         right = 0,
     }
-    theme.wallpaper_corner_radius = 10
-    theme.wallpaper_gap = 15
 
     theme.font = theme.font_type.normal .. " 8"
 
