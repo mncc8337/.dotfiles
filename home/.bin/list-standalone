@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for pkg in $(pacman -Qeq); do
+    deps=$(pacman -Qi "$pkg" | grep "^Depends On" | cut -d':' -f2 | xargs)
+    if [ "$deps" = "None" ] || [ -z "$deps" ]; then
+        echo "0 deps: $pkg"
+    else
+        count=$(echo "$deps" | wc -w)
+        echo "$count deps: $pkg"
+    fi
+done | sort -nr -k1,1
