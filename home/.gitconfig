@@ -15,3 +15,5 @@
 	defaultBranch = main
 [fetch]
 	prune = true
+[push]
+	default = current
