@@ -1,73 +1,67 @@
 #!/bin/sh
 
-# make a screenshot using maim / grim + slurp
-# args must be
+# make a screenshot using maim + slop / grim + slurp
+# include area to crop, save to save to $HOME/Pictures
 # - screenshot
-# - screenshot <anyword here works> save
+# - screenshot save
 # - screenshot area
-# - screenshot area full
+# - screenshot area save
+# - screenshot save area
 # requires imagemagick v7
 
-pgrep -x wayland
-waylander=$?
+if [ -n "$WAYLAND_DISPLAY" ]; then
+    is_wayland=1
+    screenshotter="grim"
+    clipboard_saver="wl-copy"
+else
+    is_wayland=0
+    screenshotter="maim --hidecursor"
+    clipboard_saver="xclip -selection clipboard -t image/png"
+fi
 
 tmpf=$(mktemp /tmp/scrsht-XXXXX.png)
 
-# if [ $waylander -ne 0 ]; then
-#     if [ "$1" = 'area' ]; then
-#         grim -g "`slurp`" $tmpf
-#     else
-#         grim $tmpf
-#     fi
-# else
-#     if [ "$1" = 'area' ]; then
-#         maim -s $tmpf --hidecursor
-#     else
-#         maim $tmpf --hidecursor
-#     fi
-# fi
+save=0
+for arg in "$@"; do
+    if [ "$arg" = "area" ]; then
+        if [ $is_wayland -eq 1 ]; then
+            area_arg="-g \"$(slurp)\""
+        else
+            area_arg="-s"
+        fi
+    elif [ "$arg" = "save" ]; then
+        save=1
+    fi
+done
 
-if [ "$1" = 'area' ]; then
-    maim -s $tmpf --hidecursor
-else
-    maim $tmpf --hidecursor
-fi
-
+$screenshotter $area_arg $tmpf
 
 success=$?
-
-if [ $success -eq 0 ]; then
-    # if [ $waylander -ne 0 ]; then
-    #     cat $tmpf | wl-copy
-    # else
-    #     cat $tmpf | xclip -selection clipboard -t image/png
-    # fi
-
-    cat $tmpf | xclip -selection clipboard -t image/png
-
-    savedir=''
-    prefix=''
-    if [ "$2" = 'save' ]; then
-        savedir="$(xdg-user-dir PICTURES)/$(date +"%Y-%m-%d_%H-%M-%S").png"
-        prefix="and saved to $(xdg-user-dir PICTURES)"
-        cp $tmpf $savedir
-    fi
-
-    width_by_height=$(magick identify -format "%[fx:round(w*1000/h)]" "$tmpf")
-    height_by_width=$(magick identify -format "%[fx:round(h*1000/w)]" "$tmpf")
-
-    if [ "$width_by_height" -gt "3000" ]; then
-        magick $tmpf -resize 1200x900 -gravity center -background '#00000000' -extent 1200x900 $tmpf
-    fi
-    if [ "$height_by_width" -gt "3000" ]; then
-        magick $tmpf -resize 900x1200 -gravity center -background '#00000000' -extent 900x1200 $tmpf
-    fi
-
-    notify-send "Screen captured" "Image copied to clipboard $prefix" -i $tmpf
-fi
-
-rm $tmpf
-
 if [ $success -ne 0 ]; then
+    rm $tmpf
     exit 1
 fi
+
+cat $tmpf | $clipboard_saver
+
+prefix=''
+if [ $save -eq 1 ]; then
+    savedir="$HOME/Pictures"
+    savename="$savedir/$(date +"%Y-%m-%d_%H-%M-%S").png"
+    prefix=" and saved to $savedir"
+    cp $tmpf $savename
+fi
+
+width_by_height=$(magick identify -format "%[fx:round(w*1000/h)]" "$tmpf")
+height_by_width=$(magick identify -format "%[fx:round(h*1000/w)]" "$tmpf")
+
+if [ "$width_by_height" -gt "3000" ]; then
+    magick $tmpf -resize 1200x900 -gravity center -background '#00000000' -extent 1200x900 $tmpf
+fi
+if [ "$height_by_width" -gt "3000" ]; then
+    magick $tmpf -resize 900x1200 -gravity center -background '#00000000' -extent 900x1200 $tmpf
+fi
+
+notify-send "Screen captured" "Image copied to clipboard$prefix" -i $tmpf
+
+rm $tmpf
