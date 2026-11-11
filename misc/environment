@@ -6,11 +6,12 @@
 #
 GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
+QT_IM_MODULES="wayland;fcitx"
 SDL_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 QT4=IM_MODULE=fcitx
 CLUTTER_IM_MODULE=fcitx
-GLFW_IM_MODULE=fcitx
+GLFW_IM_MODULE=ibus
 
 #precise scroll on firefox
 MOZ_USE_XINPUT2=1

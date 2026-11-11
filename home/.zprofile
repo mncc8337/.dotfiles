@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-wayland_compositor=hyprland
+wayland_compositor=somewm
 
 function X_start {
     if [ -f ~/.xorg.log ]; then
@@ -15,10 +15,10 @@ function wayland_start {
         mv ~/.$wayland_compositor.log ~/.$wayland_compositor.old.log
     fi
 
-    $wayland_compositor > ~/.$wayland_compositor.log 2>&1
+    dbus-run-session $wayland_compositor > ~/.$wayland_compositor.log 2>&1
 }
 
 if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-    X_start
-    # wayland_start
+    # X_start
+    wayland_start
 fi

@@ -1,14 +1,5 @@
 #!/bin/sh
 
-# make a screenshot using maim + slop / grim + slurp
-# include area to crop, save to save to $HOME/Pictures
-# - screenshot
-# - screenshot save
-# - screenshot area
-# - screenshot area save
-# - screenshot save area
-# requires imagemagick v7
-
 if [ -n "$WAYLAND_DISPLAY" ]; then
     is_wayland=1
     screenshotter="grim"
@@ -19,22 +10,50 @@ else
     clipboard_saver="xclip -selection clipboard -t image/png"
 fi
 
-tmpf=$(mktemp /tmp/scrsht-XXXXX.png)
-
 save=0
+area=0
 for arg in "$@"; do
     if [ "$arg" = "area" ]; then
-        if [ $is_wayland -eq 1 ]; then
-            area_arg="-g \"$(slurp)\""
-        else
-            area_arg="-s"
-        fi
+        area=1
     elif [ "$arg" = "save" ]; then
         save=1
+    else
+        echo make a screenshot using maim + slop / grim + slurp
+        echo specify \"area\" to crop, \"save\" to save to $HOME/Pictures
+        echo image is saved at /tmp if \"save\" is not specified. in both cases the save path is printed
+        echo usage: screenshot arg1 arg2 ...
+        echo args:
+        echo - save: save to $HOME/Pictures/
+        echo - area: screen snipping
+        echo order isnt matter
+        echo examples:
+        echo - screenshot
+        echo - screenshot area
+        echo - screenshot save
+        echo - screenshot save area
+        exit 1
     fi
 done
 
-$screenshotter $area_arg $tmpf
+tmpf=$(mktemp /tmp/scrsht-XXXXX.png)
+
+if [ $is_wayland -eq 1 ]; then
+    if [ $area -eq 1 ]; then
+        geometry=$(slurp)
+        if [ $? -ne 0 ]; then
+            return 1
+        fi
+        grim -g "$geometry" $tmpf
+    else
+        grim $tmpf
+    fi
+else
+    if [ $area -eq 1 ]; then
+        maim --hidecursor -s $tmpf
+    else
+        maim --hidecursor $tmpf
+    fi
+fi
 
 success=$?
 if [ $success -ne 0 ]; then
@@ -52,16 +71,11 @@ if [ $save -eq 1 ]; then
     cp $tmpf $savename
 fi
 
-width_by_height=$(magick identify -format "%[fx:round(w*1000/h)]" "$tmpf")
-height_by_width=$(magick identify -format "%[fx:round(h*1000/w)]" "$tmpf")
-
-if [ "$width_by_height" -gt "3000" ]; then
-    magick $tmpf -resize 1200x900 -gravity center -background '#00000000' -extent 1200x900 $tmpf
-fi
-if [ "$height_by_width" -gt "3000" ]; then
-    magick $tmpf -resize 900x1200 -gravity center -background '#00000000' -extent 900x1200 $tmpf
-fi
-
 notify-send "Screen captured" "Image copied to clipboard$prefix" -i $tmpf
 
-rm $tmpf
+if [ $save -eq 1 ]; then
+    rm $tmpf
+    echo $savename
+else
+    echo $tmpf
+fi

@@ -1,0 +1,65 @@
+#!/bin/sh
+# deps: wf-recorder, slurp
+# an wrapper for wl-recorder that use the same flags as .bin/x-rec
+
+audio_param=""
+output="$HOME/Videos/$(date +"%Y-%m-%d_%H-%M-%S").mp4"
+framerate=""
+geometry_flag=""
+
+for token in "$@"; do
+    arg=$(echo $token | cut -f1 -d=)
+    val=$(echo $token | cut -f2 -d=)
+
+    if [ "$arg" = "--help" ] || [ "$arg" = "-h" ]; then
+        printf "usage: rec [OPTION]...\n\n"
+        printf "OPTIONS:\n"
+        printf "    -h, --help                    print this text\n"
+        printf "    -a, --audio                   record audio\n"
+        printf "    -o, --output=<file>           specify the output file\n"
+        printf "    -f, --framerate=<rate>        set frame rate\n"
+        printf "    -r, --area                    select the area to be recorded\n"
+        printf "    -g, --geometry=<w>,<h>,<x>,<y> set explicit geometry (w,h,x,y)\n\n"
+        printf "to stop recording press ctrl-c\n"
+        printf "default geometry is fullscreen\n"
+        exit
+    elif [ "$arg" = "--audio" ] || [ "$arg" = "-a" ]; then
+        audio_param="--audio"
+    elif [ "$arg" = "--output" ] || [ "$arg" = "-o" ]; then
+        output=$val
+        if [ "$(echo $output | cut -f2 -d.)" = "" ]; then
+            printf "empty extension detected, adding '.mkv' to it\n"
+            output="$(echo $output | cut -f1 -d.).mkv"
+        fi
+    elif [ "$arg" = "--framerate" ] || [ "$arg" = "-f" ]; then
+        framerate="-r $val"
+    elif [ "$arg" = "--area" ] || [ "$arg" = "-r" ]; then
+        # slurp outputs the region in 'x,y WxH' format required by wf-recorder -g
+        geometry_flag="-g \"$(slurp)\""
+    elif [ "$arg" = "--geometry" ] || [ "$arg" = "-g" ]; then
+        w=$(echo $val | cut -f1 -d,)
+        h=$(echo $val | cut -f2 -d,)
+        x=$(echo $val | cut -f3 -d,)
+        y=$(echo $val | cut -f4 -d,)
+        geometry_flag="-g $x,$y ${w}x$h"
+    fi
+done
+
+# Build and execute the wf-recorder command
+cmd="wf-recorder -f \"$output\" -c libx264 -p preset=ultrafast -p crf=24"
+
+if [ "$audio_param" != "" ]; then
+    cmd="$cmd $audio_param"
+fi
+
+if [ "$framerate" != "" ]; then
+    cmd="$cmd $framerate"
+fi
+
+if [ "$geometry_flag" != "" ]; then
+    cmd="$cmd $geometry_flag"
+fi
+
+eval "$cmd"
+
+printf "\nrecording ended. Saved to: $output\n"
