@@ -6,11 +6,10 @@ my .files for arch (btw)
 img not provided bc im lazy
 ## included config
 - nvim
-- awesome
+- awesome/somewm
 - hyprland
 - rofi (copied somewhere else and i don't remember the source)
-- alacritty
-- wezterm
+- alacritty/wezterm/tym
 - picom
 - some shell scripts collected from internet
 ## before installing
@@ -20,37 +19,58 @@ img not provided bc im lazy
 - install these packages, marked (*) items are optional and are used by default:
     - [zsh](https://www.zsh.org/) (shell) (*)
     - [nemo](https://github.com/linuxmint/nemo/) (file explorer) (*)
-    - [wezterm](https://wezterm.org/) (terminal emulator) (*)
+    - [tym](https://github.com/endaaman/tym) (terminal emulator) (*)
     - [rofi](https://github.com/davatorium/rofi) (app launcher) (*)
     - [playerctl](https://github.com/altdesktop/playerctl) (control mpris2 based media)
     - [themix-theme-oomox](https://github.com/themix-project/oomox-gtk-theme) for dynamic theming
-    - imagemagick for `magick`
     - libnotify for `notify-send`
-    - libpulse (pulseaudio) or pipewire-pulse (pipewire) for pactl  
-    `yay -S zsh nemo wezterm rofi playerctl themix-theme-oomox-git imagemagick libnotify pipewire-pulse`
+    - libpulse (pulseaudio) or pipewire-pulse (pipewire) for pactl
+```
+yay -S zsh nemo tym rofi playerctl themix-theme-oomox-git libnotify pipewire-pulse
+```
 - i don't use `bash` anymore so `home/.bashrc` maybe outdated compared to `home/.zshrc`
 - these are fonts and cursor theme used by default
     - cascadia-code-nerd
     - ibm-plex
-    - bibata-cursor-theme  
-    `yay -S ttf-cascadia-code-nerd ttf-ibm-plex bibata-cursor-theme`
-### awesomewm
-these dependencies are only needed for awesomewm.
-- [awesome](https://awesomewm.org/)
-- xorg-xinput for `xinput`
-- [picom](https://github.com/yshui/picom)
-- [maim](https://github.com/naelstrof/maim)
-- [i3lock-color](https://github.com/Raymo111/i3lock-color) and [xidlehook](https://gitlab.com/jD91mZM2/xidlehook)
-- [xclip](https://github.com/astrand/xclip)  
-`yay -S awesome-git xorg-xinput picom-git maim i3lock-color xidlehook xclip`
-### hyprland
-these dependencies are only needed for hyprland.
+```
+yay -S ttf-cascadia-code-nerd ttf-ibm-plex
+```
+### wayland
+- [grim](https://gitlab.freedesktop.org/emersion/grim) and [slurp](https://github.com/emersion/slurp)
+- [wl-clipboard](https://github.com/bugaevc/wl-clipboard)
+```
+yay -S grim slurp wl-clipboard
+```
+#### somewm (default)
+- [somewm](https://awesomewm.org/)
+```
+yay -S somewm-git
+```
+#### hyprland
 - [hyprland](https://hyprland.org/)
 - [hyprpaper](https://github.com/hyprwm/hyprpaper)
 - [fabric](https://wiki.ffpy.org/)
-- [wl-clipboard](https://github.com/bugaevc/wl-clipboard)
-- [grim](https://sr.ht/~emersion/grim/) and [slurp](https://github.com/emersion/slurp)  
-`yay -S hyprland hyprpaper python-fabric-git wl-clipboard grim slurp`
+```
+yay -S hyprland hyprpaper python-fabric-git
+```
+### X11
+- [picom](https://github.com/yshui/picom)
+- [maim](https://github.com/naelstrof/maim)
+- [i3lock-color](https://github.com/Raymo111/i3lock-color) and [xidlehook](https://gitlab.com/jD91mZM2/xidlehook)
+- [xclip](https://github.com/astrand/xclip)
+```
+yay -S picom-git maim i3lock-color xidlehook xclip
+```
+#### awesomewm
+> [!NOTE]
+> to switch from somewm to awm, you need to change the branch of `.config/awesome` to `awm`
+
+- xorg-xinput for `xinput`
+- [awesome](https://awesomewm.org/)
+- [snixembed](https://git.sr.ht/~steef/snixembed/) (no SNI supports on awm sadly)
+```
+yay -S awesome-git xorg-xinput snixembed
+```
 ## install
 please **do not use** `./tool/create-symlink` because it is for my use only.
 ```
