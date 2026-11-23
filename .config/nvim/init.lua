@@ -22,10 +22,6 @@ vim.opt.backup = false
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
 
--- disable netrw to use nvim-tree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 --[[ plugins ]]
 
 -- build steps for plugins that need them, keyed by plugin name (see :help vim.pack-events)
@@ -60,16 +56,13 @@ vim.api.nvim_create_autocmd("PackChanged", {
 -- NOTE: dependencies must be listed before the plugins that need them
 local function gh(x) return "https://github.com/" .. x end
 vim.pack.add({
-    gh("RRethy/base16-nvim"),
     gh("nvim-tree/nvim-web-devicons"),
-    gh("akinsho/bufferline.nvim"),
-    gh("nvim-lualine/lualine.nvim"),
+    gh("RRethy/base16-nvim"),
     gh("lukas-reineke/indent-blankline.nvim"),
     gh("NvChad/nvim-colorizer.lua"),
 
     gh("nvim-lua/plenary.nvim"),
     gh("nvim-telescope/telescope.nvim"),
-    gh("nvim-tree/nvim-tree.lua"),
     gh("kevinhwang91/promise-async"),
     gh("kevinhwang91/nvim-ufo"),
 
@@ -89,36 +82,16 @@ vim.pack.add({
 require("base16-colorscheme").setup()
 vim.cmd.colorscheme("base16-nord-light")
 
-require("bufferline").setup({
-    options = {
-        indicator = { style = "none" },
-        diagnostics = "nvim_lsp",
-        diagnostics_indicator = function(count, level)
-            local icon = level:match("error") and " " or " "
-            return " " .. icon .. count
-        end,
-        offsets = {
-            {
-                filetype = "NvimTree",
-                text = "File Explorer",
-                text_align = "center",
-                separator = true,
-            },
-        },
-    },
-})
-require("lualine").setup()
 require("ibl").setup({
     indent = { char = "╎" },
 })
 require("colorizer").setup()
-require("nvim-tree").setup()
 require("ufo").setup()
 
 local function setup_treesitter()
     local ts = require("nvim-treesitter")
     local ignore_filetypes = {
-        "checkhealth", "mason", "NvimTree", "conform-info", "man", "text",
+        "checkhealth", "mason", "conform-info", "man", "text", "minifiles",
     }
 
     local function start(buf, lang)
@@ -143,6 +116,7 @@ local function setup_treesitter()
             if start(buf, lang) then
                 return
             end
+
             -- parser not installed yet. install it, then retry on completion
             ts.install({ lang }):await(function()
                 if vim.api.nvim_buf_is_valid(buf) then
@@ -157,10 +131,10 @@ setup_treesitter()
 require("mini.pairs").setup()
 require("mini.move").setup()
 require("mini.cursorword").setup()
-require("mini.splitjoin").setup({
+require("mini.splitjoin").setup {
     mappings = { toggle = " j" },
-})
-require("mini.surround").setup({
+}
+require("mini.surround").setup {
     highlight_duration = 500,
     mappings = {
         add = "sa",
@@ -176,7 +150,10 @@ require("mini.surround").setup({
     n_lines = 20,
     respect_selection_type = false,
     search_method = "cover",
-})
+}
+require("mini.files").setup()
+require("mini.statusline").setup()
+require("mini.diff").setup()
 
 require("mason").setup()
 require("mason-lspconfig").setup({

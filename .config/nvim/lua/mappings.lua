@@ -19,10 +19,6 @@ map({ "n" }, "<esc>", vim.cmd.noh)
 -- save file
 map({ "n" }, "<C-s>", vim.cmd.w, { desc = "Save current file" })
 
--- nvim-tree
-map({ "n" }, "<leader>t", vim.cmd.NvimTreeToggle, { desc = "NvimTree toggle" })
-map({ "n" }, "<leader>tt", vim.cmd.NvimTreeFocus, { desc = "NvimTree focus" })
-
 -- move between windows using hjkl
 map({ "n" }, "<C-h>", "<cmd>wincmd h<CR>", { desc = "To left window" })
 map({ "n" }, "<C-j>", "<cmd>wincmd j<CR>", { desc = "To down window" })
@@ -34,6 +30,8 @@ map({ "n" }, "<C-A-j>", "<cmd>wincmd -<CR>", { desc = "Decrease height of curren
 map({ "n" }, "<C-A-k>", "<cmd>wincmd +<CR>", { desc = "Increase height of current window" })
 map({ "n" }, "<C-A-l>", "<cmd>wincmd ><CR>", { desc = "Increase width of current window" })
 
+map({ "t" }, "<Esc><Esc><Esc>", "<C-\\><C-n>", { desc = "Leave terminal mode" })
+
 -- telescope
 local telescope_builtin = require("telescope.builtin")
 map({ "n" }, "<C-f><C-f>", telescope_builtin.find_files, { desc = "Find files" })
@@ -42,10 +40,11 @@ map({ "n" }, "<C-f><C-b>", telescope_builtin.buffers, { desc = "List all buffers
 map({ "n" }, "<leader>gc", telescope_builtin.git_commits, { desc = "Git checkout commits" })
 map({ "n" }, "<leader>gst", telescope_builtin.git_status, { desc = "Git status" })
 
--- bufferline
-map({ "n" }, "<Tab>", vim.cmd.BufferLineCycleNext, { desc = "Next buffer" })
-map({ "n" }, "<S-Tab>", vim.cmd.BufferLineCyclePrev, { desc = "Prev buffer" })
-map({ "n" }, "<C-b>", vim.cmd.BufferLinePick, { desc = "Pick buffer" })
+-- mini
+local minidiff = require("mini.diff")
+map({ "n" }, "<leader>gd", minidiff.toggle_overlay, { desc = "Toggle diff overlay" })
+local minifiles = require("mini.files")
+map({ "n" }, "<leader>t", minifiles.open, { desc = "Open files" })
 
 -- formatter
 map({ "n", "v" }, "<leader>fff", require("conform").format, { desc = "Format code" })
