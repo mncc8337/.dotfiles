@@ -26,315 +26,225 @@ vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
---[[ lazy.nvim bootstrap ]]
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable",
-        lazypath,
-    })
-end
-vim.opt.rtp:prepend(lazypath)
-
 --[[ plugins ]]
-require("lazy").setup({
-    {
-        "RRethy/base16-nvim",
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require("base16-colorscheme").setup()
-            vim.cmd.colorscheme("base16-gruvbox-dark-medium")
-        end,
-    },
 
-    {
-        "akinsho/bufferline.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {
-            options = {
-                indicator = { style = "none" },
-                diagnostics = "nvim_lsp",
-                diagnostics_indicator = function(count, level)
-                    local icon = level:match("error") and " " or " "
-                    return " " .. icon .. count
-                end,
-                offsets = {
-                    {
-                        filetype = "NvimTree",
-                        text = "File Explorer",
-                        text_align = "center",
-                        separator = true,
-                    },
-                },
-            },
-        },
-    },
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = true,
-    },
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
-        opts = {
-            indent = { char = "╎" },
-        },
-    },
-    { "NvChad/nvim-colorizer.lua", config = true },
-    {
-        "stevearc/dressing.nvim",
-        opts = { input = { border = "solid" } },
-    },
-    { "nvim-tree/nvim-web-devicons" },
+-- build steps for plugins that need them, keyed by plugin name (see :help vim.pack-events)
+-- cmd: external command (argument list), :command (string), or function(ev)
+-- load: packadd the plugin first (for :commands when the plugin isn't active)
+local pack_build = {
+    ["nvim-treesitter"] = { cmd = "TSUpdate", load = true },
+}
 
-    {
-        "nvim-telescope/telescope.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-    },
-    {
-        "nvim-tree/nvim-tree.lua",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        lazy = false,
-        config = true,
-    },
-    {
-        "kevinhwang91/nvim-ufo",
-        dependencies = "kevinhwang91/promise-async",
-        config = true,
-    },
-
-    {
-        -- straight up copying from
-        -- https://www.reddit.com/r/neovim/comments/1pndf9e/my_new_nvimtreesitter_configuration_for_the_main/
-        "nvim-treesitter/nvim-treesitter",
-        lazy = false,
-        branch = "main",
-        build = ":TSUpdate",
-        config = function()
-            local ts = require("nvim-treesitter")
-
-            local parsers_loaded = {}
-            local parsers_pending = {}
-            local parsers_failed = {}
-
-            local ns = vim.api.nvim_create_namespace("treesitter.async")
-
-            local function start(buf, lang)
-                local ok = pcall(vim.treesitter.start, buf, lang)
-                if ok then
-                    vim.bo[buf].indentexpr = 'v:lua.require("nvim-treesitter").indentexpr()'
-                end
-                return ok
+vim.api.nvim_create_autocmd("PackChanged", {
+    callback = function(ev)
+        if ev.data.kind ~= "install" and ev.data.kind ~= "update" then
+            return
+        end
+        local build = pack_build[ev.data.spec.name]
+        if not build then
+            return
+        end
+        if type(build.cmd) == "function" then
+            build.cmd(ev)
+        elseif type(build.cmd) == "string" then
+            if build.load and not ev.data.active then
+                vim.cmd.packadd(ev.data.spec.name)
             end
+            vim.cmd(build.cmd)
+        else
+            vim.system(build.cmd, { cwd = ev.data.path }):wait()
+        end
+    end,
+})
 
-            vim.api.nvim_create_autocmd("User", {
-                pattern = "LazyDone",
-                once = true,
-                callback = function()
-                    ts.install({
-                        "c",
-                        "cpp",
-                        "python",
-                    }, {
-                        max_jobs = 8,
-                    })
-                end,
-            })
+-- NOTE: dependencies must be listed before the plugins that need them
+local function gh(x) return "https://github.com/" .. x end
+vim.pack.add({
+    gh("RRethy/base16-nvim"),
+    gh("nvim-tree/nvim-web-devicons"),
+    gh("akinsho/bufferline.nvim"),
+    gh("nvim-lualine/lualine.nvim"),
+    gh("lukas-reineke/indent-blankline.nvim"),
+    gh("NvChad/nvim-colorizer.lua"),
 
-            vim.api.nvim_set_decoration_provider(ns, {
-                on_start = vim.schedule_wrap(function()
-                    if #parsers_pending == 0 then
-                        return false
-                    end
-                    for _, data in ipairs(parsers_pending) do
-                        if vim.api.nvim_buf_is_valid(data.buf) then
-                            if start(data.buf, data.lang) then
-                                parsers_loaded[data.lang] = true
-                            else
-                                parsers_failed[data.lang] = true
-                            end
-                        end
-                    end
-                    parsers_pending = {}
-                end),
-            })
+    gh("nvim-lua/plenary.nvim"),
+    gh("nvim-telescope/telescope.nvim"),
+    gh("nvim-tree/nvim-tree.lua"),
+    gh("kevinhwang91/promise-async"),
+    gh("kevinhwang91/nvim-ufo"),
 
-            local group = vim.api.nvim_create_augroup("TreesitterSetup", { clear = true })
+    gh("nvim-treesitter/nvim-treesitter"),
+    gh("echasnovski/mini.nvim"),
 
-            local ignore_filetypes = {
-                "checkhealth",
-                "lazy",
-                "lazy_backdrop",
-                "mason",
-                "NvimTree",
-                "conform-info",
-                "man",
-                "text",
-            }
-
-            vim.api.nvim_create_autocmd("FileType", {
-                group = group,
-                desc = "Enable treesitter highlighting and indentation (non-blocking)",
-                callback = function(event)
-                    if vim.tbl_contains(ignore_filetypes, event.match) then
-                        return
-                    end
-
-                    local lang = vim.treesitter.language.get_lang(event.match) or event.match
-                    local buf = event.buf
-
-                    if parsers_failed[lang] then
-                        return
-                    end
-
-                    if parsers_loaded[lang] then
-                        start(buf, lang)
-                    else
-                        table.insert(parsers_pending, { buf = buf, lang = lang })
-                    end
-
-                    ts.install({ lang })
-                end,
-            })
-        end,
-    },
-    {
-        "nvim-treesitter/nvim-treesitter-context",
-        opts = {
-            max_lines = 4,
-            multiline_threshold = 2,
-        },
-    },
-
-    {
-        "echasnovski/mini.nvim",
-        version = false,
-        config = function()
-            require("mini.pairs").setup()
-            require("mini.move").setup()
-            require("mini.cursorword").setup()
-            require("mini.splitjoin").setup({
-                mappings = { toggle = " j" },
-            })
-            require("mini.surround").setup({
-                highlight_duration = 500,
-                mappings = {
-                    add = "sa",
-                    delete = "sd",
-                    find = "sf",
-                    find_left = "sF",
-                    highlight = "sh",
-                    replace = "sr",
-                    update_n_lines = "sn",
-                    suffix_last = "l",
-                    suffix_next = "n",
-                },
-                n_lines = 20,
-                respect_selection_type = false,
-                search_method = "cover",
-            })
-        end,
-    },
-
-    {
-        "mason-org/mason-lspconfig.nvim",
-        opts = {
-            ensure_installed = { "clangd", "pylsp" },
-        },
-        dependencies = {
-            {
-                "mason-org/mason.nvim",
-                opts = {},
-            },
-            "neovim/nvim-lspconfig",
-        },
-    },
-    {
-        "saghen/blink.cmp",
-        version = "*",
-        opts = {
-            keymap = {
-                preset = "none",
-                ["<Enter>"] = { "accept", "fallback" },
-                ["<Tab>"] = { "select_next", "fallback" },
-                ["<S-Tab>"] = { "select_prev", "fallback" },
-                ["<C-e>"] = { "hide", "fallback" },
-            },
-            appearance = {
-                use_nvim_cmp_as_default = true,
-                nerd_font_variant = "mono",
-            },
-            sources = {
-                default = { "lsp", "path", "snippets", "buffer" },
-            },
-            cmdline = {
-                enabled = true,
-                keymap = {
-                    preset = "cmdline",
-                    ["<Right>"] = false,
-                    ["<Left>"] = false,
-                },
-                completion = {
-                    list = { selection = { preselect = false } },
-                    menu = {
-                        auto_show = function(_)
-                            return vim.fn.getcmdtype() == ":"
-                        end,
-                    },
-                    ghost_text = { enabled = true },
-                },
-            },
-        },
-    },
-    {
-        "stevearc/conform.nvim",
-        cmd = { "ConformInfo" },
-        opts = {
-            formatters_by_ft = {
-                lua = { "stylua" },
-                python = { "isort", "black" },
-                c = { "clang-format" },
-                cpp = { "clang-format" },
-            },
-        },
-    },
+    gh("mason-org/mason.nvim"),
+    gh("neovim/nvim-lspconfig"),
+    gh("mason-org/mason-lspconfig.nvim"),
+    gh("saghen/blink.cmp"),
+    gh("stevearc/conform.nvim"),
 
     -- extras
-    {
-        "windwp/nvim-ts-autotag",
-        config = true,
-    },
-    {
-        "keaising/im-select.nvim",
-        config = function()
-            require('im_select').setup({
-                default_im_select  = "keyboard-us",
-                default_command = "fcitx5-remote",
+    gh("keaising/im-select.nvim"),
+})
 
-                -- Restore the default input method state when the following events are triggered
-                -- "VimEnter" and "FocusGained" were removed for causing problems, add it by your needs
-                set_default_events = { "InsertLeave", "CmdlineLeave" },
+require("base16-colorscheme").setup()
+vim.cmd.colorscheme("base16-nord-light")
 
-                -- Restore the previous used input method state when the following events
-                -- are triggered, if you don't want to restore previous used im in Insert mode,
-                -- e.g. deprecated `disable_auto_restore = 1`, just let it empty
-                -- as `set_previous_events = {}`
-                set_previous_events = { "InsertEnter" },
-
-                -- Show notification about how to install executable binary when binary missed
-                keep_quiet_on_no_binary = false,
-
-                -- Async run `default_command` to switch IM or not
-                async_switch_im = true
-            })
+require("bufferline").setup({
+    options = {
+        indicator = { style = "none" },
+        diagnostics = "nvim_lsp",
+        diagnostics_indicator = function(count, level)
+            local icon = level:match("error") and " " or " "
+            return " " .. icon .. count
         end,
+        offsets = {
+            {
+                filetype = "NvimTree",
+                text = "File Explorer",
+                text_align = "center",
+                separator = true,
+            },
+        },
+    },
+})
+require("lualine").setup()
+require("ibl").setup({
+    indent = { char = "╎" },
+})
+require("colorizer").setup()
+require("nvim-tree").setup()
+require("ufo").setup()
+
+local function setup_treesitter()
+    local ts = require("nvim-treesitter")
+    local ignore_filetypes = {
+        "checkhealth", "mason", "NvimTree", "conform-info", "man", "text",
     }
+
+    local function start(buf, lang)
+        if not pcall(vim.treesitter.start, buf, lang) then
+            return false
+        end
+        vim.bo[buf].indentexpr = 'v:lua.require("nvim-treesitter").indentexpr()'
+        return true
+    end
+
+    ts.install({ "c", "cpp", "python" }, { max_jobs = 8 })
+
+    vim.api.nvim_create_autocmd("FileType", {
+        desc = "Enable treesitter highlighting and indentation (non-blocking)",
+        callback = function(ev)
+            if vim.tbl_contains(ignore_filetypes, ev.match) then
+                return
+            end
+            local lang = vim.treesitter.language.get_lang(ev.match) or ev.match
+            local buf = ev.buf
+
+            if start(buf, lang) then
+                return
+            end
+            -- parser not installed yet. install it, then retry on completion
+            ts.install({ lang }):await(function()
+                if vim.api.nvim_buf_is_valid(buf) then
+                    start(buf, lang)
+                end
+            end)
+        end,
+    })
+end
+setup_treesitter()
+
+require("mini.pairs").setup()
+require("mini.move").setup()
+require("mini.cursorword").setup()
+require("mini.splitjoin").setup({
+    mappings = { toggle = " j" },
+})
+require("mini.surround").setup({
+    highlight_duration = 500,
+    mappings = {
+        add = "sa",
+        delete = "sd",
+        find = "sf",
+        find_left = "sF",
+        highlight = "sh",
+        replace = "sr",
+        update_n_lines = "sn",
+        suffix_last = "l",
+        suffix_next = "n",
+    },
+    n_lines = 20,
+    respect_selection_type = false,
+    search_method = "cover",
+})
+
+require("mason").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = { "clangd", "pylsp" },
+})
+
+require("blink.cmp").setup({
+    keymap = {
+        preset = "none",
+        ["<Enter>"] = { "accept", "fallback" },
+        ["<Tab>"] = { "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "fallback" },
+        ["<C-e>"] = { "hide", "fallback" },
+    },
+    appearance = {
+        use_nvim_cmp_as_default = true,
+        nerd_font_variant = "mono",
+    },
+    sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
+    },
+    cmdline = {
+        enabled = true,
+        keymap = {
+            preset = "cmdline",
+            ["<Right>"] = false,
+            ["<Left>"] = false,
+        },
+        completion = {
+            list = { selection = { preselect = false } },
+            menu = {
+                auto_show = function(_)
+                    return vim.fn.getcmdtype() == ":"
+                end,
+            },
+            ghost_text = { enabled = true },
+        },
+    },
+})
+
+require("conform").setup({
+    formatters_by_ft = {
+        lua = { "stylua" },
+        python = { "isort", "black" },
+        c = { "clang-format" },
+        cpp = { "clang-format" },
+    },
+})
+
+require('im_select').setup({
+    default_im_select  = "keyboard-us",
+    default_command = "fcitx5-remote",
+
+    -- Restore the default input method state when the following events are triggered
+    -- "VimEnter" and "FocusGained" were removed for causing problems, add it by your needs
+    set_default_events = { "InsertLeave", "CmdlineLeave" },
+
+    -- Restore the previous used input method state when the following events
+    -- are triggered, if you don't want to restore previous used im in Insert mode,
+    -- e.g. deprecated `disable_auto_restore = 1`, just let it empty
+    -- as `set_previous_events = {}`
+    set_previous_events = { "InsertEnter" },
+
+    -- Show notification about how to install executable binary when binary missed
+    keep_quiet_on_no_binary = false,
+
+    -- Async run `default_command` to switch IM or not
+    async_switch_im = true
 })
 
 --[[ lsp config ]]
