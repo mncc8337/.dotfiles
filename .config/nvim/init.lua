@@ -22,6 +22,15 @@ vim.opt.backup = false
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
 
+-- on startup, builtin ftplugins calls vim.treesitter.start unconditionally
+-- make it a protected call so nvim wouldnt thow an error on
+-- startup when parsers is not available and prevent the setup
+-- below to automatically install the required parser
+local org_ts_install = vim.treesitter.start
+vim.treesitter.start = function(buf, lang)
+    return pcall(org_ts_install, buf, lang)
+end
+
 --[[ plugins ]]
 
 -- build steps for plugins that need them, keyed by plugin name (see :help vim.pack-events)
@@ -95,7 +104,7 @@ local function setup_treesitter()
     }
 
     local function start(buf, lang)
-        if not pcall(vim.treesitter.start, buf, lang) then
+        if not vim.treesitter.start(buf, lang) then
             return false
         end
         vim.bo[buf].indentexpr = 'v:lua.require("nvim-treesitter").indentexpr()'
